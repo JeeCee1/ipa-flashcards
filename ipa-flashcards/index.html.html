@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<!-- RP IPA Flashcards v1.7 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&display=swap">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RP IPA Flashcards</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:     #1a1a2e;
+    --paper:   #f5f0e8;
+    --card-bg: #fffdf7;
+    --accent:  #c0392b;
+    --accent2: #2c3e7a;
+    --muted:   #7a7060;
+    --border:  #d4cfc4;
+    --correct: #27ae60;
+    --tag-lax:       #e8f4fd;
+    --tag-weak:      #fde8f4;
+    --tag-mono:      #fef9e7;
+    --tag-diph:      #fff3e0;
+    --tag-plosive:   #fdf2f8;
+    --tag-fricative: #f2f4fd;
+    --tag-affricate: #edf9f2;
+    --tag-nasal:     #fdf5e8;
+    --tag-approx:    #f0fdf4;
+    --tag-supra:     #eafaf1;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Spectral', serif;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+    background-image:
+      radial-gradient(ellipse at 10% 0%, rgba(192,57,43,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 90% 100%, rgba(44,62,122,0.06) 0%, transparent 60%);
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  header h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--accent2);
+  }
+
+  header h1 span {
+    color: var(--accent);
+  }
+
+  header p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  /* ---- FILTER TREE ---- */
+  .filter-tree {
+    width: 100%;
+    max-width: 580px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .filter-all-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .filter-group {
+    border: 1.5px solid var(--border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .filter-group-header {
+    padding: 0.35rem 0.5rem;
+    background: var(--paper);
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+  }
+
+  .filter-group-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 2rem;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    user-select: none;
+  }
+  .filter-group-label:hover { border-color: var(--accent2); color: var(--accent2); }
+  .filter-group-label.group-active { background: var(--accent2); border-color: var(--accent2); color: white; }
+
+  .filter-group-children {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.5rem 0.7rem;
+    background: var(--card-bg);
+  }
+
+  .filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.28rem 0.7rem;
+    border-radius: 2rem;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .filter-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+  .filter-btn.active { background: var(--accent2); border-color: var(--accent2); color: white; }
+  .filter-btn.all-btn { padding: 0.3rem 1.2rem; }
+
+  /* ---- PROGRESS ---- */
+  .progress-bar-wrap {
+    width: 100%;
+    max-width: 580px;
+    margin-bottom: 0.6rem;
+  }
+
+  .progress-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+  }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent2);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  /* ---- CARD SCENE ---- */
+  .scene {
+    width: 100%;
+    max-width: 580px;
+    perspective: 1200px;
+    margin-bottom: 1.5rem;
+  }
+
+  .card {
+    width: 100%;
+    min-height: 280px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .card.flipped { transform: rotateY(180deg); }
+
+  .card-face {
+    position: absolute;
+    width: 100%;
+    min-height: 280px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05);
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-back { transform: rotateY(180deg); }
+
+  /* decorative corner line */
+  .card-face::before {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid currentColor;
+  }
+
+  .tag-lax       { color: #2980b9; background: #e8f4fd; }
+  .tag-mono      { color: #b7950b; background: #fef9e7; }
+  .tag-diph      { color: #a04000; background: #fdf0e8; }
+  .tag-weak      { color: #5d6d7e; background: #eaf0fb; }
+  .tag-plosive   { color: #8e44ad; background: #fdf2f8; }
+  .tag-fricative { color: #76448a; background: #f5eef8; }
+  .tag-affricate { color: #6c3483; background: #f0e6f6; }
+  .tag-nasal     { color: #1a5276; background: #d6eaf8; }
+  .tag-approx    { color: #117a65; background: #d1f2eb; }
+  .tag-supra     { color: #1e8449; background: #eafaf1; }
+
+  .symbol {
+    font-family: 'Spectral', serif;
+    font-size: clamp(3.5rem, 12vw, 5.5rem);
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  /* Answer face */
+  .answer-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .answer-name {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--accent2);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .answer-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    text-align: center;
+    font-weight: 300;
+    line-height: 1.55;
+    margin-bottom: 0.8rem;
+    font-style: italic;
+  }
+
+  .examples {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .example-word {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
+    color: var(--ink);
+  }
+
+  .example-word em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* Audio button */
+  .audio-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2rem;
+    border: 1.5px solid var(--accent2);
+    background: transparent;
+    color: var(--accent2);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+    margin-top: 0.3rem;
+  }
+
+  .audio-btn:hover { background: var(--accent2); color: white; }
+  .audio-btn.loading { opacity: 0.5; cursor: wait; }
+  .audio-btn.playing { background: var(--accent2); color: white; }
+  .audio-btn.error { border-color: var(--accent); color: var(--accent); }
+
+  .audio-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  .audio-unavail { opacity: 0.4; cursor: not-allowed; border-style: dashed; }
+  .audio-unavail:hover { background: transparent; color: var(--muted); border-color: var(--border); }
+  .audio-link { text-decoration: none; }
+  .audio-link:hover { background: var(--accent2); color: white; }
+
+  .audio-attr {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+    letter-spacing: 0.03em;
+  }
+  .audio-attr a { color: var(--muted); text-decoration: underline; }
+  .audio-attr a:hover { color: var(--accent2); }
+
+  /* ---- CONTROLS ---- */
+  .controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ctrl-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 3px;
+    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    color: var(--ink);
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: all 0.15s;
+  }
+
+  .ctrl-btn:hover { border-color: var(--ink); }
+
+  .ctrl-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .ctrl-btn.primary:hover { opacity: 0.85; }
+
+  .ctrl-btn.secondary {
+    background: var(--accent2);
+    border-color: var(--accent2);
+    color: white;
+  }
+
+  .ctrl-btn.secondary:hover { opacity: 0.85; }
+
+  /* ---- KEYBOARD HINT ---- */
+  .kbd-hint {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  .kbd-hint kbd {
+    display: inline-block;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1rem 0.35rem;
+    background: var(--card-bg);
+    font-family: inherit;
+  }
+
+  /* ---- DECK NAV DOT ---- */
+  .deck-dots {
+    display: flex;
+    gap: 0.35rem;
+    justify-content: center;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+    max-width: 580px;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .dot.seen    { background: var(--muted); }
+  .dot.current { background: var(--accent2); transform: scale(1.3); }
+
+  /* Card side label */
+  .card-side-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    opacity: 0.7;
+  }
+
+  /* Struggle button */
+  .struggle-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1.2rem;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: var(--border);
+    cursor: pointer;
+    transition: color 0.15s, transform 0.15s;
+    line-height: 1;
+    padding: 0.1rem;
+  }
+  .struggle-btn:hover { color: #e6b800; transform: scale(1.2); }
+  .struggle-btn.marked { color: #e6b800; }
+
+  /* Struggle filter button */
+  .struggle-filter-btn { color: var(--muted); }
+  .struggle-filter-btn.active { background: #e6b800; border-color: #e6b800; color: white; }
+
+  /* Start-side toggle */
+  .startside-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .startside-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .startside-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 2rem;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.04em;
+  }
+  .startside-btn.active { background: var(--accent2); border-color: var(--accent2); color: white; }
+
+  /* Audio source link */
+  .audio-src-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    text-decoration: underline;
+    margin-top: 0.2rem;
+  }
+  .audio-src-link:hover { color: var(--accent2); }
+
+  /* Answer label kept for back-compat but now replaced by card-side-label */
+  .answer-label { display: none; }
+  .phon-class {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2rem;
+    position: absolute;
+    top: 1.1rem;
+    right: 1.2rem;
+    opacity: 0.65;
+  }
+  .phon-class.obstruent { background: #fde8f4; color: #8e44ad; border: 1px solid #d7bde2; }
+  .phon-class.sonorant  { background: #d1f2eb; color: #117a65; border: 1px solid #a9dfbf; }
+
+  /* multi-select hint */
+  .filter-hint {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+
+  .page-footer {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.03em;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+  .page-footer a { color: var(--muted); text-decoration: underline; }
+  .page-footer a:hover { color: var(--accent2); }
+
+  @media (max-width: 480px) {
+    .card-face { padding: 1.5rem 1.2rem; }
+    .symbol { font-size: 3.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>RP <span>/IPA/</span> Flashcards</h1>
+  <p>Received Pronunciation · based on <em>English Pronunciation for Teachers</em>, Gussenhoven &amp; Broeders, 2nd edition</p>
+</header>
+
+<div class="filter-tree" id="filterTree"></div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-label">
+    <span id="progText">Card 1 of 0</span>
+    <span id="seenText">0 seen</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+</div>
+
+<!-- Start-side toggle -->
+<div class="startside-row">
+  <span class="startside-label">Start cards showing:</span>
+  <button class="startside-btn active" id="sideSymbol" onclick="setStartSide('symbol')">Symbol</button>
+  <button class="startside-btn" id="sideDesc" onclick="setStartSide('desc')">Description</button>
+</div>
+
+<div class="scene">
+  <div class="card" id="card" onclick="flip()">
+    <div class="card-face card-front" id="front"></div>
+    <div class="card-face card-back"  id="back"></div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn" onclick="navigate(-1)">← Prev</button>
+  <button class="ctrl-btn primary" onclick="flip()">Flip</button>
+  <button class="ctrl-btn" onclick="navigate(1)">Next →</button>
+  <button class="ctrl-btn secondary" onclick="shuffle()">Shuffle</button>
+  <button class="ctrl-btn struggle-filter-btn" id="struggleFilterBtn" onclick="toggleStruggleFilter()">★ Struggling (<span id="struggleCount">0</span>)</button>
+  <button class="ctrl-btn" onclick="resetStruggle()" title="Clear all struggle marks">Reset ★</button>
+</div>
+
+<p class="kbd-hint">
+  <kbd>Space</kbd> flip &nbsp;·&nbsp; <kbd>←</kbd><kbd>→</kbd> navigate &nbsp;·&nbsp; <kbd>A</kbd> play audio
+</p>
+
+<div class="deck-dots" id="dots"></div>
+
+<footer class="page-footer" id="pageFooter">
+  Audio: <a href="https://en.wikipedia.org/wiki/Help:IPA" target="_blank">Wikipedia · Help:IPA</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a>
+</footer>
+
+<noscript><p style="text-align:center;padding:2rem;font-family:monospace;color:#c0392b">JavaScript is required. If you're viewing this in an email client, save the file and open it in a browser.</p></noscript>
+<script>
+const APP_VERSION = '1.7';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CARD DATA
+// symbol, name, category (tag), description, examples [{word, stressed}],
+// audioFile = Wikimedia Commons filename (spaces as underscores)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const BASE = 'https://upload.wikimedia.org/wikipedia/commons/';
+
+// URLs verified from Wikipedia Help:IPA HAR capture
+const AUDIO = {
+  'ɪ': BASE + 'transcoded/4/4c/Near-close_near-front_unrounded_vowel.ogg/Near-close_near-front_unrounded_vowel.ogg.mp3',
+  'e': BASE + 'transcoded/6/6c/Close-mid_front_unrounded_vowel.ogg/Close-mid_front_unrounded_vowel.ogg.mp3',
+  'æ': BASE + 'transcoded/c/c9/Near-open_front_unrounded_vowel.ogg/Near-open_front_unrounded_vowel.ogg.mp3',
+  'ʌ': BASE + 'transcoded/8/80/PR-open-mid_back_unrounded_vowel2.ogg/PR-open-mid_back_unrounded_vowel2.ogg.mp3',
+  'ɒ': BASE + 'transcoded/3/31/PR-open_back_rounded_vowel.ogg/PR-open_back_rounded_vowel.ogg.mp3',
+  'ʊ': BASE + 'transcoded/d/d5/Near-close_near-back_rounded_vowel.ogg/Near-close_near-back_rounded_vowel.ogg.mp3',
+  'iː': BASE + 'transcoded/9/91/Close_front_unrounded_vowel.ogg/Close_front_unrounded_vowel.ogg.mp3',
+  'uː': BASE + 'transcoded/5/5d/Close_back_rounded_vowel.ogg/Close_back_rounded_vowel.ogg.mp3',
+  'ɑː': BASE + 'transcoded/e/e5/Open_back_unrounded_vowel.ogg/Open_back_unrounded_vowel.ogg.mp3',
+  'ɔː': BASE + 'transcoded/d/d0/PR-open-mid_back_rounded_vowel.ogg/PR-open-mid_back_rounded_vowel.ogg.mp3',
+  'ɜː': BASE + 'transcoded/0/01/Open-mid_central_unrounded_vowel.ogg/Open-mid_central_unrounded_vowel.ogg.mp3',
+  'ə':  BASE + 'transcoded/d/d9/Mid-central_vowel.ogg/Mid-central_vowel.ogg.mp3',
+  'i':  null, 'u': null,
+  'eɪ': null, 'aɪ': null, 'ɔɪ': null, 'aʊ': null,
+  'əʊ': null, 'ɪə': null, 'eə': null, 'ʊə': null,
+  'p':  BASE + 'transcoded/5/51/Voiceless_bilabial_plosive.ogg/Voiceless_bilabial_plosive.ogg.mp3',
+  'b':  BASE + 'transcoded/2/2c/Voiced_bilabial_plosive.ogg/Voiced_bilabial_plosive.ogg.mp3',
+  't':  BASE + 'transcoded/0/02/Voiceless_alveolar_plosive.ogg/Voiceless_alveolar_plosive.ogg.mp3',
+  'd':  BASE + 'transcoded/0/01/Voiced_alveolar_plosive.ogg/Voiced_alveolar_plosive.ogg.mp3',
+  'k':  BASE + 'transcoded/e/e3/Voiceless_velar_plosive.ogg/Voiceless_velar_plosive.ogg.mp3',
+  'ɡ':  BASE + 'transcoded/1/12/Voiced_velar_plosive_02.ogg/Voiced_velar_plosive_02.ogg.mp3',
+  'f':  BASE + 'transcoded/c/c7/Voiceless_labio-dental_fricative.ogg/Voiceless_labio-dental_fricative.ogg.mp3',
+  'v':  BASE + 'transcoded/4/42/Voiced_labio-dental_fricative.ogg/Voiced_labio-dental_fricative.ogg.mp3',
+  'θ':  BASE + 'transcoded/8/80/Voiceless_dental_fricative.ogg/Voiceless_dental_fricative.ogg.mp3',
+  'ð':  BASE + 'transcoded/6/6a/Voiced_dental_fricative.ogg/Voiced_dental_fricative.ogg.mp3',
+  's':  BASE + 'transcoded/a/ac/Voiceless_alveolar_sibilant.ogg/Voiceless_alveolar_sibilant.ogg.mp3',
+  'z':  BASE + 'transcoded/c/c0/Voiced_alveolar_sibilant.ogg/Voiced_alveolar_sibilant.ogg.mp3',
+  'ʃ':  BASE + 'transcoded/c/cc/Voiceless_palato-alveolar_sibilant.ogg/Voiceless_palato-alveolar_sibilant.ogg.mp3',
+  'ʒ':  BASE + 'transcoded/3/30/Voiced_palato-alveolar_sibilant.ogg/Voiced_palato-alveolar_sibilant.ogg.mp3',
+  'h':  BASE + 'transcoded/d/da/Voiceless_glottal_fricative.ogg/Voiceless_glottal_fricative.ogg.mp3',
+  'tʃ': BASE + 'transcoded/9/97/Voiceless_palato-alveolar_affricate.ogg/Voiceless_palato-alveolar_affricate.ogg.mp3',
+  'dʒ': BASE + 'transcoded/e/e6/Voiced_palato-alveolar_affricate.ogg/Voiced_palato-alveolar_affricate.ogg.mp3',
+  'm':  BASE + 'transcoded/a/a9/Bilabial_nasal.ogg/Bilabial_nasal.ogg.mp3',
+  'n':  BASE + 'transcoded/2/29/Alveolar_nasal.ogg/Alveolar_nasal.ogg.mp3',
+  'ŋ':  BASE + 'transcoded/3/39/Velar_nasal.ogg/Velar_nasal.ogg.mp3',
+  'l':  BASE + 'transcoded/b/bc/Alveolar_lateral_approximant.ogg/Alveolar_lateral_approximant.ogg.mp3',
+  'r':  BASE + 'transcoded/1/1f/Alveolar_approximant.ogg/Alveolar_approximant.ogg.mp3',
+  'j':  BASE + 'transcoded/e/e8/Palatal_approximant.ogg/Palatal_approximant.ogg.mp3',
+  'w':  BASE + 'transcoded/f/f2/Voiced_labio-velar_approximant.ogg/Voiced_labio-velar_approximant.ogg.mp3',
+  'ˈ':  null, 'ˌ': null, 'ː': null,
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CARD DATA  — order follows uploaded book pages exactly
+// Tags: lax | mono | diph | weak | plosive | fricative | affricate | nasal | approx | supra
+// ─────────────────────────────────────────────────────────────────────────────
+const cards = [
+
+  // ── LAX VOWELS (book order: ɪ ʊ e æ ʌ ɒ) ───────────────────────────────
+  {
+    symbol: 'ɪ', tag: 'lax', tagLabel: 'Lax vowel',
+    name: 'Near-close near-front unrounded',
+    desc: 'Short lax vowel. Tongue near-high front, lips unrounded.',
+    examples: [{w:'k',s:'i',e:'t'}, {w:'b',s:'i',e:'t'}, {w:'t',s:'i',e:'n'}]
+  },
+  {
+    symbol: 'ʊ', tag: 'lax', tagLabel: 'Lax vowel',
+    name: 'Near-close near-back rounded',
+    desc: 'Short lax vowel. Tongue near-high back, lips rounded.',
+    examples: [{w:'f',s:'oo',e:'t'}, {w:'p',s:'u',e:'ll'}, {w:'g',s:'oo',e:'d'}]
+  },
+  {
+    symbol: 'e', tag: 'lax', tagLabel: 'Lax vowel',
+    name: 'Close-mid front unrounded',
+    desc: 'Short lax vowel. Tongue mid-front, lips spread.',
+    examples: [{w:'dr',s:'e',e:'ss'}, {w:'b',s:'e',e:'d'}, {w:'sh',s:'e',e:'ll'}]
+  },
+  {
+    symbol: 'æ', tag: 'lax', tagLabel: 'Lax vowel',
+    name: 'Near-open front unrounded',
+    desc: 'Short lax vowel. Tongue low-front, jaw relatively open.',
+    examples: [{w:'tr',s:'a',e:'p'}, {w:'b',s:'a',e:'n'}, {w:'c',s:'a',e:'t'}]
+  },
+  {
+    symbol: 'ʌ', tag: 'lax', tagLabel: 'Lax vowel',
+    name: 'Open-mid back unrounded',
+    desc: 'Short lax vowel. Tongue low-back, lips unrounded.',
+    examples: [{w:'str',s:'u',e:'t'}, {w:'f',s:'u',e:'n'}, {w:'c',s:'u',e:'t'}]
+  },
+  {
+    symbol: 'ɒ', tag: 'lax', tagLabel: 'Lax vowel',
+    name: 'Open back rounded',
+    desc: 'Short lax vowel (RP only). Tongue low-back, lips rounded.',
+    examples: [{w:'l',s:'o',e:'t'}, {w:'d',s:'o',e:'ck'}, {w:'h',s:'o',e:'t'}]
+  },
+
+  // ── WEAK VOWELS (book order: ə  i  u) ────────────────────────────────────
+  {
+    symbol: 'ə', tag: 'weak', tagLabel: 'Weak vowel (schwa)',
+    name: 'Mid central — schwa',
+    desc: 'Most common English vowel. Occurs only in unstressed syllables. Called "schwa" /ʃwɑː/.',
+    examples: [{w:'',s:'a',e:'bout'}, {w:'bett',s:'e',e:'r'}, {w:'comm',s:'a',e:''}]
+  },
+  {
+    symbol: 'i', tag: 'weak', tagLabel: 'Weak vowel',
+    name: 'Near-close front (weak /i/)',
+    desc: 'Unstressed; quality between /iː/ and /ɪ/. Modern RP uses happy-tensing: closer to /iː/.',
+    examples: [{w:'happ',s:'y',e:''}, {w:'rad',s:'i',e:'o'}, {w:'cit',s:'y',e:''}]
+  },
+  {
+    symbol: 'u', tag: 'weak', tagLabel: 'Weak vowel',
+    name: 'Near-close back rounded (weak /u/)',
+    desc: 'Unstressed back vowel. Reduced quality.',
+    examples: [{w:'infl',s:'u',e:'ence'}, {w:'sit',s:'u',e:'ation'}, {w:'pop',s:'u',e:'lar'}]
+  },
+
+  // ── TENSE MONOPHTHONGS (book order: iː uː ɑː ɔː ɜː) ──────────────────────
+  {
+    symbol: 'iː', tag: 'mono', tagLabel: 'Tense monophthong',
+    name: 'Close front unrounded (long)',
+    desc: 'Long tense vowel. Tongue high-front, lips spread.',
+    examples: [{w:'fl',s:'ee',e:'ce'}, {w:'b',s:'ea',e:'n'}, {w:'s',s:'ee',e:''}]
+  },
+  {
+    symbol: 'uː', tag: 'mono', tagLabel: 'Tense monophthong',
+    name: 'Close back rounded (long)',
+    desc: 'Long tense vowel. Tongue high-back, lips rounded.',
+    examples: [{w:'g',s:'oo',e:'se'}, {w:'sp',s:'oo',e:'n'}, {w:'f',s:'oo',e:'d'}]
+  },
+  {
+    symbol: 'ɑː', tag: 'mono', tagLabel: 'Tense monophthong',
+    name: 'Open back unrounded (long)',
+    desc: 'Long tense vowel. Tongue low-back, lips unrounded.',
+    examples: [{w:'p',s:'a',e:'lm'}, {w:'c',s:'a',e:'lm'}, {w:'f',s:'a',e:'ther'}]
+  },
+  {
+    symbol: 'ɔː', tag: 'mono', tagLabel: 'Tense monophthong',
+    name: 'Open-mid back rounded (long)',
+    desc: 'Long tense vowel. Tongue low-back, lips rounded.',
+    examples: [{w:'th',s:'ough',e:'t'}, {w:'b',s:'o',e:'rn'}, {w:'l',s:'aw',e:''}]
+  },
+  {
+    symbol: 'ɜː', tag: 'mono', tagLabel: 'Tense monophthong',
+    name: 'Open-mid central unrounded (long)',
+    desc: 'Long tense vowel. Tongue mid-central, lips neutral.',
+    examples: [{w:'n',s:'ur',e:'se'}, {w:'b',s:'ur',e:'n'}, {w:'h',s:'er',e:'d'}]
+  },
+
+  // ── DIPHTHONGS (book order: eɪ aɪ ɔɪ aʊ əʊ ɪə eə ʊə) ────────────────────
+  {
+    symbol: 'eɪ', tag: 'diph', tagLabel: 'Tense diphthong',
+    name: 'Closing front diphthong',
+    desc: 'Glides from mid-front [e] toward near-high front [ɪ].',
+    examples: [{w:'p',s:'ai',e:'n'}, {w:'f',s:'a',e:'ce'}, {w:'d',s:'ay',e:''}]
+  },
+  {
+    symbol: 'aɪ', tag: 'diph', tagLabel: 'Tense diphthong',
+    name: 'Closing front diphthong',
+    desc: 'Glides from open front [a] toward near-high front [ɪ].',
+    examples: [{w:'f',s:'i',e:'ne'}, {w:'pr',s:'i',e:'ce'}, {w:'fl',s:'y',e:''}]
+  },
+  {
+    symbol: 'ɔɪ', tag: 'diph', tagLabel: 'Tense diphthong',
+    name: 'Closing back-to-front diphthong',
+    desc: 'Glides from open-mid back [ɔ] toward near-high front [ɪ].',
+    examples: [{w:'b',s:'oy',e:''}, {w:'v',s:'oi',e:'ce'}, {w:'ch',s:'oi',e:'ce'}]
+  },
+  {
+    symbol: 'aʊ', tag: 'diph', tagLabel: 'Tense diphthong',
+    name: 'Closing back diphthong',
+    desc: 'Glides from open front [a] toward near-high back [ʊ].',
+    examples: [{w:'h',s:'ou',e:'se'}, {w:'m',s:'ou',e:'th'}, {w:'n',s:'ow',e:''}]
+  },
+  {
+    symbol: 'əʊ', tag: 'diph', tagLabel: 'Tense diphthong',
+    name: 'Closing back diphthong (RP)',
+    desc: 'Glides from mid-central schwa [ə] toward near-high back [ʊ]. RP realisation of "bone".',
+    examples: [{w:'b',s:'o',e:'ne'}, {w:'g',s:'o',e:''}, {w:'s',s:'o',e:'ul'}]
+  },
+  {
+    symbol: 'ɪə', tag: 'diph', tagLabel: 'Tense diphthong',
+    name: 'Centring diphthong',
+    desc: 'Glides from near-high front [ɪ] toward schwa [ə].',
+    examples: [{w:'b',s:'ee',e:'r'}, {w:'h',s:'ere',e:''}, {w:'f',s:'ear',e:''}]
+  },
+  {
+    symbol: 'eə', tag: 'diph', tagLabel: 'Tense diphthong',
+    name: 'Centring diphthong',
+    desc: 'Glides from mid-front [e] toward schwa [ə].',
+    examples: [{w:'b',s:'are',e:''}, {w:'th',s:'ere',e:''}, {w:'h',s:'air',e:''}]
+  },
+  {
+    symbol: 'ʊə', tag: 'diph', tagLabel: 'Tense diphthong',
+    name: 'Centring diphthong',
+    desc: 'Glides from near-high back [ʊ] toward schwa [ə].',
+    examples: [{w:'t',s:'our',e:''}, {w:'p',s:'ure',e:''}, {w:'c',s:'ure',e:''}]
+  },
+
+  // ── PLOSIVES (book order: p,b  t,d  k,g) ─────────────────────────────────
+  {
+    symbol: 'p', tag: 'plosive', tagLabel: 'Plosive (fortis)',
+    name: 'Voiceless bilabial plosive',
+    desc: 'Both lips close; air builds; burst release. Aspirated word-initially in RP.',
+    examples: [{w:'',s:'p',e:'ond'}, {w:'s',s:'p',e:'in'}, {w:'sto',s:'p',e:''}]
+  },
+  {
+    symbol: 'b', tag: 'plosive', tagLabel: 'Plosive (lenis)',
+    name: 'Voiced bilabial plosive',
+    desc: 'Both lips close; vocal folds vibrate through closure.',
+    examples: [{w:'',s:'b',e:'ond'}, {w:'a',s:'b',e:'out'}, {w:'ro',s:'b',e:''}]
+  },
+  {
+    symbol: 't', tag: 'plosive', tagLabel: 'Plosive (fortis)',
+    name: 'Voiceless alveolar plosive',
+    desc: 'Tongue tip contacts alveolar ridge. Aspirated word-initially in RP.',
+    examples: [{w:'',s:'t',e:'orn'}, {w:'s',s:'t',e:'op'}, {w:'ca',s:'t',e:''}]
+  },
+  {
+    symbol: 'd', tag: 'plosive', tagLabel: 'Plosive (lenis)',
+    name: 'Voiced alveolar plosive',
+    desc: 'Tongue tip contacts alveolar ridge; vocal folds vibrate.',
+    examples: [{w:'',s:'d',e:'awn'}, {w:'a',s:'d',e:'opt'}, {w:'ba',s:'d',e:''}]
+  },
+  {
+    symbol: 'k', tag: 'plosive', tagLabel: 'Plosive (fortis)',
+    name: 'Voiceless velar plosive',
+    desc: 'Back of tongue contacts velum. Aspirated word-initially in RP.',
+    examples: [{w:'',s:'c',e:'old'}, {w:'s',s:'k',e:'y'}, {w:'ba',s:'ck',e:''}]
+  },
+  {
+    symbol: 'ɡ', tag: 'plosive', tagLabel: 'Plosive (lenis)',
+    name: 'Voiced velar plosive',
+    desc: 'Back of tongue contacts velum; vocal folds vibrate.',
+    examples: [{w:'',s:'g',e:'old'}, {w:'a',s:'g',e:'o'}, {w:'ba',s:'g',e:''}]
+  },
+
+  // ── FRICATIVES (book order: f,v  θ,ð  s,z  ʃ,ʒ  h) ──────────────────────
+  {
+    symbol: 'f', tag: 'fricative', tagLabel: 'Fricative (fortis)',
+    name: 'Voiceless labiodental fricative',
+    desc: 'Upper teeth contact lower lip; air escapes through narrow gap.',
+    examples: [{w:'',s:'f',e:'eel'}, {w:'de',s:'f',e:'end'}, {w:'lea',s:'f',e:''}]
+  },
+  {
+    symbol: 'v', tag: 'fricative', tagLabel: 'Fricative (lenis)',
+    name: 'Voiced labiodental fricative',
+    desc: 'Upper teeth contact lower lip; vocal folds vibrate.',
+    examples: [{w:'',s:'v',e:'eal'}, {w:'e',s:'v',e:'er'}, {w:'lea',s:'v',e:'e'}]
+  },
+  {
+    symbol: 'θ', tag: 'fricative', tagLabel: 'Fricative (fortis)',
+    name: 'Voiceless dental fricative',
+    desc: 'Tongue tip near/between upper teeth; air passes through. The "th" in think.',
+    examples: [{w:'',s:'th',e:'ink'}, {w:'',s:'th',e:'in'}, {w:'brea',s:'th',e:''}]
+  },
+  {
+    symbol: 'ð', tag: 'fricative', tagLabel: 'Fricative (lenis)',
+    name: 'Voiced dental fricative',
+    desc: 'Tongue tip near/between upper teeth; vocal folds vibrate. The "th" in this.',
+    examples: [{w:'',s:'th',e:'is'}, {w:'',s:'th',e:'en'}, {w:'wea',s:'th',e:'er'}]
+  },
+  {
+    symbol: 's', tag: 'fricative', tagLabel: 'Fricative (fortis)',
+    name: 'Voiceless alveolar sibilant',
+    desc: 'Tongue tip near alveolar ridge; high-frequency turbulence.',
+    examples: [{w:'',s:'s',e:'ink'}, {w:'le',s:'ss',e:'on'}, {w:'ice',s:'',e:''}]
+  },
+  {
+    symbol: 'z', tag: 'fricative', tagLabel: 'Fricative (lenis)',
+    name: 'Voiced alveolar sibilant',
+    desc: 'Like /s/ with vocal fold vibration.',
+    examples: [{w:'',s:'z',e:'inc'}, {w:'wi',s:'sd',e:'om'}, {w:'i',s:'s',e:''}]
+  },
+  {
+    symbol: 'ʃ', tag: 'fricative', tagLabel: 'Fricative (fortis)',
+    name: 'Voiceless palato-alveolar sibilant',
+    desc: 'Tongue blade near post-alveolar region; lips often slightly protruded.',
+    examples: [{w:'',s:'sh',e:'oe'}, {w:'pre',s:'ss',e:'ure'}, {w:'na',s:'ti',e:'on'}]
+  },
+  {
+    symbol: 'ʒ', tag: 'fricative', tagLabel: 'Fricative (lenis)',
+    name: 'Voiced palato-alveolar sibilant',
+    desc: 'Like /ʃ/ with vocal fold vibration.',
+    examples: [{w:'mea',s:'s',e:'ure'}, {w:'vi',s:'si',e:'on'}, {w:'bei',s:'ge',e:''}]
+  },
+  {
+    symbol: 'h', tag: 'fricative', tagLabel: 'Fricative',
+    name: 'Voiceless glottal fricative',
+    desc: 'Open glottis; turbulent airflow with no supraglottal constriction.',
+    examples: [{w:'',s:'h',e:'all'}, {w:'a',s:'h',e:'ead'}, {w:'be',s:'h',e:'ind'}]
+  },
+
+  // ── AFFRICATES (book order: tʃ, dʒ) ──────────────────────────────────────
+  {
+    symbol: 'tʃ', tag: 'affricate', tagLabel: 'Affricate (fortis)',
+    name: 'Voiceless palato-alveolar affricate',
+    desc: 'Plosive closure followed by fricative release at post-alveolar place.',
+    examples: [{w:'',s:'ch',e:'ar'}, {w:'na',s:'t',e:'ure'}, {w:'ri',s:'ch',e:''}]
+  },
+  {
+    symbol: 'dʒ', tag: 'affricate', tagLabel: 'Affricate (lenis)',
+    name: 'Voiced palato-alveolar affricate',
+    desc: 'Like /tʃ/ with vocal fold vibration.',
+    examples: [{w:'',s:'j',e:'ar'}, {w:'e',s:'dge',e:''}, {w:'a',s:'g',e:'e'}]
+  },
+
+  // ── NASALS (book order: m  n  ŋ) ─────────────────────────────────────────
+  {
+    symbol: 'm', tag: 'nasal', tagLabel: 'Nasal sonorant',
+    name: 'Bilabial nasal',
+    desc: 'Both lips closed; velum lowered; air resonates through nose.',
+    examples: [{w:'',s:'m',e:'ap'}, {w:'ha',s:'mm',e:'er'}, {w:'roo',s:'m',e:''}]
+  },
+  {
+    symbol: 'n', tag: 'nasal', tagLabel: 'Nasal sonorant',
+    name: 'Alveolar nasal',
+    desc: 'Tongue tip contacts alveolar ridge; airflow through nose.',
+    examples: [{w:'',s:'n',e:'ap'}, {w:'su',s:'nn',e:'y'}, {w:'ma',s:'n',e:''}]
+  },
+  {
+    symbol: 'ŋ', tag: 'nasal', tagLabel: 'Nasal sonorant',
+    name: 'Velar nasal',
+    desc: 'Back of tongue contacts velum; airflow through nose. Never word-initial in English.',
+    examples: [{w:'pa',s:'ng',e:''}, {w:'si',s:'ng',e:''}, {w:'thi',s:'nk',e:''}]
+  },
+
+  // ── APPROXIMANTS (book order: l  r  j  w) ────────────────────────────────
+  {
+    symbol: 'l', tag: 'approx', tagLabel: 'Lateral approximant',
+    name: 'Alveolar lateral approximant',
+    desc: '"Clear" /l/ before vowels; "dark" (velarised) /ɫ/ before consonants and finally in RP.',
+    examples: [{w:'',s:'l',e:'ip'}, {w:'fe',s:'ll',e:'ow'}, {w:'fee',s:'l',e:''}]
+  },
+  {
+    symbol: 'r', tag: 'approx', tagLabel: 'Approximant',
+    name: 'Alveolar approximant',
+    desc: 'Tongue tip raised toward alveolar ridge without contact. Non-rhotic in RP: silent before consonants and pause.',
+    examples: [{w:'',s:'r',e:'ip'}, {w:'ve',s:'r',e:'y'}, {w:'',s:'r',e:'ed'}]
+  },
+  {
+    symbol: 'j', tag: 'approx', tagLabel: 'Approximant',
+    name: 'Palatal approximant',
+    desc: 'Tongue body raised toward hard palate; consonantal version of /iː/.',
+    examples: [{w:'',s:'y',e:'es'}, {w:'',s:'y',e:'ellow'}, {w:'',s:'y',e:'ou'}]
+  },
+  {
+    symbol: 'w', tag: 'approx', tagLabel: 'Approximant',
+    name: 'Labio-velar approximant',
+    desc: 'Double articulation: lips rounded + back tongue raised toward velum. Consonantal version of /uː/.',
+    examples: [{w:'',s:'wh',e:'at'}, {w:'a',s:'w',e:'ay'}, {w:'q',s:'u',e:'ick'}]
+  },
+
+  // ── SUPRASEGMENTALS ───────────────────────────────────────────────────────
+  {
+    symbol: 'ˈ', tag: 'supra', tagLabel: 'Suprasegmental',
+    name: 'Primary stress mark',
+    desc: 'Placed immediately before the syllable with greatest prominence.',
+    examples: [{w:'ˈbʌtə',s:'',e:' (butter)'}, {w:'bəˈliːv',s:'',e:' (believe)'}]
+  },
+  {
+    symbol: 'ˌ', tag: 'supra', tagLabel: 'Suprasegmental',
+    name: 'Secondary stress mark',
+    desc: 'Placed before a syllable with lesser prominence than the primary stress.',
+    examples: [{w:'ˌʌndəˈstænd',s:'',e:' (understand)'}]
+  },
+  {
+    symbol: 'ː', tag: 'supra', tagLabel: 'Suprasegmental',
+    name: 'Length mark',
+    desc: 'Marks a long vowel. Used for all five RP tense monophthongs.',
+    examples: [{w:'/iː/ ',s:'',e:'bean'}, {w:'/ɑː/ ',s:'',e:'calm'}, {w:'/ɜː/ ',s:'',e:'burn'}]
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────────────────────
+let filtered     = [...cards];
+let idx          = 0;
+let isFlipped    = false;
+let seen         = new Set();
+let activeTags   = new Set(['all']);
+let startSide    = 'symbol';   // 'symbol' | 'desc'
+let struggleIds  = new Set();  // card keys user marked as struggling
+let showStruggle = false;      // filter to struggle-only
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FILTER SETUP
+// ─────────────────────────────────────────────────────────────────────────────
+const filterTree = [
+  { id: 'all', label: 'All', group: null },
+  {
+    group: 'Vowels',
+    children: [
+      { id: 'lax',  label: 'Lax' },
+      { id: 'weak', label: 'Weak' },
+      { id: 'mono', label: 'Tense monophthongs' },
+      { id: 'diph', label: 'Tense diphthongs' },
+    ]
+  },
+  {
+    group: 'Consonants',
+    children: [
+      { id: 'plosive',   label: 'Plosives' },
+      { id: 'fricative', label: 'Fricatives' },
+      { id: 'affricate', label: 'Affricates' },
+      { id: 'nasal',     label: 'Nasals' },
+      { id: 'approx',    label: 'Approximants' },
+    ]
+  },
+  {
+    group: 'Suprasegmentals',
+    children: [
+      { id: 'supra', label: 'All suprasegmentals' },
+    ]
+  },
+];
+
+function makeFilterBtn(id, label, extraClass = '') {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (id === 'all' ? ' all-btn' : '') + (extraClass ? ' ' + extraClass : '') + (id === 'all' ? ' active' : '');
+  btn.textContent = label;
+  btn.dataset.tag = id;
+  btn.onclick = () => toggleFilter(id);
+  return btn;
+}
+
+function buildFilters() {
+  const tree = document.getElementById('filterTree');
+
+  filterTree.forEach(node => {
+    if (!node.group) {
+      // "All" row + hint below it
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'display:flex; flex-direction:column; align-items:center; gap:0.3rem;';
+      const row = document.createElement('div');
+      row.className = 'filter-all-row';
+      row.appendChild(makeFilterBtn(node.id, node.label));
+      const hint = document.createElement('p');
+      hint.className = 'filter-hint';
+      hint.textContent = 'click multiple categories to combine · click again to deselect';
+      wrap.appendChild(row);
+      wrap.appendChild(hint);
+      tree.appendChild(wrap);
+    } else {
+      const group = document.createElement('div');
+      group.className = 'filter-group';
+
+      const childIds = node.children.map(c => c.id);
+
+      const header = document.createElement('div');
+      header.className = 'filter-group-header';
+
+      const lbl = document.createElement('button');
+      lbl.className = 'filter-group-label';
+      lbl.textContent = node.group;
+      lbl.dataset.groupIds = JSON.stringify(childIds);
+      lbl.onclick = () => toggleGroupFilter(childIds);
+      header.appendChild(lbl);
+      group.appendChild(header);
+
+      const children = document.createElement('div');
+      children.className = 'filter-group-children';
+      node.children.forEach(c => children.appendChild(makeFilterBtn(c.id, c.label)));
+      group.appendChild(children);
+
+      tree.appendChild(group);
+    }
+  });
+}
+
+function syncFilterButtons() {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', activeTags.has(b.dataset.tag));
+  });
+  document.querySelectorAll('.filter-group-label').forEach(lbl => {
+    try {
+      const ids = JSON.parse(lbl.dataset.groupIds || '[]');
+      const allActive = ids.length > 0 && ids.every(id => activeTags.has(id));
+      lbl.classList.toggle('group-active', allActive);
+    } catch(e) {}
+  });
+}
+
+function toggleFilter(tag) {
+  if (tag === 'all') {
+    activeTags = new Set(['all']);
+  } else {
+    activeTags.delete('all');
+    if (activeTags.has(tag)) {
+      activeTags.delete(tag);
+      if (activeTags.size === 0) activeTags.add('all');
+    } else {
+      activeTags.add(tag);
+    }
+  }
+  syncFilterButtons();
+  applyFilter();
+}
+
+function toggleGroupFilter(childIds) {
+  const allActive = childIds.length > 0 && childIds.every(id => activeTags.has(id));
+  activeTags.delete('all');
+  if (allActive) {
+    childIds.forEach(id => activeTags.delete(id));
+    if (activeTags.size === 0) activeTags.add('all');
+  } else {
+    childIds.forEach(id => activeTags.add(id));
+  }
+  syncFilterButtons();
+  applyFilter();
+}
+
+function applyFilter() {
+  let base;
+  if (showStruggle) {
+    base = cards.filter(c => struggleIds.has(c.symbol + c.tag));
+  } else if (activeTags.has('all')) {
+    base = [...cards];
+  } else {
+    base = cards.filter(c => activeTags.has(c.tag));
+  }
+  filtered = base;
+  idx = 0;
+  seen.clear();
+  isFlipped = false;
+  document.getElementById('card').classList.remove('flipped');
+  render();
+}
+
+function setStartSide(side) {
+  startSide = side;
+  document.getElementById('sideSymbol').classList.toggle('active', side === 'symbol');
+  document.getElementById('sideDesc').classList.toggle('active', side === 'desc');
+  render();
+}
+
+function toggleStruggleFilter() {
+  showStruggle = !showStruggle;
+  document.getElementById('struggleFilterBtn').classList.toggle('active', showStruggle);
+  applyFilter();
+}
+
+function resetStruggle() {
+  if (struggleIds.size === 0) return;
+  struggleIds.clear();
+  document.getElementById('struggleCount').textContent = '0';
+  if (showStruggle) {
+    showStruggle = false;
+    document.getElementById('struggleFilterBtn').classList.remove('active');
+    applyFilter();
+  } else {
+    render();
+  }
+}
+
+function toggleStruggle(cardKey, e) {
+  e.stopPropagation();
+  if (struggleIds.has(cardKey)) {
+    struggleIds.delete(cardKey);
+  } else {
+    struggleIds.add(cardKey);
+  }
+  document.getElementById('struggleCount').textContent = struggleIds.size;
+  // if in struggle-filter mode and this was the last card, exit mode
+  if (showStruggle && struggleIds.size === 0) {
+    showStruggle = false;
+    document.getElementById('struggleFilterBtn').classList.remove('active');
+    applyFilter();
+    return;
+  }
+  // Update struggle buttons in-place on both faces — no full re-render needed
+  const isStruggling = struggleIds.has(cardKey);
+  document.querySelectorAll('.struggle-btn').forEach(btn => {
+    btn.classList.toggle('marked', isStruggling);
+    btn.title = isStruggling ? 'Remove struggle mark' : 'Mark as struggling';
+  });
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AUDIO
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+let currentAudio = null;
+
+function playAudio(symbol, btn) {
+  const url = AUDIO[symbol];
+  if (!url) return;
+
+  if (currentAudio) {
+    try { currentAudio.onerror = null; currentAudio.oncanplay = null; currentAudio.pause(); } catch(e) {}
+    currentAudio = null;
+  }
+
+  btn.classList.add('loading');
+  btn.classList.remove('playing');
+  btn.disabled = true;
+
+  const audio = new Audio();
+  currentAudio = audio;
+
+  audio.onended = () => {
+    btn.classList.remove('playing');
+    const lbl = btn.querySelector('.btn-label');
+    if (lbl) lbl.textContent = 'Play sound';
+    
+  };
+
+  function onFail() {
+    
+    btn.classList.remove('loading', 'playing');
+    btn.disabled = true;
+    if (btn.parentNode) {
+      // Wrap in span so tooltip works (disabled buttons swallow mouse events)
+      const wrapper = document.createElement('span');
+      wrapper.title = url;
+      wrapper.style.display = 'inline-flex';
+      btn.parentNode.insertBefore(wrapper, btn);
+      wrapper.appendChild(btn);
+    }
+    const lbl = btn.querySelector('.btn-label');
+    if (lbl) lbl.textContent = 'Unavailable';
+    console.warn('Audio failed:', url);
+  }
+
+  let canplayFired = false;
+
+  audio.onerror = (e) => {
+    if (canplayFired) return;
+    console.warn('audio.onerror', e, audio.error);
+    onFail();
+  };
+
+  audio.oncanplay = () => {
+    canplayFired = true;
+    btn.classList.remove('loading');
+    btn.classList.add('playing');
+    btn.disabled = false;
+    audio.play().then(() => {
+      
+    }).catch(err => { console.warn('play() rejected:', err.name, err.message); onFail(); });
+  };
+
+  audio.src = url;
+  audio.load();
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────────────────────────────────────────
+function navigate(dir) {
+  if (filtered.length === 0) return;
+  seen.add(idx);
+  idx = (idx + dir + filtered.length) % filtered.length;
+  isFlipped = false;
+  document.getElementById('card').classList.remove('flipped');
+  render();
+}
+
+function flip() {
+  if (filtered.length === 0) return;
+  isFlipped = !isFlipped;
+  document.getElementById('card').classList.toggle('flipped', isFlipped);
+}
+
+function shuffle() {
+  for (let i = filtered.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+  }
+  idx = 0;
+  seen.clear();
+  isFlipped = false;
+  document.getElementById('card').classList.remove('flipped');
+  render();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AUDIO
+// ─────────────────────────────────────────────────────────────────────────────
+// playAudio defined above
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────────────────────
+function exampleHTML(ex) {
+  if (!ex.s) {
+    // suprasegmental: show the full string as-is
+    return `<span class="example-word">${ex.w}${ex.e}</span>`;
+  }
+  return `<span class="example-word">${ex.w}<em>${ex.s}</em>${ex.e}</span>`;
+}
+
+function phonClass(tag) {
+  // Phonological classes apply to consonants only
+  // Obstruents: plosives, fricatives, affricates (impede airflow)
+  // Sonorants: nasals, approximants (resonant, voiced by default)
+  if (['plosive','fricative','affricate'].includes(tag)) return 'obstruent';
+  if (['nasal','approx'].includes(tag)) return 'sonorant';
+  return null; // vowels and suprasegmentals: no badge
+}
+
+function render() {
+  const front = document.getElementById('front');
+  const back  = document.getElementById('back');
+
+  if (filtered.length === 0) {
+    front.innerHTML = `<p class="empty">No cards in this set.</p>`;
+    back.innerHTML  = '';
+    updateProgress();
+    buildDots();
+    return;
+  }
+
+  const c = filtered[idx];
+  const cardKey = c.symbol + c.tag;
+  const isStruggling = struggleIds.has(cardKey);
+
+  // Audio state: null URL = no audio for this symbol
+  const audioUrl = AUDIO[c.symbol] || null;
+  
+  const audioOk = !!audioUrl;
+
+  const pc = phonClass(c.tag);
+  const pcBadge = pc ? `<span class="phon-class ${pc}">${pc}</span>` : '';
+
+  const struggleCheckbox = `
+    <button class="struggle-btn ${isStruggling ? 'marked' : ''}"
+      onclick="toggleStruggle('${cardKey}', event)"
+      title="${isStruggling ? 'Remove struggle mark' : 'Mark as struggling'}">
+      ★
+    </button>`;
+
+  const audioHtmlFront = !audioOk ? '' : `
+    <button class="audio-btn" id="audioBtnFront" onclick="event.stopPropagation(); playAudio('${c.symbol}', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="5,3 19,12 5,21"/>
+      </svg>
+      <span class="btn-label">Play sound</span>
+    </button>`;
+
+  // Build the symbol side
+  const symbolSide = `
+    <div class="card-side-label">Symbol</div>
+    <span class="card-tag tag-${c.tag}">${c.tagLabel}</span>
+    ${pcBadge}
+    <div class="symbol">${c.symbol}</div>
+    <p class="hint">tap to reveal</p>
+    ${audioHtmlFront}
+    ${struggleCheckbox}
+  `;
+
+  // Build the description side
+  const examplesHtml = c.examples.map(exampleHTML).join('');
+
+  let audioHtml = '';
+  if (!audioOk) {
+    audioHtml = `<button class="audio-btn audio-unavail" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="2" y1="2" x2="22" y2="22"/>
+        <polygon points="11,5 6,9 2,9 2,15 6,15 11,19 11,5" opacity="0.5"/>
+      </svg>
+      <span class="btn-label">No audio</span>
+    </button>`;
+  } else {
+    audioHtml = `
+    <button class="audio-btn" id="audioBtnBack" onclick="event.stopPropagation(); playAudio('${c.symbol}', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="5,3 19,12 5,21"/>
+      </svg>
+      <span class="btn-label">Play sound</span>
+    </button>`;
+  }
+
+  const descSide = `
+    <div class="card-side-label">Description</div>
+    <div class="answer-name">${c.name}</div>
+    <div class="answer-desc">${c.desc}</div>
+    <div class="examples">${examplesHtml}</div>
+    ${audioHtml}
+    ${struggleCheckbox}
+  `;
+
+  if (startSide === 'symbol') {
+    front.innerHTML = symbolSide;
+    back.innerHTML  = descSide;
+  } else {
+    front.innerHTML = descSide;
+    back.innerHTML  = symbolSide;
+  }
+
+  updateProgress();
+  buildDots();
+}
+
+function updateProgress() {
+  const total = filtered.length;
+  const cur = total > 0 ? idx + 1 : 0;
+  document.getElementById('progText').textContent = `Card ${cur} of ${total}`;
+  document.getElementById('seenText').textContent = `${seen.size} seen`;
+  document.getElementById('progFill').style.width = total > 0 ? ((cur / total) * 100) + '%' : '0%';
+}
+
+function buildDots() {
+  const dots = document.getElementById('dots');
+  dots.innerHTML = '';
+  const max = Math.min(filtered.length, 60);
+  for (let i = 0; i < max; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === idx ? ' current' : seen.has(i) ? ' seen' : '');
+    d.onclick = () => { seen.add(idx); idx = i; isFlipped = false; document.getElementById('card').classList.remove('flipped'); render(); };
+    dots.appendChild(d);
+  }
+  if (filtered.length > 60) {
+    const more = document.createElement('span');
+    more.style.cssText = 'font-size:0.65rem; color:var(--muted); font-family:monospace; align-self:center';
+    more.textContent = `+${filtered.length - 60} more`;
+    dots.appendChild(more);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// KEYBOARD
+// ─────────────────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowUp')   { e.preventDefault(); navigate(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowDown') { e.preventDefault(); navigate(-1); }
+  if (e.key === ' ') { e.preventDefault(); flip(); }
+  if (e.key === 'a' || e.key === 'A') {
+    const btnId = isFlipped ? 'audioBtnBack' : 'audioBtnFront';
+    const btn = document.getElementById(btnId);
+    if (btn) { const c = filtered[idx]; playAudio(c.symbol, btn); }
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────────────────
+window.onerror = function(msg, src, line, col, err) {
+  document.body.insertAdjacentHTML('afterbegin',
+    `<div style="background:#c0392b;color:white;padding:1rem;font-family:monospace;font-size:0.8rem;position:fixed;top:0;left:0;right:0;z-index:9999">
+      JS Error: ${msg}<br>Line ${line}: ${src}
+    </div>`);
+};
+
+try {
+  buildFilters();
+  render();
+  document.getElementById('pageFooter').insertAdjacentHTML(
+    'beforeend',
+    ` · <span style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted)">v${APP_VERSION}</span>`
+  );
+} catch(e) {
+  document.body.insertAdjacentHTML('afterbegin',
+    `<div style="background:#c0392b;color:white;padding:1rem;font-family:monospace;font-size:0.8rem;position:fixed;top:0;left:0;right:0;z-index:9999">
+      Init error: ${e.message}<br>${e.stack || ''}
+    </div>`);
+}
+</script>
+</body>
+</html>
