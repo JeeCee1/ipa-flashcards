@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RP IPA Flashcards v1.7 -->
+<!-- RP IPA Flashcards v2.2 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -607,7 +607,7 @@
 
 <noscript><p style="text-align:center;padding:2rem;font-family:monospace;color:#c0392b">JavaScript is required. If you're viewing this in an email client, save the file and open it in a browser.</p></noscript>
 <script>
-const APP_VERSION = '1.7';
+const APP_VERSION = '2.2';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CARD DATA
@@ -991,7 +991,12 @@ let isFlipped    = false;
 let seen         = new Set();
 let activeTags   = new Set(['all']);
 let startSide    = 'symbol';   // 'symbol' | 'desc'
-let struggleIds  = new Set();  // card keys user marked as struggling
+let struggleIds  = (function() {
+  try {
+    const saved = localStorage.getItem('ipa_flashcards_struggle');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  } catch(e) { return new Set(); }
+})();  // card keys user marked as struggling
 let showStruggle = false;      // filter to struggle-only
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1154,6 +1159,7 @@ function toggleStruggleFilter() {
 function resetStruggle() {
   if (struggleIds.size === 0) return;
   struggleIds.clear();
+  try { localStorage.removeItem('ipa_flashcards_struggle'); } catch(e) {}
   document.getElementById('struggleCount').textContent = '0';
   if (showStruggle) {
     showStruggle = false;
@@ -1172,6 +1178,7 @@ function toggleStruggle(cardKey, e) {
     struggleIds.add(cardKey);
   }
   document.getElementById('struggleCount').textContent = struggleIds.size;
+  try { localStorage.setItem('ipa_flashcards_struggle', JSON.stringify([...struggleIds])); } catch(e) {}
   // if in struggle-filter mode and this was the last card, exit mode
   if (showStruggle && struggleIds.size === 0) {
     showStruggle = false;
@@ -1272,6 +1279,7 @@ function navigate(dir) {
 
 function flip() {
   if (filtered.length === 0) return;
+  if (window.getSelection && window.getSelection().toString().length > 0) return;
   isFlipped = !isFlipped;
   document.getElementById('card').classList.toggle('flipped', isFlipped);
 }
@@ -1355,8 +1363,6 @@ function render() {
   // Build the symbol side
   const symbolSide = `
     <div class="card-side-label">Symbol</div>
-    <span class="card-tag tag-${c.tag}">${c.tagLabel}</span>
-    ${pcBadge}
     <div class="symbol">${c.symbol}</div>
     <p class="hint">tap to reveal</p>
     ${audioHtmlFront}
@@ -1387,6 +1393,8 @@ function render() {
 
   const descSide = `
     <div class="card-side-label">Description</div>
+    <span class="card-tag tag-${c.tag}">${c.tagLabel}</span>
+    ${pcBadge}
     <div class="answer-name">${c.name}</div>
     <div class="answer-desc">${c.desc}</div>
     <div class="examples">${examplesHtml}</div>
@@ -1460,6 +1468,7 @@ window.onerror = function(msg, src, line, col, err) {
 try {
   buildFilters();
   render();
+  document.getElementById('struggleCount').textContent = struggleIds.size;
   document.getElementById('pageFooter').insertAdjacentHTML(
     'beforeend',
     ` · <span style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted)">v${APP_VERSION}</span>`
