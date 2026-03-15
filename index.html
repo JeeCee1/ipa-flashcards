@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RP IPA Flashcards v7.80 -->
+<!-- RP IPA Flashcards v7.83 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -958,8 +958,8 @@
     justify-content: center;
     margin-bottom: 0.75rem;
   }
-  .pill-fortis { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #e74c3c; background:#fdedec; color:#922b21; letter-spacing:0.06em; text-transform:uppercase; text-align: center; display: inline-flex; justify-content: center; }
-  .pill-lenis  { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #27ae60; background:#eafaf1; color:#1e8449; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
+  .pill-fortis { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #e74c3c; background:#fdedec; color:#922b21; letter-spacing:0.06em; text-transform:uppercase; text-align: center; display: inline-flex; justify-content: center; }
+  .pill-lenis  { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #27ae60; background:#eafaf1; color:#1e8449; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
   .pill-obstr  { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #d7bde2; background:#f5eef8; color:#6c3483; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
   .pill-sonor  { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #a9dfbf; background:#d1f2eb; color:#117a65; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
   .pill-rule   { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #f7dc6f; background:#fef9e7; color:#7d6608; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
@@ -1561,6 +1561,54 @@
     margin-bottom: 0.8rem;
     font-style: italic;
   }
+
+  /* ── PLAY ALL ── */
+  .playall-row {
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .playall-slider-wrap {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .playall-slider-wrap.visible { display: flex; }
+  .playall-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--border);
+    outline: none;
+    cursor: pointer;
+  }
+  .playall-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent2);
+    cursor: pointer;
+  }
+  .playall-slider::-moz-range-thumb {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent2);
+    cursor: pointer;
+    border: none;
+  }
+  .ctrl-btn.playing { background: var(--accent); border-color: var(--accent); color: white; }
 </style>
 </head>
 <body>
@@ -1603,12 +1651,21 @@
   </div>
 
   <div class="controls">
-    <button class="ctrl-btn" onclick="navigate(-1)">← Prev</button>
+    <button class="ctrl-btn" onclick="navigateManual(-1)">← Prev</button>
     <button class="ctrl-btn primary" onclick="flip()">Flip</button>
-    <button class="ctrl-btn" onclick="navigate(1)">Next →</button>
+    <button class="ctrl-btn" onclick="navigateManual(1)">Next →</button>
     <button class="ctrl-btn secondary" onclick="shuffle()">Shuffle</button>
     <button class="ctrl-btn struggle-filter-btn" id="struggleFilterBtn" onclick="toggleStruggleFilter()">★ Review only (<span id="struggleCount">0</span>)</button>
     <button class="ctrl-btn no-fill" onclick="resetStruggle()" title="Clear all review marks">Reset review</button>
+  </div>
+
+  <div class="playall-row">
+    <button class="ctrl-btn" id="playAllBtn">▶ Play all</button>
+    <div class="playall-slider-wrap" id="playAllSliderWrap">
+      <span>Pause:</span>
+      <input type="range" class="playall-slider" id="playAllSlider" min="0.5" max="4" step="0.5" value="1.5">
+      <span id="playAllSliderLabel">1.5s</span>
+    </div>
   </div>
 
   <p class="kbd-hint">
@@ -1823,19 +1880,12 @@
           <span class="resource-card-desc">Official IPA chart — consonants, vowels, diacritics, suprasegmentals</span>
           <span class="resource-card-type">↗ IPA</span>
         </a>
+      <button class="resource-card" id="vowelTrapeziumBtn" style="text-align:left;background:var(--paper);border:1.5px solid var(--border)">
+          <span class="resource-card-title">IPA vowel trapezium</span>
+          <span class="resource-card-desc">Vowels mapped by height and backness — the standard IPA vowel chart</span>
+          <span class="resource-card-type">↗ view</span>
+        </button>
       </div>
-    </div>
-    <div class="modal-section" style="margin-top:1rem">
-      <div class="modal-section-title">IPA Vowel Trapezium</div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/IPA_vowel_chart.svg/600px-IPA_vowel_chart.svg.png"
-           alt="IPA vowel trapezium"
-           class="diag-modal-img"
-           style="border-radius:4px;margin-bottom:0.5rem"
-           loading="lazy">
-      <p style="font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;margin:0">
-        <a href="https://commons.wikimedia.org/wiki/File:IPA_vowel_chart.svg" target="_blank">Wikimedia Commons</a>
-        &nbsp;·&nbsp; <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a>
-      </p>
     </div>
   </div>
 </div>
@@ -1880,7 +1930,7 @@
 <noscript><p style="text-align:center;padding:2rem;font-family:monospace;color:#c0392b">JavaScript is required.</p></noscript>
 
 <script>
-const APP_VERSION = '7.80';
+const APP_VERSION = '7.83';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AUDIO MAP
@@ -3483,6 +3533,7 @@ const RULE_SUBTAG = {
 };
 
 function applyFilter() {
+  if (typeof playAllActive !== 'undefined' && playAllActive) playAllStop();
   let base;
   if (showStruggle) {
     base = cards.filter(c => struggleIds.has(c.symbol + c.tag));
@@ -3678,16 +3729,22 @@ function navigate(dir) {
   document.getElementById('card').classList.remove('flipped');
   render();
 }
+function navigateManual(dir) {
+  if (playAllActive) playAllStop();
+  navigate(dir);
+}
 
 function flip() {
   if (filtered.length === 0) return;
   if (window.getSelection && window.getSelection().toString().length > 0) return;
+  if (playAllActive) playAllStop();
   isFlipped = !isFlipped;
   document.getElementById('card').classList.toggle('flipped', isFlipped);
   setTimeout(initRulesScroll, 60);
 }
 
 function shuffle() {
+  if (playAllActive) playAllStop();
   jumpHistory = [];
   for (let i = filtered.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -4557,6 +4614,86 @@ function resetEditModal() {
 }
 
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PLAY ALL
+// ─────────────────────────────────────────────────────────────────────────────
+let playAllActive   = false;
+let playAllTimer    = null;
+
+function playAllStop() {
+  playAllActive = false;
+  clearTimeout(playAllTimer);
+  playAllTimer = null;
+  stopAudio();
+  const btn = document.getElementById('playAllBtn');
+  const wrap = document.getElementById('playAllSliderWrap');
+  if (btn)  { btn.textContent = '▶ Play all'; btn.classList.remove('playing'); }
+  if (wrap) wrap.classList.remove('visible');
+}
+
+function playAllAdvance() {
+  if (!playAllActive) return;
+  // Stop at end of deck
+  if (idx >= filtered.length - 1) { playAllStop(); return; }
+  navigate(1);
+  playAllCard();
+}
+
+function playAllCard() {
+  if (!playAllActive) return;
+  // Ensure symbol side is showing
+  if (isFlipped) {
+    isFlipped = false;
+    document.getElementById('card').classList.remove('flipped');
+  }
+  const card = filtered[idx];
+  const delay = parseFloat(document.getElementById('playAllSlider')?.value || 1.5) * 1000;
+  const url = AUDIO[card.symbol];
+
+  if (!url) {
+    // No audio — just wait the delay then advance
+    playAllTimer = setTimeout(playAllAdvance, delay);
+    return;
+  }
+
+  stopAudio();
+  const audio = new Audio();
+  currentAudio = audio;
+  let started = false;
+
+  audio.onended = () => {
+    currentAudio = null;
+    if (!playAllActive) return;
+    playAllTimer = setTimeout(playAllAdvance, delay);
+  };
+  audio.onerror = () => {
+    currentAudio = null;
+    if (!playAllActive) return;
+    playAllTimer = setTimeout(playAllAdvance, delay);
+  };
+  audio.oncanplay = () => {
+    if (started) return;
+    started = true;
+    audio.play().catch(() => {
+      currentAudio = null;
+      if (playAllActive) playAllTimer = setTimeout(playAllAdvance, delay);
+    });
+  };
+  audio.src = url;
+  audio.load();
+}
+
+function playAllStart() {
+  playAllActive = true;
+  const btn  = document.getElementById('playAllBtn');
+  const wrap = document.getElementById('playAllSliderWrap');
+  if (btn)  { btn.textContent = '■ Stop'; btn.classList.add('playing'); }
+  if (wrap) wrap.classList.add('visible');
+  // Start from current card
+  playAllCard();
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // SWIPE SUPPORT
 // ─────────────────────────────────────────────────────────────────────────────
@@ -4584,8 +4721,8 @@ function addSwipeHandler(el, onLeft, onRight) {
 document.addEventListener('keydown', e => {
   if (currentMode === 'flash') {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowUp')   { e.preventDefault(); navigate(1); }
-    if (e.key === 'ArrowLeft'  || e.key === 'ArrowDown') { e.preventDefault(); navigate(-1); }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp')   { e.preventDefault(); navigateManual(1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowDown') { e.preventDefault(); navigateManual(-1); }
     if (e.key === ' ') { e.preventDefault(); flip(); }
     if (e.key === 'a' || e.key === 'A') {
       const btnId = isFlipped ? 'audioBtnBack' : 'audioBtnFront';
@@ -4647,6 +4784,16 @@ try {
     () => practiceNext(),
     () => practicePrev()
   );
+
+  // Play All
+  $el('playAllBtn').addEventListener('click', () => {
+    if (playAllActive) playAllStop();
+    else playAllStart();
+  });
+  $el('playAllSlider').addEventListener('input', () => {
+    const v = $el('playAllSlider').value;
+    $el('playAllSliderLabel').textContent = v + 's';
+  });
 
   $el('btnModeFlash').addEventListener('click', () => setMode('flash'));
   $el('btnModeQuiz').addEventListener('click',  () => setMode('quiz'));
@@ -4750,6 +4897,7 @@ try {
   function closeDiag() { diagModal.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; }
   window.openTrapeziumModal = () => openDiag(TRAP_SRC, TRAP_ALT, TRAP_CAPTION);
   $el('vowelDiagramBtn').addEventListener('click', () => openDiag());
+  $el('vowelTrapeziumBtn').addEventListener('click', () => openTrapeziumModal());
   $el('diagModalClose').addEventListener('click', closeDiag);
   diagModal.addEventListener('click', e => { if (e.target === diagModal) closeDiag(); });
 
