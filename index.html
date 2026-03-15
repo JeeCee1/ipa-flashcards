@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RP IPA Flashcards v7.37 -->
+<!-- RP IPA Flashcards v7.69 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -495,19 +495,46 @@
 
   .struggle-btn {
     position: absolute;
-    top: 1rem;
-    left: 1.2rem;
+    top: 0.6rem;
+    right: 0.8rem;
     background: none;
     border: none;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     color: var(--border);
     cursor: pointer;
     transition: color 0.15s, transform 0.15s;
     line-height: 1;
-    padding: 0.1rem;
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .struggle-btn:hover { color: #e6b800; transform: scale(1.2); }
+  .struggle-btn:hover { color: #e6b800; transform: scale(1.15); }
   .struggle-btn.marked { color: #e6b800; }
+
+  .card-back-btn {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.8rem;
+    background: none;
+    border: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s;
+    line-height: 1;
+    padding: 0.5rem 0.6rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 3px;
+  }
+  .card-back-btn:hover { color: var(--accent2); }
 
   .struggle-filter-btn { color: var(--muted); }
   .struggle-filter-btn.active { background: #e6b800; border-color: #e6b800; color: white; }
@@ -1067,7 +1094,7 @@
 
   .quiz-table-header {
     display: grid;
-    grid-template-columns: 1fr 1fr 2.5rem 2.5rem;
+    grid-template-columns: 1fr 1fr 2.5rem 2rem;
     padding: 0.6rem 1rem;
     background: var(--paper);
     border-bottom: 1.5px solid var(--border);
@@ -1084,7 +1111,7 @@
 
   .quiz-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 2.5rem 2.5rem;
+    grid-template-columns: 1fr 1fr 2.5rem 2rem;
     padding: 0.55rem 1rem;
     border-bottom: 1px solid var(--border);
     gap: 0.5rem;
@@ -1097,24 +1124,35 @@
   .quiz-row.row-correct { background: rgba(39,174,96,0.06); }
   .quiz-row.row-wrong   { background: rgba(192,57,43,0.05); }
 
+  /* Meaning column — hidden by default, shown when .meaning-visible on table */
+  .quiz-table.meaning-visible .quiz-table-header,
+  .quiz-table.meaning-visible .quiz-row {
+    grid-template-columns: 1fr 1fr 1fr 2.5rem 2rem;
+  }
+  .quiz-col-meaning,
+  .quiz-cell-meaning { display: none; }
+  .quiz-table.meaning-visible .quiz-col-meaning,
+  .quiz-table.meaning-visible .quiz-cell-meaning { display: block; }
+  .quiz-cell-meaning {
+    font-family: 'Spectral', serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 300;
+  }
+
   .quiz-word {
     font-family: 'Spectral', serif;
     font-size: 1rem;
     font-weight: 400;
     color: var(--ink);
-    cursor: pointer;
-    user-select: none;
-    border-bottom: 1px dashed var(--border);
-    transition: color 0.15s;
   }
-  .quiz-word:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
-  .quiz-word.revealed { color: var(--accent2); }
 
   .quiz-input-wrap { position: relative; }
 
   .quiz-input {
-    font-family: 'Helvetica Neue', Arial, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 0.95rem;
+    font-family: 'Spectral', serif;
+    font-size: 1rem;
     width: 100%;
     padding: 0.3rem 0.5rem;
     border: 1.5px solid var(--border);
@@ -1128,10 +1166,18 @@
   .quiz-input.input-correct { border-color: var(--correct); background: rgba(39,174,96,0.06); }
   .quiz-input.input-wrong   { border-color: var(--accent); background: rgba(192,57,43,0.05); }
 
+  /* Static IPA display in study table */
+  .quiz-ipa-display {
+    font-family: 'Spectral', serif;
+    font-size: 1rem;
+    color: var(--accent2);
+    font-weight: 400;
+  }
+
   /* answer reveal below input */
   .quiz-answer-reveal {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
+    font-family: 'Spectral', serif;
+    font-size: 0.85rem;
     color: var(--correct);
     margin-top: 0.15rem;
     display: none;
@@ -1211,27 +1257,41 @@
 
   .ipa-bar {
     position: relative;
-    left: 0;
-    right: 0;
     display: none;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 4px;
+    flex-direction: column;
+    gap: 3px;
     background: #d1d5db;
     border: 1px solid #aaa;
     border-radius: 8px;
-    padding: 6px 8px;
+    padding: 5px 6px;
     transition: margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .ipa-bar.open { display: flex; }
+  .ipa-bar.open { display: flex; flex-direction: column; align-items: center; position: relative; padding-right: 6px; }
+  /* Left column: QWERTY rows */
+  .ipa-bar-keys-col { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
+  .ipa-bar-row { display: flex; gap: 3px; align-items: center; }
+  .ipa-bar-row.row-2 { padding-left: 18px; }
+  .ipa-bar-row.row-3 { padding-left: 37px; }
+  /* Right column: diac/separator keys stacked, with left separator */
+  .ipa-bar-diac-col {
+    position: absolute;
+    right: 6px;
+    top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-left: 1px solid #aaa;
+    padding-left: 6px;
+  }
+  .ipa-key-gap { min-width: 34px; flex-shrink: 0; visibility: hidden; }
 
   .ipa-key {
-    font-family: 'Helvetica Neue', Arial, -apple-system, BlinkMacSystemFont, sans-serif;
-    touch-action: pan-x;
-    font-size: 1rem;
-    min-width: 32px;
-    height: 36px;
-    padding: 0 5px;
+    font-family: 'Spectral', serif;
+    touch-action: manipulation;
+    font-size: 1.15rem;
+    min-width: 34px;
+    height: 40px;
+    padding: 0 3px;
     border: none;
     border-radius: 5px;
     background: white;
@@ -1242,12 +1302,32 @@
     user-select: none;
     -webkit-user-select: none;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
   .ipa-key:active { background: #aaa; box-shadow: none; transform: translateY(1px); }
-  /* ː needs to be larger to be legible */
-  .ipa-key.key-length { font-size: 1.5rem; line-height: 1; font-weight: 700; }
+  .ipa-key-label {
+    font-size: 0.5rem;
+    color: #888;
+    line-height: 1;
+    margin-top: 1px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .ipa-key-main {
+    line-height: 1;
+    display: block;
+  }
+
+
+  /* Diacritic keys on right */
+  .ipa-key.key-diac {
+    min-width: 34px;
+    font-size: 1.15rem;
+  }
 
   /* ── QUIZ SUB-MODE SWITCHER ── */
   .quiz-submode-switcher {
@@ -1395,7 +1475,7 @@
   }
 
   .practice-input {
-    font-family: 'Helvetica Neue', Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Spectral', serif;
     font-size: 1.25rem;
     width: 100%;
     max-width: 340px;
@@ -1449,10 +1529,10 @@
   .practice-ipa-bar {
     width: 100%;
     max-width: 580px;
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 4px;
     background: #d1d5db;
     border: 1px solid #aaa;
     border-radius: 8px;
@@ -1473,7 +1553,115 @@
     .card-face { padding: 1.5rem 1.2rem; }
     .symbol { font-size: 3.5rem; }
     .quiz-table-header,
-    .quiz-row { grid-template-columns: 1fr 1fr 2rem 2rem; padding: 0.5rem 0.6rem; }
+    .quiz-row { grid-template-columns: 1fr 1fr 2rem 1.8rem; padding: 0.5rem 0.6rem; }
+    .quiz-table.meaning-visible .quiz-table-header,
+    .quiz-table.meaning-visible .quiz-row { grid-template-columns: 1fr 1fr 1fr 2rem 1.8rem; }
+  }
+
+  /* ── USER EDITS ── */
+  .quiz-row.row-edited {
+    border-left: 3px solid #e6a817;
+    background: rgba(230,168,23,0.06);
+  }
+  .quiz-edit-btn {
+    background: none;
+    border: none;
+    font-size: 0.85rem;
+    color: var(--border);
+    cursor: pointer;
+    padding: 0.1rem 0.2rem;
+    transition: color 0.15s;
+    line-height: 1;
+  }
+  .quiz-edit-btn:hover { color: var(--accent2); }
+  .quiz-edit-btn.is-edited { color: #e6a817; }
+
+  /* Edit modal */
+  .edit-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,26,46,0.55);
+    backdrop-filter: blur(2px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .edit-modal-backdrop.open { display: flex; }
+  .edit-modal-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    width: 100%;
+    max-width: 540px;
+    padding: 1.8rem 2rem 1.4rem;
+    position: relative;
+  }
+  .edit-modal-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1.2rem;
+  }
+  .edit-modal-word {
+    font-family: 'Spectral', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .edit-modal-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+  .edit-modal-input {
+    font-family: 'Spectral', serif;
+    font-size: 1.15rem;
+    width: 100%;
+    padding: 0.45rem 0.7rem;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    background: var(--paper);
+    color: var(--ink);
+    outline: none;
+    margin-bottom: 0.6rem;
+    transition: border-color 0.15s;
+  }
+  .edit-modal-input:focus { border-color: var(--accent2); }
+  .edit-modal-ipa-bar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: #d1d5db;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    padding: 6px 8px;
+    margin-bottom: 1rem;
+  }
+  .edit-modal-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .edit-original-ipa {
+    font-family: 'Spectral', serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+    font-style: italic;
   }
 </style>
 </head>
@@ -1487,7 +1675,7 @@
 <!-- Mode switcher -->
 <div class="mode-switcher">
   <button class="mode-btn active" id="btnModeFlash">Theory</button>
-  <button class="mode-btn" id="btnModeQuiz">Pronunciation Quiz</button>
+  <button class="mode-btn" id="btnModeQuiz">Pronunciation</button>
 </div>
 
 <!-- ═══════════════════════════ FLASHCARD MODE ═══════════════════════════ -->
@@ -1537,8 +1725,8 @@
 
   <!-- Sub-mode switcher -->
   <div class="quiz-submode-switcher">
-    <button class="quiz-submode-btn active" id="subModeTable">Table</button>
-    <button class="quiz-submode-btn" id="subModePractice">Flashcards</button>
+    <button class="quiz-submode-btn active" id="subModeTable">Study</button>
+    <button class="quiz-submode-btn" id="subModePractice">Quiz</button>
   </div>
 
   <!-- TABLE SUB-MODE -->
@@ -1549,45 +1737,36 @@
       <strong id="quizGroupLabel">A</strong>
       &nbsp;·&nbsp; <span id="quizGroupRange"></span>
     </div>
-    <div class="quiz-pager">
-      <button class="quiz-pager-btn" id="quizPrevBtn">← Prev</button>
-      <button class="quiz-pager-btn" id="quizNextBtn">Next →</button>
-    </div>
   </div>
 
   <!-- Alphabet index -->
   <div class="quiz-alpha-index" id="quizAlphaIndex"></div>
 
-  <!-- IPA character bar — collapsed by default -->
-  <div class="ipa-bar-wrap" id="ipaBarWrap">
-    <button class="ipa-bar-toggle" id="ipaBarToggle">&#9656; IPA keys</button>
-    <div class="ipa-bar" id="ipaBar"></div>
+  <div class="quiz-actions" style="margin-bottom:0.6rem">
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;width:100%;justify-content:flex-end">
+      <button class="ctrl-btn struggle-filter-btn" id="quizStruggleToggle">★ Review only (<span id="quizStruggleCount">0</span>)</button>
+      <button class="ctrl-btn" id="quizResetStruggleBtn">Reset review</button>
+      <button class="ctrl-btn" id="quizEditedToggle" style="display:none">Show edited</button>
+      <button class="ctrl-btn" id="quizMeaningToggle">Show meaning</button>
+      <button class="ctrl-btn" id="quizResetAllWordsBtn" style="display:none">Reset all words</button>
+      <button class="ctrl-btn secondary" id="quizAddWordBtn">+ Add word</button>
+    </div>
   </div>
 
   <div class="quiz-table" id="quizTable">
-    <div class="quiz-table-hint">Tap a word to reveal its answer</div>
-    <div class="quiz-table-header">
+    <div class="quiz-table-header" id="quizTableHeader">
       <span class="quiz-col-label">Word</span>
       <span class="quiz-col-label">IPA transcription</span>
-      <span class="quiz-col-label" style="text-align:center">✓</span>
+      <span class="quiz-col-label quiz-col-meaning" style="display:none">Meaning</span>
       <span class="quiz-col-label" style="text-align:center">★</span>
+      <span class="quiz-col-label" style="text-align:center">✏</span>
     </div>
     <div id="quizRows"></div>
   </div>
 
-  <div class="quiz-actions">
-    <div style="display:flex;gap:0.6rem;flex-wrap:wrap;width:100%;justify-content:space-between;align-items:center">
-      <div class="quiz-score-box" id="quizScoreBox">–</div>
-      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-        <button class="ctrl-btn struggle-filter-btn" id="quizStruggleToggle">★ Review only (<span id="quizStruggleCount">0</span>)</button>
-        <button class="ctrl-btn" id="quizRevealBtn">Reveal answers</button>
-        <button class="ctrl-btn primary" id="quizCheckBtn">Check answers</button>
-        <button class="ctrl-btn" id="quizShowWrongBtn" style="display:none">Show incorrect</button>
-        <button class="ctrl-btn" id="quizMarkWrongBtn" style="display:none">★ Mark incorrect as review</button>
-        <button class="ctrl-btn secondary" id="quizResetBtn">Reset group</button>
-        <button class="ctrl-btn" id="quizResetStruggleBtn">Reset review</button>
-      </div>
-    </div>
+  <div class="quiz-pager" style="width:100%;max-width:580px;justify-content:center;margin-top:0.6rem">
+    <button class="quiz-pager-btn" id="quizPrevBtn">← Prev</button>
+    <button class="quiz-pager-btn" id="quizNextBtn">Next →</button>
   </div>
 
   </div><!-- end quizTableMode -->
@@ -1748,6 +1927,18 @@
         </a>
       </div>
     </div>
+    <div class="modal-section" style="margin-top:1rem">
+      <div class="modal-section-title">IPA Vowel Trapezium</div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/IPA_vowel_chart.svg/600px-IPA_vowel_chart.svg.png"
+           alt="IPA vowel trapezium"
+           class="diag-modal-img"
+           style="border-radius:4px;margin-bottom:0.5rem"
+           loading="lazy">
+      <p style="font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;margin:0">
+        <a href="https://commons.wikimedia.org/wiki/File:IPA_vowel_chart.svg" target="_blank">Wikimedia Commons</a>
+        &nbsp;·&nbsp; <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a>
+      </p>
+    </div>
   </div>
 </div>
 
@@ -1766,10 +1957,32 @@
   </div>
 </div>
 
+
+<!-- ═══════════════════════════ EDIT WORD MODAL ═══════════════════════════ -->
+<div class="edit-modal-backdrop" id="editModal" role="dialog" aria-modal="true">
+  <div class="edit-modal-card">
+    <button class="modal-close" id="editModalClose" aria-label="Close">✕</button>
+    <div class="edit-modal-title" id="editModalTitle">Edit IPA</div>
+    <div id="editModalWordWrap">
+      <!-- add mode: word input; edit mode: word display -->
+    </div>
+    <div class="edit-original-ipa" id="editOriginalIpa" style="display:none"></div>
+    <label class="edit-modal-label">IPA transcription</label>
+    <input class="edit-modal-input" id="editModalIpaInput" type="text"
+      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <div class="edit-modal-ipa-bar" id="editModalIpaBar"></div>
+    <div class="edit-modal-actions">
+      <button class="ctrl-btn" id="editModalResetBtn" style="display:none">Reset to original</button>
+      <button class="ctrl-btn" id="editModalCancelBtn">Cancel</button>
+      <button class="ctrl-btn secondary" id="editModalSaveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
 <noscript><p style="text-align:center;padding:2rem;font-family:monospace;color:#c0392b">JavaScript is required.</p></noscript>
 
 <script>
-const APP_VERSION = '7.37';
+const APP_VERSION = '7.69';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AUDIO MAP
@@ -2484,10 +2697,24 @@ const cards = [
 
   // ── CATEGORIES ───────────────────────────────────────────────────────────────
 
+  { symbol:'Phoneme', tag:'cat', tagLabel:'Category', name:'Phoneme', groups:['lax','weak','mono','diph','plosive','fricative','affricate','nasal','approx','supra'],
+    desc:'A phoneme is the smallest unit of sound that can distinguish meaning in a language.',
+    examples:[{w:'',s:'p',e:'in vs '},{w:'',s:'b',e:'in — only /p/ vs /b/ differs'}],
+    rules:'Every card in this app represents one phoneme of RP. Two words that differ in exactly one phoneme are called a <b>minimal pair</b> — e.g. <em>pin/bin, cat/bat, seat/set</em>.<br><br>A transcription system in which every phoneme has its own symbol is an <b>alphabetic</b> system. This is what IPA provides.<br><br>The number of phonemes varies by accent. RP has <b>44 phonemes</b>: 20 vowels (6 lax, 3 weak, 5 tense monophthongs, 8 diphthongs) and 24 consonants.',
+    related:[
+      {symbol:'Vowel quality', reason:'Vowel phonemes explained',    src:'G&B'},
+      {symbol:'Lax',           reason:'The 6 lax vowel phonemes',    src:'G&B'},
+      {symbol:'Tense mono',    reason:'The 5 tense monophthongs',    src:'G&B'},
+      {symbol:'Tense diph',    reason:'The 8 diphthongs',            src:'G&B'},
+      {symbol:'Weak',          reason:'The 3 weak vowels',           src:'G&B'},
+      {symbol:'Obstruent',     reason:'Obstruent consonant phonemes', src:'G&B'},
+      {symbol:'Sonorant',      reason:'Sonorant consonant phonemes', src:'G&B'},
+    ] },
+
   { symbol:'Vowel quality', tag:'cat', tagLabel:'Category', name:'Vowel quality', groups:['lax','weak','mono','diph'],
-    desc:'The quality of a vowel is what makes it sound the way it does.',
+    desc:'The quality of a vowel is what makes it sound the way it does — determined by mouth openness (<b>close ↔ open</b>), tongue position (<b>front ↔ back</b>), and lip rounding.',
     examples:[],
-    rules:'Vowel quality is determined by three things: how open your mouth is (<b>close ↔ open</b>), how far forward or back your tongue is (<b>front ↔ back</b>), and whether your lips are <b>rounded</b>. The IPA vowel trapezium maps all vowels by these axes — close at the top, open at the bottom, front on the left, back on the right.<br><br><img src="https://upload.wikimedia.org/wikipedia/commons/8/89/IPA_vowel_chart.svg" alt="IPA vowel trapezium" style="display:block;width:100%;max-width:340px;margin:0.5rem auto;background:#fff;border-radius:4px;padding:0.5rem"><br>A vowel\'s quality can be <b>steady</b> throughout — that is a <b>monophthong</b>, sitting at a fixed point on the trapezium. Or it can <b>change</b> within the syllable — that is a <b>diphthong</b>, which moves across the chart.<br><br>For example, /aɪ/ starts at <b>a</b> (open, front — bottom left) and glides toward <b>ɪ</b> (between close and close-mid, front — upper left). That movement is exactly what "a change in quality" means.',
+    rules:'The trapezium maps vowels by these axes — close at top, open at bottom, front on left, back on right.<br><br><button onclick="event.stopPropagation();openTrapeziumModal()" style="display:inline-flex;align-items:center;gap:0.4rem;font-family:\'Space Mono\',monospace;font-size:0.65rem;padding:0.25rem 0.65rem;border-radius:2rem;border:1.5px solid var(--accent2);background:transparent;color:var(--accent2);cursor:pointer;letter-spacing:0.05em;margin:0.3rem 0">&#9654; View IPA vowel trapezium</button><br><br>A vowel\'s quality can be <b>steady</b> — a <b>monophthong</b>, sitting at a fixed point. Or it can <b>change</b> within the syllable — a <b>diphthong</b>, moving across the chart.<br><br>For example, /aɪ/ starts at <b>a</b> (open, front) and glides toward <b>ɪ</b> (near-close, front). That movement is exactly what "a change in quality" means.',
     related:[
       {symbol:'Lax',        reason:'Short vowels, steady quality',   src:'G&B'},
       {symbol:'Tense mono', reason:'Long vowels, steady quality',    src:'G&B'},
@@ -2705,12 +2932,12 @@ const quizWords = [
   { word: 'abusive', ipa: "ə'bjuːsɪv", meaning: "stop using abusive language" },
   { word: 'abysmal', ipa: "ə'bɪzml", meaning: "bottomless; extremely bad" },
   { word: 'abyss', ipa: "ə'bɪs", meaning: "afgrond" },
-  { word: 'access', ipa: "'æksɛs", meaning: "to have access to" },
+  { word: 'access', ipa: "'ækses", meaning: "to have access to" },
   { word: 'accessible', ipa: "ək'sesəbl", meaning: "toegankelijk" },
   { word: 'accomplice', ipa: "ə'kʌmplɪs", meaning: "medeplichtige" },
   { word: 'acid', ipa: "'æsɪd", meaning: "sulphuric acid (zwavelzuur)" },
   { word: 'acknowledge',    ipa: "ək'nɒlɪdʒ" },
-  { word: 'acquiesce', ipa: "'ækwi'ɛs", meaning: "to acquiesce in a decision" },
+  { word: 'acquiesce', ipa: "'ækwi'es", meaning: "to acquiesce in a decision" },
   { word: 'acrobat',        ipa: "'ækrəbæt" },
   { word: 'acrobatic',      ipa: "'ækrə'bætɪk" },
   { word: 'actual', ipa: "'æktʃuəl", meaning: "adj." },
@@ -3148,17 +3375,12 @@ const quizWords = [
 // ─────────────────────────────────────────────────────────────────────────────
 // IPA KEYS for helper bar
 // ─────────────────────────────────────────────────────────────────────────────
-// Quiz/practice bar: exact chars needed to type all quiz answers
-// IPA specials + Latin in QWERTY layout rows
-const IPA_KEYS_QUIZ = [
-  // IPA vowels & specials
-  'ɪ','ʊ','ɛ','ə','ɜ','ɔ','ʌ','ɒ','æ','ː',"'",'ʃ','ʒ','ð','θ','ŋ',
-  // QWERTY row 1 (needed): w e r t y u i o p
-  'w','e','r','t','u','i','p',
-  // QWERTY row 2 (needed): a s d f g h j k l
-  'a','s','d','f','g','h','j','k','l',
-  // QWERTY row 3 (needed): z v b n m
-  'z','v','b','n','m',
+// IPA keyboard — QWERTY layout. null = empty gap. 'SYL' = syllabic shift (far left row 3).
+// Each row: [keys...] — diacritics ˈ ˌ ː are one per row on the far right.
+const IPA_KEYBOARD = [
+  { keys: ['ɑ', 'ɒ', 'ɛ',  null, 'θ',  null, 'ʊ',  'ɪ',  'ɔ',  null], diac: 'ˈ' },
+  { keys: ['ə', 'ʃ', 'ð',  null, 'ɡ',  null, null, null, 'l̩'],   diac: 'ˌ' },
+  { keys: ['ʒ', 'ɜ', 'æ',  'ʌ',  null, 'ŋ',  'n̩'],               diac: 'ː' },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -3192,12 +3414,36 @@ let showStruggle = false;
 // ─────────────────────────────────────────────────────────────────────────────
 let quizLetter       = '';  // currently selected letter group
 let quizStruggleMode = false;
+let quizEditedMode   = false;
 let quizStruggleIds  = new Set(lsGetJSON('ipa_quiz_struggle', []));
+
+// ── USER EDITS ───────────────────────────────────────────────────────────────
+function loadUserEdits() {
+  try { return JSON.parse(localStorage.getItem('ipa_user_edits') || '{"modified":{},"added":[]}'); }
+  catch(e) { return { modified: {}, added: [] }; }
+}
+function saveUserEdits(edits) {
+  try { localStorage.setItem('ipa_user_edits', JSON.stringify(edits)); } catch(e) {}
+}
+function buildEffectiveQuizWords() {
+  const edits = loadUserEdits();
+  const base = quizWords.map(w =>
+    edits.modified[w.word] !== undefined
+      ? { ...w, ipa: edits.modified[w.word], _edited: true }
+      : w
+  );
+  const added = (edits.added || []).map(w => ({ ...w, _added: true, _edited: true }));
+  return [...base, ...added];
+}
+function getEffectiveQuizWords() {
+  return buildEffectiveQuizWords();
+}
 
 // currently focused input (for IPA key injection)
 let activeQuizInput = null;
 let quizRevealed     = false;
 let quizShowingWrong = false;
+let jumpHistory      = [];  // [{symbol, filteredTags, idx}]
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MODE SWITCHING
@@ -3211,7 +3457,7 @@ function setMode(mode) {
   document.getElementById('quizMode').style.display      = mode === 'quiz'  ? '' : 'none';
   document.getElementById('btnModeFlash').classList.toggle('active', mode === 'flash');
   document.getElementById('btnModeQuiz').classList.toggle('active',  mode === 'quiz');
-  if (mode === 'quiz') renderQuiz();
+  if (mode === 'quiz') { setQuizSubMode(quizSubMode); renderQuiz(); }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -3365,6 +3611,7 @@ function applyFilter() {
     });
   }
   filtered = base;
+  jumpHistory = [];
   idx = 0;
   seen.clear();
   isFlipped = false;
@@ -3473,6 +3720,10 @@ function initRulesScroll() {
 }
 
 function jumpToSymbol(sym) {
+  // Push current position to history before jumping
+  const fromSym = filtered[idx] ? filtered[idx].symbol : null;
+  if (fromSym) jumpHistory.push({ symbol: fromSym, tags: new Set(activeTags), idx });
+
   let target = filtered.findIndex(c => c.symbol === sym);
   if (target === -1) {
     activeTags = new Set(['all']);
@@ -3490,8 +3741,41 @@ function jumpToSymbol(sym) {
   }
 }
 
+function jumpBack() {
+  if (jumpHistory.length === 0) return;
+  const prev = jumpHistory.pop();
+  // Restore filter state
+  activeTags = new Set(prev.tags);
+  syncFilterButtons();
+  lsSetJSON('ipa_active_tags', [...activeTags]);
+  if (activeTags.has('all')) {
+    filtered = [...cards];
+  } else {
+    // Re-run filter logic without pushing new history
+    filtered = cards.filter(c => {
+      if (activeTags.has(c.tag)) return true;
+      if (c.tag === 'cat' && c.groups && c.groups.some(g => activeTags.has(g))) return true;
+      if (c.tag === 'rule') {
+        for (const [key, val] of Object.entries(RULE_SUBTAG)) {
+          if (activeTags.has(key) && c.subtag === val) return true;
+        }
+      }
+      return false;
+    });
+    filtered.sort((a, b) => (a.tag === 'cat' ? -1 : 0) - (b.tag === 'cat' ? -1 : 0));
+  }
+  // Find the card we came from
+  const target = filtered.findIndex(c => c.symbol === prev.symbol);
+  idx = target !== -1 ? target : 0;
+  seen.clear();
+  isFlipped = startSide === 'symbol';
+  document.getElementById('card').classList.toggle('flipped', isFlipped);
+  render();
+}
+
 function navigate(dir) {
   if (filtered.length === 0) return;
+  jumpHistory = [];
   seen.add(idx);
   idx = (idx + dir + filtered.length) % filtered.length;
   isFlipped = false;
@@ -3508,6 +3792,7 @@ function flip() {
 }
 
 function shuffle() {
+  jumpHistory = [];
   for (let i = filtered.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
@@ -3582,12 +3867,15 @@ function render() {
   const isStruggling = struggleIds.has(cardKey);
   const audioOk = !!AUDIO[c.symbol];
   const tagStripHtml = tagStrip(c);
+  const backBtn = jumpHistory.length > 0
+    ? `<button class="card-back-btn" data-action="back" title="Back">← back</button>`
+    : '';
   const struggleCheckbox = `<button class="struggle-btn ${isStruggling ? 'marked' : ''}" data-action="struggle" data-key="${cardKey}" title="${isStruggling ? 'Remove review mark' : 'Mark for review'}">★</button>`;
   const audioHtmlFront = !audioOk ? '' : `<button class="audio-btn" id="audioBtnFront" data-action="audio" data-symbol="${c.symbol}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg><span class="btn-label">Play sound</span></button>`;
   const isRuleCard = c.tag === 'rule';
   const symbolSide = isRuleCard
-    ? `<div class="card-side-label">Symbol</div><div class="card-symbol-wrap"><div class="symbol" style="font-size:clamp(1.4rem,6vw,2.6rem);font-weight:400;letter-spacing:-0.02em">${c.symbol}</div><p class="hint">tap to reveal</p></div>${struggleCheckbox}`
-    : `<div class="card-side-label">Symbol</div><div class="card-symbol-wrap"><div class="symbol">${c.symbol}</div><p class="hint">tap to reveal</p>${audioHtmlFront ? `<div class="card-audio-slot">${audioHtmlFront}</div>` : ''}</div>${struggleCheckbox}`;
+    ? `${backBtn}<div class="card-side-label">Symbol</div><div class="card-symbol-wrap"><div class="symbol" style="font-size:clamp(1.4rem,6vw,2.6rem);font-weight:400;letter-spacing:-0.02em">${c.symbol}</div><p class="hint">tap to reveal</p></div>${struggleCheckbox}`
+    : `${backBtn}<div class="card-side-label">Symbol</div><div class="card-symbol-wrap"><div class="symbol">${c.symbol}</div><p class="hint">tap to reveal</p>${audioHtmlFront ? `<div class="card-audio-slot">${audioHtmlFront}</div>` : ''}</div>${struggleCheckbox}`;
   const examplesHtml = c.examples.map(exampleHTML).join('');
   let audioHtml = '';
   if (!audioOk) {
@@ -3608,7 +3896,7 @@ function render() {
   } else {
     nameHtml = `<div class="answer-name">${c.name}</div>`;
   }
-  const descSide = `<div class="card-side-label">Description</div>${tagStripHtml}${nameHtml}<div class="answer-desc">${c.desc}</div><div class="examples">${examplesHtml}</div>${rulesHtml}<div class="card-footer">${relatedHtml}${audioHtml}</div>${struggleCheckbox}`;
+  const descSide = `${backBtn}<div class="card-side-label">Description</div>${tagStripHtml}${nameHtml}<div class="answer-desc">${c.desc}</div><div class="examples">${examplesHtml}</div>${rulesHtml}<div class="card-footer">${relatedHtml}${audioHtml}</div>${struggleCheckbox}`;
   if (startSide === 'symbol') {
     front.innerHTML = symbolSide;
     back.innerHTML  = descSide;
@@ -3657,7 +3945,10 @@ function getLettersInSource(src) {
 }
 
 function getQuizSource() {
-  return quizStruggleMode ? quizWords.filter(w => quizStruggleIds.has(w.word)) : quizWords;
+  const all = getEffectiveQuizWords();
+  let src = quizStruggleMode ? all.filter(w => quizStruggleIds.has(w.word)) : all;
+  if (quizEditedMode) src = src.filter(w => w._edited);
+  return src;
 }
 
 function getQuizGroup() {
@@ -3669,7 +3960,12 @@ function getQuizGroup() {
 function quizPageDir(dir) {
   const letters = getLettersInSource(getQuizSource());
   const next = letters.indexOf(quizLetter) + dir;
-  if (next >= 0 && next < letters.length) { quizLetter = letters[next]; renderQuiz(); }
+  if (next >= 0 && next < letters.length) {
+    quizLetter = letters[next];
+    renderQuiz();
+    const tbl = document.getElementById('quizTable');
+    if (tbl) tbl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 function toggleQuizStruggleFilter() {
@@ -3685,6 +3981,8 @@ function saveQuizStruggle() {
   document.getElementById('quizStruggleCount').textContent = size;
   document.getElementById('practiceStruggleCount').textContent = size;
   document.getElementById('quizStruggleToggle').classList.toggle('active', quizStruggleMode);
+  const rstBtn = document.getElementById('quizResetStruggleBtn');
+  if (rstBtn) { rstBtn.disabled = size === 0; rstBtn.style.opacity = size === 0 ? '0.4' : ''; }
 }
 
 function renderQuiz() {
@@ -3692,8 +3990,8 @@ function renderQuiz() {
   const letters = getLettersInSource(src);
   const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  // Ensure quizLetter is valid
-  if (!quizLetter || !letters.includes(quizLetter)) {
+  // Ensure quizLetter is valid ('' means "All" — preserve it)
+  if (quizLetter !== '' && !letters.includes(quizLetter)) {
     quizLetter = letters[0] || '';
   }
 
@@ -3702,6 +4000,13 @@ function renderQuiz() {
   // Build alphabet index
   const alphaContainer = document.getElementById('quizAlphaIndex');
   alphaContainer.innerHTML = '';
+  // "All" button
+  const allAlphaBtn = document.createElement('button');
+  allAlphaBtn.className = 'alpha-btn' + (quizLetter === '' ? ' active' : '');
+  allAlphaBtn.textContent = 'All';
+  allAlphaBtn.style.minWidth = '2.4rem';
+  allAlphaBtn.addEventListener('click', () => { quizLetter = ''; renderQuiz(); });
+  alphaContainer.appendChild(allAlphaBtn);
   allLetters.forEach(l => {
     const btn = document.createElement('button');
     btn.className = 'alpha-btn' +
@@ -3715,14 +4020,14 @@ function renderQuiz() {
   });
 
   // Header info
-  document.getElementById('quizGroupLabel').textContent = quizLetter || '–';
+  document.getElementById('quizGroupLabel').textContent = quizLetter || 'All';
   document.getElementById('quizGroupRange').textContent = pageWords.length
     ? `${pageWords.length} word${pageWords.length > 1 ? 's' : ''}`
     : 'No words';
   document.getElementById('quizStruggleCount').textContent = quizStruggleIds.size;
   const letterIdx = letters.indexOf(quizLetter);
-  document.getElementById('quizPrevBtn').disabled = letterIdx <= 0;
-  document.getElementById('quizNextBtn').disabled = letterIdx >= letters.length - 1;
+  document.getElementById('quizPrevBtn').disabled = quizLetter === '' || letterIdx <= 0;
+  document.getElementById('quizNextBtn').disabled = quizLetter === '' || letterIdx >= letters.length - 1;
 
   // Rows
   const container = document.getElementById('quizRows');
@@ -3736,50 +4041,19 @@ function renderQuiz() {
     row.className = 'quiz-row';
     row.id = `qrow-${rowId}`;
 
-    // Word cell — click to reveal
+    // Word cell — plain, no tap-to-reveal
     const wordCell = document.createElement('div');
     wordCell.className = 'quiz-word';
     wordCell.textContent = item.word;
-    wordCell.title = 'Click to reveal answer';
-    wordCell.addEventListener('click', () => {
-      const reveal = document.getElementById(`qreveal-${rowId}`);
-      if (reveal) {
-        reveal.classList.toggle('visible');
-        wordCell.classList.toggle('revealed', reveal.classList.contains('visible'));
-      }
-    });
 
-    // Input cell
-    const inputWrap = document.createElement('div');
-    inputWrap.className = 'quiz-input-wrap';
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'quiz-input';
-    input.id = `qinput-${rowId}`;
-    input.placeholder = 'type IPA…';
-    input.autocomplete = 'off';
-    input.autocorrect = 'off';
-    input.autocapitalize = 'off';
-    input.spellcheck = false;
-    input.dataset.answer = item.ipa;
-    input.addEventListener('focus', () => { activeQuizInput = input; });
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter') { e.preventDefault(); quizCheck(); }
-    });
-    const reveal = document.createElement('div');
-    reveal.className = 'quiz-answer-reveal';
-    reveal.id = `qreveal-${rowId}`;
-    reveal.textContent = item.ipa;
-    inputWrap.appendChild(input);
-    inputWrap.appendChild(reveal);
-
-    // Status icon
-    const statusCell = document.createElement('div');
-    statusCell.className = 'quiz-status-icon';
-    statusCell.id = `qstatus-${rowId}`;
+    // Static IPA display
+    const ipaCell = document.createElement('div');
+    ipaCell.className = 'quiz-ipa-display';
+    ipaCell.textContent = item.ipa;
 
     // Review btn
     const struggleCell = document.createElement('div');
+    struggleCell.style.cssText = 'display:flex;justify-content:center;align-items:center';
     const sBtn = document.createElement('button');
     sBtn.className = 'quiz-struggle-btn' + (isStruggling ? ' marked' : '');
     sBtn.textContent = '\u2605';
@@ -3794,22 +4068,35 @@ function renderQuiz() {
     });
     struggleCell.appendChild(sBtn);
 
+    // Meaning cell (hidden until meaning-visible on table)
+    const meaningCell = document.createElement('div');
+    meaningCell.className = 'quiz-cell-meaning';
+    meaningCell.textContent = item.meaning || '';
+
+    // Edit btn
+    const editCell = document.createElement('div');
+    editCell.style.cssText = 'display:flex;justify-content:center;align-items:center';
+    const eBtn = document.createElement('button');
+    eBtn.className = 'quiz-edit-btn' + (item._edited ? ' is-edited' : '');
+    eBtn.textContent = '\u270f';
+    eBtn.title = 'Edit IPA';
+    eBtn.addEventListener('click', () => openEditModal(item));
+    editCell.appendChild(eBtn);
+
+    // Edited row highlight
+    if (item._edited) row.classList.add('row-edited');
+
     row.appendChild(wordCell);
-    row.appendChild(inputWrap);
-    row.appendChild(statusCell);
+    row.appendChild(ipaCell);
+    row.appendChild(meaningCell);
     row.appendChild(struggleCell);
+    row.appendChild(editCell);
     container.appendChild(row);
   });
 
-  // Reset score display and reveal state
+  // Reset state
   quizRevealed = false;
   quizShowingWrong = false;
-  const showWrong = document.getElementById('quizShowWrongBtn');
-  document.getElementById('quizRevealBtn').textContent = 'Reveal answers';
-  showWrong.style.display = document.getElementById('quizMarkWrongBtn').style.display = 'none';
-  showWrong.textContent = 'Show incorrect';
-  showWrong.classList.remove('active');
-  document.getElementById('quizScoreBox').innerHTML = '–';
 }
 
 function quizCheck() {
@@ -3879,25 +4166,29 @@ function quizReveal() {
 }
 
 function quizReset() {
-  getQuizGroup().forEach((item, i) => {
-    const rowId  = `${quizLetter}-${i}`;
-    const input  = document.getElementById(`qinput-${rowId}`);
-    const status = document.getElementById(`qstatus-${rowId}`);
-    const row    = document.getElementById(`qrow-${rowId}`);
-    const reveal = document.getElementById(`qreveal-${rowId}`);
-    if (input)  { input.value = ''; input.classList.remove('input-correct', 'input-wrong'); }
-    if (status) status.textContent = '';
-    if (row)    { row.classList.remove('row-correct', 'row-wrong'); row.style.display = ''; }
-    if (reveal) reveal.classList.remove('visible');
-  });
-  quizRevealed = false;
-  quizShowingWrong = false;
-  const showWrong = document.getElementById('quizShowWrongBtn');
-  document.getElementById('quizRevealBtn').textContent = 'Reveal answers';
-  showWrong.style.display = document.getElementById('quizMarkWrongBtn').style.display = 'none';
-  showWrong.textContent = 'Show incorrect';
-  showWrong.classList.remove('active');
-  document.getElementById('quizScoreBox').innerHTML = '–';
+  renderQuiz();
+}
+
+function resetAllWords() {
+  if (!confirm('Reset all word edits? This will remove all your custom IPA changes and added words.')) return;
+  try { localStorage.removeItem('ipa_user_edits'); } catch(e) {}
+  // Reset edited filter if active
+  if (quizEditedMode) {
+    quizEditedMode = false;
+    const eb = document.getElementById('quizEditedToggle');
+    if (eb) { eb.classList.remove('active'); eb.textContent = 'Show edited'; }
+  }
+  updateEditButtons();
+  renderQuiz();
+}
+
+function updateEditButtons() {
+  const edits = loadUserEdits();
+  const hasEdits = Object.keys(edits.modified || {}).length > 0 || (edits.added || []).length > 0;
+  const eb = document.getElementById('quizEditedToggle');
+  const rb = document.getElementById('quizResetAllWordsBtn');
+  if (eb) eb.style.display = hasEdits ? '' : 'none';
+  if (rb) rb.style.display = hasEdits ? '' : 'none';
 }
 
 function quizResetStruggle() {
@@ -3952,7 +4243,8 @@ let practiceFlipped      = false;
 let practiceAlphaLetter  = '';   // '' = all words
 
 function getPracticeSource() {
-  const base = practiceStruggleMode ? quizWords.filter(w => quizStruggleIds.has(w.word)) : quizWords;
+  const all = getEffectiveQuizWords();
+  const base = practiceStruggleMode ? all.filter(w => quizStruggleIds.has(w.word)) : all;
   return practiceAlphaLetter ? base.filter(w => w.word[0].toUpperCase() === practiceAlphaLetter) : base;
 }
 
@@ -4029,7 +4321,7 @@ function renderPracticeCard() {
   // Build alphabet index
   const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   const available  = new Set(getLettersInSource(practiceStruggleMode
-    ? quizWords.filter(w => quizStruggleIds.has(w.word)) : quizWords));
+    ? getEffectiveQuizWords().filter(w => quizStruggleIds.has(w.word)) : getEffectiveQuizWords()));
   const alphaEl    = document.getElementById('practiceAlphaIndex');
   alphaEl.innerHTML = '';
   // "All" button
@@ -4177,7 +4469,7 @@ function practiceNext() {
   } else {
     if (practiceAlphaLetter) {
       const letters = getLettersInSource(practiceStruggleMode
-        ? quizWords.filter(w => quizStruggleIds.has(w.word)) : quizWords);
+        ? getEffectiveQuizWords().filter(w => quizStruggleIds.has(w.word)) : getEffectiveQuizWords());
       const nextLetter = letters[letters.indexOf(practiceAlphaLetter) + 1];
       if (nextLetter) {
         document.getElementById('practiceResult').className = 'practice-result correct';
@@ -4236,87 +4528,213 @@ function practiceResetScores() {
 // IPA BAR
 // ─────────────────────────────────────────────────────────────────────────────
 function buildIpaKeys() {
-  function populateBar(el, keys, getInput) {
-    if (!el) return;
-    keys.forEach(sym => {
-      const btn = document.createElement('button');
-      btn.className = 'ipa-key' + (sym === 'ː' ? ' key-length' : '');
-      btn.textContent = sym;
-      btn.type = 'button';
-      btn.addEventListener('mousedown', e => e.preventDefault());
-      btn.addEventListener('click', () => {
-        const inp = getInput();
-        if (!inp || inp.disabled) return;
-        const s  = inp.selectionStart;
-        const e2 = inp.selectionEnd;
-        inp.value = inp.value.slice(0, s) + sym + inp.value.slice(e2);
-        inp.selectionStart = inp.selectionEnd = s + sym.length;
-        inp.focus();
-      });
-      el.appendChild(btn);
-    });
-  }
+  const QWERTY_LABEL = {
+    'ɑ':'q','ɒ':'w','ɛ':'e','θ':'t','ʊ':'u','ɪ':'i','ɔ':'o',
+    'ə':'a','ʃ':'s','ð':'d','ɡ':'g',
+    'ʒ':'z','ɜ':'x','æ':'c','ʌ':'v','ŋ':'n','n̩':'n','l̩':'l',
+    'ˈ':"'",'ˌ':',',' ː':';',
+  };
+  const ROW_CLASS = ['row-1','row-2','row-3'];
 
-  // Quiz table bar (collapsible)
-  const quizBar = document.getElementById('ipaBar');
-  populateBar(quizBar, IPA_KEYS_QUIZ, () => activeQuizInput);
+  function buildBar(container, getInput) {
+    if (!container) return;
+
+    function insertChar(sym) {
+      const inp = getInput();
+      if (!inp || inp.disabled) return;
+      const s = inp.selectionStart;
+      const e = inp.selectionEnd;
+      inp.value = inp.value.slice(0, s) + sym + inp.value.slice(e);
+      inp.selectionStart = inp.selectionEnd = s + sym.length;
+      inp.focus();
+    }
+
+    function makeKey(sym) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ipa-key';
+      const label = QWERTY_LABEL[sym] || '';
+      btn.title = label ? `${sym}  [${label}]` : sym;
+      const top = document.createElement('span');
+      top.className = 'ipa-key-main';
+      top.textContent = sym;
+      const lbl = document.createElement('span');
+      lbl.className = 'ipa-key-label';
+      lbl.textContent = label;
+      btn.appendChild(top);
+      btn.appendChild(lbl);
+      btn.addEventListener('mousedown', e => e.preventDefault());
+      btn.addEventListener('click', () => insertChar(sym));
+      return btn;
+    }
+
+    // Two-column layout: left = QWERTY rows, right = diac keys stacked
+    const keysCol = document.createElement('div');
+    keysCol.className = 'ipa-bar-keys-col';
+
+    const diacCol = document.createElement('div');
+    diacCol.className = 'ipa-bar-diac-col';
+
+    IPA_KEYBOARD.forEach((row, ri) => {
+      const rowEl = document.createElement('div');
+      rowEl.className = 'ipa-bar-row ' + ROW_CLASS[ri];
+
+      row.keys.forEach(sym => {
+        if (sym === null) {
+          const gap = document.createElement('div');
+          gap.className = 'ipa-key-gap';
+          rowEl.appendChild(gap);
+        } else {
+          rowEl.appendChild(makeKey(sym));
+        }
+      });
+      keysCol.appendChild(rowEl);
+
+      // Diacritic key goes into right column
+      const diacBtn = document.createElement('button');
+      diacBtn.type = 'button';
+      diacBtn.className = 'ipa-key key-diac';
+      const diacLabel = QWERTY_LABEL[row.diac] || '';
+      diacBtn.title = diacLabel ? `${row.diac}  [${diacLabel}]` : row.diac;
+      const diacMain = document.createElement('span');
+      diacMain.className = 'ipa-key-main';
+      diacMain.textContent = row.diac;
+      const diacLbl = document.createElement('span');
+      diacLbl.className = 'ipa-key-label';
+      diacLbl.textContent = diacLabel;
+      diacBtn.appendChild(diacMain);
+      diacBtn.appendChild(diacLbl);
+      diacBtn.addEventListener('mousedown', e => e.preventDefault());
+      diacBtn.addEventListener('click', () => insertChar(row.diac));
+      diacCol.appendChild(diacBtn);
+    });
+
+    container.appendChild(keysCol);
+    container.appendChild(diacCol);
+  }
 
   // Practice bar (always visible)
-  populateBar(document.getElementById('practiceIpaBar'), IPA_KEYS_QUIZ, () => document.getElementById('practiceInput'));
+  buildBar(document.getElementById('practiceIpaBar'), () => document.getElementById('practiceInput'));
 
-  // Toggle open/close for quiz bar
-  const toggle = document.getElementById('ipaBarToggle');
-  toggle.addEventListener('click', () => {
-    const open = quizBar.classList.toggle('open');
-    toggle.classList.toggle('open', open);
-    toggle.innerHTML = open ? '&#9662; IPA keys' : '&#9656; IPA keys';
-  });
+  // Expose buildBar globally for edit modal
+  window._ipaBarBuilder = buildBar;
+}
 
-  // iOS sticky-bar fix: on scroll, compensate if wrap has drifted off-screen
-  const wrap = document.getElementById('ipaBarWrap');
-  let fixPos = 0;
-  let debounceTimer = null;
+// ─────────────────────────────────────────────────────────────────────────────
+// USER WORD EDITS — modal logic
+// ─────────────────────────────────────────────────────────────────────────────
+let editModalMode  = null;  // 'edit' | 'add'
+let editModalWord  = null;  // the item being edited (for 'edit' mode)
 
-  function setBarMargin() {
-    const top = wrap.getBoundingClientRect().top;
-    if (top < -1) {
-      quizBar.classList.add('down');
-      fixPos = Math.abs(top);
-      if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) fixPos -= 2;
-      quizBar.style.marginTop = fixPos + 'px';
+function openEditModal(item) {
+  editModalMode = item ? 'edit' : 'add';
+  editModalWord = item || null;
+  const $e = id => document.getElementById(id);
+
+  $e('editModalTitle').textContent = item ? 'Edit IPA' : 'Add word';
+
+  const wordWrap = $e('editModalWordWrap');
+  wordWrap.innerHTML = '';
+  if (item) {
+    const d = document.createElement('div');
+    d.className = 'edit-modal-word';
+    d.textContent = item.word;
+    wordWrap.appendChild(d);
+    // Show original IPA if edited
+    const edits = loadUserEdits();
+    const origWord = quizWords.find(w => w.word === item.word);
+    if (origWord && edits.modified[item.word] !== undefined) {
+      $e('editOriginalIpa').textContent = 'Original: ' + origWord.ipa;
+      $e('editOriginalIpa').style.display = '';
+      $e('editModalResetBtn').style.display = '';
+    } else if (item._added) {
+      $e('editOriginalIpa').textContent = 'Added word';
+      $e('editOriginalIpa').style.display = '';
+      $e('editModalResetBtn').style.display = '';  // "Reset" = delete added word
+      $e('editModalResetBtn').textContent = 'Delete word';
+    } else {
+      $e('editOriginalIpa').style.display = 'none';
+      $e('editModalResetBtn').style.display = 'none';
     }
+    $e('editModalIpaInput').value = item.ipa;
+  } else {
+    // Add mode: word input
+    const lbl = document.createElement('label');
+    lbl.className = 'edit-modal-label';
+    lbl.textContent = 'Word';
+    const inp = document.createElement('input');
+    inp.className = 'edit-modal-input';
+    inp.id = 'editModalWordInput';
+    inp.type = 'text';
+    inp.autocomplete = 'off';
+    inp.placeholder = 'enter word…';
+    wordWrap.appendChild(lbl);
+    wordWrap.appendChild(inp);
+    $e('editOriginalIpa').style.display = 'none';
+    $e('editModalResetBtn').style.display = 'none';
+    $e('editModalIpaInput').value = '';
+    setTimeout(() => inp.focus(), 50);
   }
 
-  function onScroll() {
-    if (fixPos > 0) {
-      quizBar.classList.remove('down');
-      fixPos = 0;
-      quizBar.style.marginTop = '0px';
+  $e('editModal').classList.add('open'); document.body.style.overflow = 'hidden'; document.documentElement.style.overflow = 'hidden';
+  // Focus IPA input (slight delay for add mode so word input gets focus first)
+  if (item) setTimeout(() => $e('editModalIpaInput').focus(), 50);
+}
+
+function closeEditModal() {
+  document.getElementById('editModal').classList.remove('open');
+  document.body.style.overflow = ''; document.documentElement.style.overflow = '';
+  editModalMode = null;
+  editModalWord = null;
+}
+
+function saveEditModal() {
+  const $e = id => document.getElementById(id);
+  const newIpa = $e('editModalIpaInput').value.trim();
+  if (!newIpa) { $e('editModalIpaInput').focus(); return; }
+
+  const edits = loadUserEdits();
+
+  if (editModalMode === 'edit' && editModalWord) {
+    if (editModalWord._added) {
+      // Update added word
+      const idx = edits.added.findIndex(w => w.word === editModalWord.word);
+      if (idx >= 0) edits.added[idx].ipa = newIpa;
+    } else {
+      edits.modified[editModalWord.word] = newIpa;
     }
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(setBarMargin, 150);
+  } else if (editModalMode === 'add') {
+    const wordInput = $e('editModalWordInput');
+    const newWord = wordInput ? wordInput.value.trim() : '';
+    if (!newWord) { wordInput && wordInput.focus(); return; }
+    // Don't duplicate
+    const all = getEffectiveQuizWords();
+    if (all.find(w => w.word.toLowerCase() === newWord.toLowerCase())) {
+      wordInput.style.borderColor = 'var(--accent)';
+      setTimeout(() => wordInput.style.borderColor = '', 1500);
+      return;
+    }
+    edits.added.push({ word: newWord, ipa: newIpa, meaning: '' });
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+  saveUserEdits(edits);
+  closeEditModal();
+  renderQuiz();
+  updateEditButtons();
+}
 
-  document.addEventListener('focusin', e => {
-    if (e.target.tagName === 'INPUT' && currentMode === 'quiz') {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(setBarMargin, 100);
-      setTimeout(setBarMargin, 300);
-      setTimeout(setBarMargin, 600);
-    }
-  });
-
-  document.addEventListener('focusout', e => {
-    if (e.target.tagName === 'INPUT' && currentMode === 'quiz') {
-      setTimeout(() => {
-        fixPos = 0;
-        quizBar.classList.remove('down');
-        quizBar.style.marginTop = '0px';
-      }, 100);
-    }
-  });
+function resetEditModal() {
+  if (!editModalWord) return;
+  const edits = loadUserEdits();
+  if (editModalWord._added) {
+    edits.added = edits.added.filter(w => w.word !== editModalWord.word);
+  } else {
+    delete edits.modified[editModalWord.word];
+  }
+  saveUserEdits(edits);
+  closeEditModal();
+  updateEditButtons();
+  renderQuiz();
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -4372,6 +4790,7 @@ try {
     if (action === 'struggle') toggleStruggle(key, e);
     if (action === 'audio')    playAudio(symbol, btn);
     if (action === 'jump')     jumpToSymbol(symbol);
+    if (action === 'back')     jumpBack();
   });
   $el('struggleCount').textContent = struggleIds.size;
   $el('quizStruggleCount').textContent = quizStruggleIds.size;
@@ -4382,12 +4801,48 @@ try {
   $el('quizPrevBtn').addEventListener('click', () => quizPageDir(-1));
   $el('quizNextBtn').addEventListener('click', () => quizPageDir(1));
   $el('quizStruggleToggle').addEventListener('click', toggleQuizStruggleFilter);
-  $el('quizRevealBtn').addEventListener('click', quizReveal);
-  $el('quizCheckBtn').addEventListener('click', quizCheck);
-  $el('quizShowWrongBtn').addEventListener('click', quizToggleWrong);
-  $el('quizMarkWrongBtn').addEventListener('click', quizMarkWrong);
-  $el('quizResetBtn').addEventListener('click', quizReset);
+  let quizMeaningVisible = false;
+  $el('quizMeaningToggle').addEventListener('click', () => {
+    quizMeaningVisible = !quizMeaningVisible;
+    document.getElementById('quizTable').classList.toggle('meaning-visible', quizMeaningVisible);
+    // show/hide the header cell
+    document.querySelectorAll('.quiz-col-meaning').forEach(el => el.style.display = quizMeaningVisible ? '' : 'none');
+    $el('quizMeaningToggle').textContent = quizMeaningVisible ? 'Hide meaning' : 'Show meaning';
+    $el('quizMeaningToggle').classList.toggle('secondary', quizMeaningVisible);
+  });
   $el('quizResetStruggleBtn').addEventListener('click', quizResetStruggle);
+  // Initial grey-out state
+  { const rstBtn = $el('quizResetStruggleBtn');
+    rstBtn.disabled = quizStruggleIds.size === 0;
+    rstBtn.style.opacity = quizStruggleIds.size === 0 ? '0.4' : ''; }
+
+  updateEditButtons();
+  // Edited-words filter
+  $el('quizEditedToggle').addEventListener('click', () => {
+    quizEditedMode = !quizEditedMode;
+    $el('quizEditedToggle').classList.toggle('active', quizEditedMode);
+    $el('quizEditedToggle').textContent = quizEditedMode ? 'Show all' : 'Show edited';
+    quizLetter = getLettersInSource(getQuizSource())[0] || '';
+    renderQuiz();
+  });
+
+  // Add word button
+  $el('quizAddWordBtn').addEventListener('click', () => openEditModal(null));
+  $el('quizResetAllWordsBtn').addEventListener('click', resetAllWords);
+
+  // Edit modal wiring
+  $el('editModalClose').addEventListener('click', closeEditModal);
+  $el('editModalCancelBtn').addEventListener('click', closeEditModal);
+  $el('editModalSaveBtn').addEventListener('click', saveEditModal);
+  $el('editModalResetBtn').addEventListener('click', resetEditModal);
+  $el('editModal').addEventListener('click', e => { if (e.target === $el('editModal')) closeEditModal(); });
+  $el('editModalIpaInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); saveEditModal(); }
+    if (e.key === 'Escape') closeEditModal();
+  });
+  // Build IPA keyboard for edit modal
+  // buildIpaKeys must run first (called above via buildIpaKeys())
+  window._ipaBarBuilder(document.getElementById('editModalIpaBar'), () => document.getElementById('editModalIpaInput'));
   $el('practiceBackBtn').addEventListener('click', practicePrev);
   $el('practiceShuffleBtn').addEventListener('click', practiceShuffleWords);
   $el('practiceNextBtn').addEventListener('click', practiceNext);
@@ -4406,8 +4861,8 @@ try {
 
   // ── RESOURCES MODAL ──
   const resourcesModal = $el('resourcesModal');
-  function openResources()  { resourcesModal.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function closeResources() { resourcesModal.classList.remove('open'); document.body.style.overflow = ''; }
+  function openResources()  { resourcesModal.classList.add('open'); document.body.style.overflow = 'hidden'; document.documentElement.style.overflow = 'hidden'; }
+  function closeResources() { resourcesModal.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; }
   $el('resourcesBtn').addEventListener('click', openResources);
   $el('resourcesModalClose').addEventListener('click', closeResources);
   resourcesModal.addEventListener('click', e => { if (e.target === resourcesModal) closeResources(); });
@@ -4415,17 +4870,32 @@ try {
   // ── ABOUT MODAL ──
   const modal = $el('aboutModal');
   $el('modalVersion').textContent = `v${APP_VERSION}`;
-  function openModal()  { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+  function openModal()  { modal.classList.add('open'); document.body.style.overflow = 'hidden'; document.documentElement.style.overflow = 'hidden'; }
+  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; }
   $el('aboutBtn').addEventListener('click', openModal);
   $el('aboutModalClose').addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
   // ── DIAGRAM MODAL ──
   const diagModal = $el('diagModal');
-  function openDiag()  { diagModal.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function closeDiag() { diagModal.classList.remove('open'); document.body.style.overflow = ''; }
-  $el('vowelDiagramBtn').addEventListener('click', openDiag);
+  const TRAP_SRC     = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/IPA_vowel_chart.svg/600px-IPA_vowel_chart.svg.png';
+  const TRAP_ALT     = 'IPA vowel trapezium';
+  const TRAP_CAPTION = 'IPA vowel trapezium — vowels mapped by height (close↔open) and backness (front↔back).';
+  const CARDINAL_SRC     = 'https://upload.wikimedia.org/wikipedia/commons/1/1e/Cardinal_vowel_tongue_position-front.svg';
+  const CARDINAL_ALT     = 'Cardinal front vowel tongue positions (Daniel Jones / IPA)';
+  const CARDINAL_CAPTION = "Tongue positions of Daniel Jones\u2019 cardinal front vowels. Four large dots = highest tongue point per vowel.";
+
+  function openDiag(src, alt, caption) {
+    $el('diagModalImg').src = src || CARDINAL_SRC;
+    $el('diagModalImg').alt = alt || CARDINAL_ALT;
+    const cap = diagModal.querySelector('.diag-modal-caption span');
+    if (cap) cap.textContent = caption || CARDINAL_CAPTION;
+    diagModal.classList.add('open');
+    document.body.style.overflow = 'hidden'; document.documentElement.style.overflow = 'hidden';
+  }
+  function closeDiag() { diagModal.classList.remove('open'); document.body.style.overflow = ''; document.documentElement.style.overflow = ''; }
+  window.openTrapeziumModal = () => openDiag(TRAP_SRC, TRAP_ALT, TRAP_CAPTION);
+  $el('vowelDiagramBtn').addEventListener('click', () => openDiag());
   $el('diagModalClose').addEventListener('click', closeDiag);
   diagModal.addEventListener('click', e => { if (e.target === diagModal) closeDiag(); });
 
