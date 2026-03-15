@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RP IPA Flashcards v7.69 -->
+<!-- RP IPA Flashcards v7.80 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -243,7 +243,7 @@
     visibility: hidden;
     pointer-events: none;
     padding: 2rem 2.5rem;
-    min-height: 520px;
+    min-height: 560px;
     width: 100%;
     box-sizing: border-box;
   }
@@ -300,27 +300,17 @@
     pointer-events: none;
   }
 
-  .card-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.2rem 0.6rem;
-    border-radius: 2rem;
-    margin-bottom: 1.2rem;
-    border: 1px solid currentColor;
-  }
-
-  .tag-lax       { color: #2980b9; background: #e8f4fd; }
-  .tag-mono      { color: #b7950b; background: #fef9e7; }
-  .tag-diph      { color: #a04000; background: #fdf0e8; }
-  .tag-weak      { color: #5d6d7e; background: #eaf0fb; }
-  .tag-plosive   { color: #8e44ad; background: #fdf2f8; }
-  .tag-fricative { color: #76448a; background: #f5eef8; }
-  .tag-affricate { color: #6c3483; background: #f0e6f6; }
-  .tag-nasal     { color: #1a5276; background: #d6eaf8; }
-  .tag-approx    { color: #117a65; background: #d1f2eb; }
-  .tag-rule      { color: #7d6608; background: #fef9e7; }
+  /* pill-type: phonetic category pills — full shared base + per-type colors */
+  .pill-type { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid currentColor; letter-spacing:0.06em; text-transform:uppercase; display:inline-flex; justify-content:center; }
+  .pill-lax       { color: #2980b9; background: #e8f4fd; }
+  .pill-mono      { color: #b7950b; background: #fef9e7; }
+  .pill-diph      { color: #a04000; background: #fdf0e8; }
+  .pill-weak      { color: #5d6d7e; background: #eaf0fb; }
+  .pill-plosive   { color: #8e44ad; background: #fdf2f8; }
+  .pill-fricative { color: #76448a; background: #f5eef8; }
+  .pill-affricate { color: #6c3483; background: #f0e6f6; }
+  .pill-nasal     { color: #1a5276; background: #d6eaf8; }
+  .pill-approx    { color: #117a65; background: #d1f2eb; }
 
   .symbol {
     font-family: 'Spectral', serif;
@@ -338,8 +328,6 @@
     font-style: italic;
     font-weight: 300;
   }
-
-  .answer-label { display: none; }
 
   .answer-name {
     font-size: 1.25rem;
@@ -567,21 +555,6 @@
     letter-spacing: 0.04em;
   }
   .startside-btn.active { background: var(--accent2); border-color: var(--accent2); color: white; }
-
-  .phon-class {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.15rem 0.5rem;
-    border-radius: 2rem;
-    position: absolute;
-    top: 1.1rem;
-    right: 1.2rem;
-    opacity: 0.65;
-  }
-  .phon-class.obstruent { background: #fde8f4; color: #8e44ad; border: 1px solid #d7bde2; }
-  .phon-class.sonorant  { background: #d1f2eb; color: #117a65; border: 1px solid #a9dfbf; }
 
   .filter-hint {
     font-family: 'Space Mono', monospace;
@@ -985,17 +958,16 @@
     justify-content: center;
     margin-bottom: 0.75rem;
   }
-  .pill-fortis { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #e74c3c; background:#fdedec; color:#922b21; letter-spacing:0.06em; text-transform:uppercase; }
-  .pill-lenis  { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #27ae60; background:#eafaf1; color:#1e8449; letter-spacing:0.06em; text-transform:uppercase; }
-  .pill-obstr  { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #d7bde2; background:#f5eef8; color:#6c3483; letter-spacing:0.06em; text-transform:uppercase; }
-  .pill-sonor  { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #a9dfbf; background:#d1f2eb; color:#117a65; letter-spacing:0.06em; text-transform:uppercase; }
-  .pill-rule   { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #f7dc6f; background:#fef9e7; color:#7d6608; letter-spacing:0.06em; text-transform:uppercase; }
-  .pill-cat    { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.65rem; border-radius:2rem; border:1px solid var(--border); background:var(--paper); color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; }
+  .pill-fortis { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #e74c3c; background:#fdedec; color:#922b21; letter-spacing:0.06em; text-transform:uppercase; text-align: center; display: inline-flex; justify-content: center; }
+  .pill-lenis  { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #27ae60; background:#eafaf1; color:#1e8449; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
+  .pill-obstr  { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #d7bde2; background:#f5eef8; color:#6c3483; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
+  .pill-sonor  { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #a9dfbf; background:#d1f2eb; color:#117a65; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
+  .pill-rule   { font-family:'Space Mono',monospace; font-size:0.6rem; font-weight:700; padding:0.18rem 0.55rem; border-radius:2rem; border:1px solid #f7dc6f; background:#fef9e7; color:#7d6608; letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
+  .pill-cat    { font-family:'Space Mono',monospace; font-size:0.6rem; padding:0.18rem 0.65rem; border-radius:2rem; border:1px solid var(--border); background:var(--paper); color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; text-align: center;  display: inline-flex; justify-content: center; }
   /* Clickable pill buttons — inherit pill appearance, add interaction */
   .pill-btn { cursor:pointer; transition: filter 0.15s, transform 0.1s; outline:none; appearance:none; -webkit-appearance:none; }
   .pill-btn:hover { filter: brightness(0.88); transform: translateY(-1px); }
   .pill-btn:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
-  .tag-strip .card-tag { margin-bottom: 0; }
   .tag-strip button { vertical-align: middle; }
 
   /* ════════════════════════════════════════════════
@@ -1081,17 +1053,6 @@
     margin-bottom: 1.2rem;
   }
 
-  .quiz-table-hint {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-    font-style: italic;
-    padding: 0.45rem 1rem;
-    border-bottom: 1px solid var(--border);
-    background: var(--paper);
-  }
-
   .quiz-table-header {
     display: grid;
     grid-template-columns: 1fr 1fr 2.5rem 2rem;
@@ -1147,21 +1108,6 @@
     font-weight: 400;
     color: var(--ink);
   }
-
-  .quiz-input-wrap { position: relative; }
-
-  .quiz-input {
-    font-family: 'Spectral', serif;
-    font-size: 1rem;
-    width: 100%;
-    padding: 0.3rem 0.5rem;
-    border: 1.5px solid var(--border);
-    border-radius: 3px;
-    background: var(--paper);
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.15s;
-  }
   .quiz-input:focus { border-color: var(--accent2); }
   .quiz-input.input-correct { border-color: var(--correct); background: rgba(39,174,96,0.06); }
   .quiz-input.input-wrong   { border-color: var(--accent); background: rgba(192,57,43,0.05); }
@@ -1175,20 +1121,6 @@
   }
 
   /* answer reveal below input */
-  .quiz-answer-reveal {
-    font-family: 'Spectral', serif;
-    font-size: 0.85rem;
-    color: var(--correct);
-    margin-top: 0.15rem;
-    display: none;
-  }
-  .quiz-answer-reveal.visible { display: block; }
-
-  .quiz-status-icon {
-    font-size: 1rem;
-    text-align: center;
-    line-height: 1;
-  }
 
   .quiz-struggle-btn {
     background: none;
@@ -1215,45 +1147,11 @@
     margin-bottom: 1.5rem;
   }
 
-  .quiz-score-box {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-  }
-
   .quiz-score-box strong { color: var(--correct); font-size: 1rem; }
   .quiz-score-box .wrong-count { color: var(--accent); }
 
   /* IPA bar — sticky-wrap trick for iOS keyboard survival */
-  .ipa-bar-wrap {
-    width: 100%;
-    max-width: 580px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    margin-bottom: 0.6rem;
-  }
-
-  .ipa-bar-toggle {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    background: var(--card-bg);
-    border: 1.5px solid var(--border);
-    border-radius: 2rem;
-    padding: 0.25rem 0.75rem;
-    color: var(--muted);
-    cursor: pointer;
-    margin-bottom: 0.4rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    transition: all 0.15s;
-  }
   .ipa-bar-toggle:hover { color: var(--ink); border-color: var(--ink); }
-  .ipa-bar-toggle.open { background: #d1d5db; border-color: #aaa; color: var(--ink); }
 
   .ipa-bar {
     position: relative;
@@ -1982,7 +1880,7 @@
 <noscript><p style="text-align:center;padding:2rem;font-family:monospace;color:#c0392b">JavaScript is required.</p></noscript>
 
 <script>
-const APP_VERSION = '7.69';
+const APP_VERSION = '7.80';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AUDIO MAP
@@ -3441,8 +3339,6 @@ function getEffectiveQuizWords() {
 
 // currently focused input (for IPA key injection)
 let activeQuizInput = null;
-let quizRevealed     = false;
-let quizShowingWrong = false;
 let jumpHistory      = [];  // [{symbol, filteredTags, idx}]
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -3817,7 +3713,7 @@ function tagStrip(card) {
   // Helper: pill as a jump button if a category card exists for it, else plain span
   function pill(cls, label, jumpTo) {
     if (jumpTo) return `<button class="pill-btn ${cls}" data-action="jump" data-symbol="${jumpTo}">${label}</button>`;
-    return `<span class="${cls}">${label}</span>`;
+    return `<button class="${cls}" style="cursor:default">${label}</button>`;
   }
   if (['lax','weak','mono','diph'].includes(card.tag)) {
     pills.push(pill('pill-cat', 'Vowel', 'Vowel quality'));
@@ -3828,7 +3724,7 @@ function tagStrip(card) {
       .replace('Tense diphthong','Tense diph')
       .trim();
     const vowelJump = { Lax:'Lax', Weak:'Weak', 'Tense mono':'Tense mono', 'Tense diph':'Tense diph' }[vowelLabel] || null;
-    pills.push(pill(`card-tag tag-${card.tag}`, vowelLabel, vowelJump));
+    pills.push(pill(`pill-type pill-${card.tag}`, vowelLabel, vowelJump));
   } else if (['plosive','fricative','affricate','nasal','approx'].includes(card.tag)) {
     const isObstr = ['plosive','fricative','affricate'].includes(card.tag);
     pills.push(pill('pill-cat', 'Consonant', null));
@@ -3836,7 +3732,7 @@ function tagStrip(card) {
       .replace(' (fortis)','').replace(' (lenis)','')
       .replace(' sonorant','').replace(' (syllabic)','');
     const mannerJump = { Plosive:'Plosive', Fricative:'Fricative', Affricate:'Affricate', Nasal:'Nasal', Approximant:'Approximant', 'Lateral approximant':'Approximant' }[mannerLabel] || null;
-    pills.push(pill(`card-tag tag-${card.tag}`, mannerLabel, mannerJump));
+    pills.push(pill(`pill-type pill-${card.tag}`, mannerLabel, mannerJump));
     if (card.tagLabel.includes('fortis')) pills.push(pill('pill-fortis', 'Fortis', 'Fortis'));
     if (card.tagLabel.includes('lenis'))  pills.push(pill('pill-lenis',  'Lenis',  'Lenis'));
     pills.push(pill(isObstr ? 'pill-obstr' : 'pill-sonor', isObstr ? 'Obstruent' : 'Sonorant', isObstr ? 'Obstruent' : 'Sonorant'));
@@ -3892,7 +3788,7 @@ function render() {
   let nameHtml;
   if (c.name && c.name.includes('·')) {
     const parts = c.name.split('·').map(p => p.trim());
-    nameHtml = `<div class="tag-strip" style="margin-bottom:0.5rem">${parts.map(p => `<span class="pill-cat" style="font-size:0.68rem;padding:0.25rem 0.65rem">${p}</span>`).join('')}</div>`;
+    nameHtml = `<div class="tag-strip" style="">${parts.map(p => `<span class="pill-cat" style="font-size:0.68rem;padding:0.25rem 0.65rem">${p}</span>`).join('')}</div>`;
   } else {
     nameHtml = `<div class="answer-name">${c.name}</div>`;
   }
@@ -4099,72 +3995,6 @@ function renderQuiz() {
   quizShowingWrong = false;
 }
 
-function quizCheck() {
-  const pageWords = getQuizGroup();
-  let correct = 0, filled = 0;
-
-  pageWords.forEach((item, i) => {
-    const rowId = `${quizLetter}-${i}`;
-    const input  = document.getElementById(`qinput-${rowId}`);
-    const status = document.getElementById(`qstatus-${rowId}`);
-    const row    = document.getElementById(`qrow-${rowId}`);
-    if (!input) return;
-    const val = input.value.trim();
-    if (!val) {
-      input.classList.remove('input-correct', 'input-wrong');
-      if (status) status.textContent = '';
-      if (row) row.classList.remove('row-correct', 'row-wrong');
-      return;
-    }
-    filled++;
-    const ok = val === input.dataset.answer.trim();
-    if (ok) correct++;
-    input.classList.toggle('input-correct', ok);
-    input.classList.toggle('input-wrong', !ok);
-    if (status) { status.textContent = ok ? '✓' : '✗'; status.style.color = ok ? 'var(--correct)' : 'var(--accent)'; }
-    if (row)    { row.classList.toggle('row-correct', ok); row.classList.toggle('row-wrong', !ok); }
-  });
-
-  const showWrong = document.getElementById('quizShowWrongBtn');
-  const markWrong = document.getElementById('quizMarkWrongBtn');
-  if (filled === 0) {
-    document.getElementById('quizScoreBox').innerHTML = '<em style="color:var(--muted)">Fill in some answers first</em>';
-    showWrong.style.display = markWrong.style.display = 'none';
-  } else {
-    document.getElementById('quizScoreBox').innerHTML =
-      `<strong>${correct}</strong> correct &nbsp;·&nbsp; <span class="wrong-count">${filled - correct}</span> wrong &nbsp; (of ${filled} filled)`;
-    const hasWrong = filled - correct > 0;
-    showWrong.style.display = markWrong.style.display = hasWrong ? '' : 'none';
-    quizShowingWrong = false;
-    showWrong.textContent = 'Show incorrect';
-    showWrong.classList.remove('active');
-  }
-}
-
-function quizToggleWrong() {
-  quizShowingWrong = !quizShowingWrong;
-  const btn = document.getElementById('quizShowWrongBtn');
-  btn.textContent = quizShowingWrong ? 'Show all' : 'Show incorrect';
-  btn.classList.toggle('active', quizShowingWrong);
-  getQuizGroup().forEach((item, i) => {
-    const row = document.getElementById(`qrow-${quizLetter}-${i}`);
-    if (row) row.style.display = quizShowingWrong && !row.classList.contains('row-wrong') ? 'none' : '';
-  });
-}
-
-function quizReveal() {
-  const pageWords = getQuizGroup();
-  quizRevealed = !quizRevealed;
-  pageWords.forEach((item, i) => {
-    const rowId = `${quizLetter}-${i}`;
-    const reveal = document.getElementById(`qreveal-${rowId}`);
-    const wCell  = document.querySelector(`#qrow-${rowId} .quiz-word`);
-    if (reveal) reveal.classList.toggle('visible', quizRevealed);
-    if (wCell)  wCell.classList.toggle('revealed', quizRevealed);
-  });
-  document.getElementById('quizRevealBtn').textContent = quizRevealed ? 'Hide answers' : 'Reveal answers';
-}
-
 function quizReset() {
   renderQuiz();
 }
@@ -4200,17 +4030,6 @@ function quizResetStruggle() {
     document.getElementById('quizStruggleToggle').classList.remove('active');
   }
   renderQuiz();
-}
-
-function quizMarkWrong() {
-  getQuizGroup().forEach((item, i) => {
-    const row = document.getElementById(`qrow-${quizLetter}-${i}`);
-    if (row && row.classList.contains('row-wrong')) quizStruggleIds.add(item.word);
-  });
-  saveQuizStruggle();
-  const btn = document.getElementById('quizMarkWrongBtn');
-  btn.textContent = '★ Marked!';
-  setTimeout(() => { btn.textContent = '★ Mark incorrect as review'; }, 1500);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -4737,6 +4556,28 @@ function resetEditModal() {
   renderQuiz();
 }
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SWIPE SUPPORT
+// ─────────────────────────────────────────────────────────────────────────────
+function addSwipeHandler(el, onLeft, onRight) {
+  let startX = 0, startY = 0, startTarget = null;
+  el.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    startTarget = e.target;
+  }, { passive: true });
+  el.addEventListener('touchend', e => {
+    // Ignore if touch started inside a scrollable rules box
+    if (startTarget && startTarget.closest('.card-rules')) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) < 40) return;            // too short
+    if (Math.abs(dx) < Math.abs(dy)) return;  // more vertical than horizontal
+    if (dx < 0) onLeft();
+    else        onRight();
+  }, { passive: true });
+}
 // ─────────────────────────────────────────────────────────────────────────────
 // KEYBOARD
 // ─────────────────────────────────────────────────────────────────────────────
@@ -4794,6 +4635,19 @@ try {
   });
   $el('struggleCount').textContent = struggleIds.size;
   $el('quizStruggleCount').textContent = quizStruggleIds.size;
+  // Swipe on theory card: left = next, right = prev
+  addSwipeHandler(
+    document.getElementById('card'),
+    () => navigate(1),
+    () => navigate(-1)
+  );
+  // Swipe on practice card: left = next, right = prev
+  addSwipeHandler(
+    document.getElementById('practiceCard'),
+    () => practiceNext(),
+    () => practicePrev()
+  );
+
   $el('btnModeFlash').addEventListener('click', () => setMode('flash'));
   $el('btnModeQuiz').addEventListener('click',  () => setMode('quiz'));
   $el('subModeTable').addEventListener('click',    () => setQuizSubMode('table'));
