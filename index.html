@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RP IPA Flashcards v7.83 -->
+<!-- RP IPA Flashcards v7.84 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1643,7 +1643,7 @@
   </div>
 
   <div class="scene">
-    <div class="card" id="card" onclick="flip()">
+    <div class="card" id="card" onclick="if(!event.target.closest('[data-action]'))flip()">
       <div class="card-spacer" id="cardSpacer"></div>
       <div class="card-face card-front" id="front"></div>
       <div class="card-face card-back"  id="back"></div>
@@ -1930,7 +1930,7 @@
 <noscript><p style="text-align:center;padding:2rem;font-family:monospace;color:#c0392b">JavaScript is required.</p></noscript>
 
 <script>
-const APP_VERSION = '7.83';
+const APP_VERSION = '7.84';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AUDIO MAP
@@ -4652,34 +4652,29 @@ function playAllCard() {
   const url = AUDIO[card.symbol];
 
   if (!url) {
-    // No audio — just wait the delay then advance
     playAllTimer = setTimeout(playAllAdvance, delay);
     return;
   }
 
-  stopAudio();
+  // Use own audio object — independent of currentAudio so stopAudio() on manual
+  // play-sound doesn't kill the playAll chain
   const audio = new Audio();
-  currentAudio = audio;
-  let started = false;
+  let done = false;
 
-  audio.onended = () => {
-    currentAudio = null;
+  function onDone() {
+    if (done) return;
+    done = true;
     if (!playAllActive) return;
     playAllTimer = setTimeout(playAllAdvance, delay);
+  }
+
+  audio.onended  = onDone;
+  audio.onerror  = onDone;
+  audio.oncanplaythrough = () => {
+    audio.play().catch(onDone);
   };
-  audio.onerror = () => {
-    currentAudio = null;
-    if (!playAllActive) return;
-    playAllTimer = setTimeout(playAllAdvance, delay);
-  };
-  audio.oncanplay = () => {
-    if (started) return;
-    started = true;
-    audio.play().catch(() => {
-      currentAudio = null;
-      if (playAllActive) playAllTimer = setTimeout(playAllAdvance, delay);
-    });
-  };
+  // Fallback: if canplaythrough never fires within 3s, advance anyway
+  playAllTimer = setTimeout(() => { if (!done) onDone(); }, 3000 + delay);
   audio.src = url;
   audio.load();
 }
