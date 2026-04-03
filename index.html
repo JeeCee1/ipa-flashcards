@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RP IPA Flashcards v11.302 | cards v1.17 | words v1.7 -->
+<!-- RP IPA Flashcards v11.304 | cards v1.17 | words v1.8 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1922,6 +1922,35 @@
   .wordlist-study-table.meaning-visible .wordlist-study-row {
     grid-template-columns: minmax(6rem,0.7fr) 1fr 1fr 2rem 2.5rem 2.5rem 1rem;
   }
+  .wordlist-study-filter-row {
+    display: grid;
+    grid-template-columns: minmax(6rem,0.7fr) 1fr 2rem 2.5rem 2.5rem 1rem;
+    padding: 0.3rem 0 0.3rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--paper);
+    gap: 0.25rem;
+    align-items: center;
+  }
+  .wordlist-study-table.meaning-visible .wordlist-study-filter-row {
+    grid-template-columns: minmax(6rem,0.7fr) 1fr 1fr 2rem 2.5rem 2.5rem 1rem;
+  }
+  .wordlist-filter-input {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.72rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.18rem 0.4rem;
+    background: var(--bg);
+    color: var(--ink);
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+  }
+  .wordlist-filter-input:focus {
+    border-color: var(--accent2);
+    box-shadow: 0 0 0 2px var(--accent2-faint);
+  }
+  .wordlist-filter-input::placeholder { color: var(--muted); opacity: 0.7; }
   .wordlist-study-col-meaning,
   .wordlist-study-cell-meaning { display: none; }
   .wordlist-study-table.meaning-visible .wordlist-study-col-meaning,
@@ -3648,6 +3677,10 @@
       <span id="wordlistStudyMicHeader" class="wordlist-study-col-label" style="font-size:0.82rem;opacity:1;padding:0 0.15rem;display:flex;align-items:center;gap:0.3rem">🎤<button id="stopAssessBtn" class="ctrl-btn" style="display:none;font-size:0.58rem;padding:0.1rem 0.4rem;line-height:1" title="Stop assessment sequence">■ Stop</button></span>
       <span class="wordlist-study-col-label" style="text-align:right">★</span>
     </div>
+    <div class="wordlist-study-filter-row" id="wordlistStudyFilterRow">
+      <input class="wordlist-filter-input" id="wordlistFilterWord" placeholder="filter word…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      <input class="wordlist-filter-input" id="wordlistFilterIpa" placeholder="filter IPA…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    </div>
     <div id="wordlistStudyRows"></div>
   </div>
 
@@ -4424,7 +4457,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '11.302';
+const APP_VERSION = '11.304';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -4769,6 +4802,8 @@ let theoryReviewOnly = false;
 let wordlistStudyLetter       = 'A';  // start on first letter, not All — avoids rendering all 1200+ rows at once
 let wordlistStudyReviewMode = false;
 let wordlistStudyShowEdited   = false;
+let wordlistFilterWordVal     = '';
+let wordlistFilterIpaVal      = '';
 let theoryHideNameArtic       = lsGet('ipa_hide_name_artic','') === 'true';
 let wordlistReviewIds      = new Set(lsGetJSON('ipa_wordlist_review', []));
 let _wordlistStudyDirty    = true;  // true = rows need rebuild; set false after render
@@ -5575,6 +5610,14 @@ function getWordlistStudySource() {
   const all = getEffectiveWordlistWords();
   let src = wordlistStudyReviewMode ? all.filter(w => wordlistReviewIds.has(w.word)) : all;
   if (wordlistStudyShowEdited) src = src.filter(w => w.edited || w.generated);
+  if (wordlistFilterWordVal) {
+    const fw = wordlistFilterWordVal.toLowerCase();
+    src = src.filter(w => w.word.toLowerCase().includes(fw));
+  }
+  if (wordlistFilterIpaVal) {
+    const fi = wordlistFilterIpaVal;
+    src = src.filter(w => w.ipa && w.ipa.includes(fi));
+  }
   return src;
 }
 
@@ -5665,7 +5708,7 @@ function renderWordlistStudy() {
   const pageWords = wordlistStudyLetter ? src.filter(w => w.word[0].toUpperCase() === wordlistStudyLetter) : src;
 
   // ── Item 17: skip expensive row rebuild on mode switch if nothing changed ──
-  const renderKey = `${wordlistStudyLetter}|${wordlistStudyReviewMode}|${wordlistStudyShowEdited}`;
+  const renderKey = `${wordlistStudyLetter}|${wordlistStudyReviewMode}|${wordlistStudyShowEdited}|${wordlistFilterWordVal}|${wordlistFilterIpaVal}`;
   const skipRows = !_wordlistStudyDirty && $el('wordlistStudyRows').dataset.renderKey === renderKey;
   _wordlistStudyDirty = false;
 
@@ -5791,7 +5834,7 @@ function renderWordlistStudy() {
     // Edited row highlight
     if (item.edited) row.classList.add('row-edited');
     // Generated IPA highlight (IPA not from book source)
-    if (item.generated) row.classList.add('row-generated');
+    if (item.ipa_generated) row.classList.add('row-generated');
 
     // TTS speaker button
     const ttsCell = document.createElement('div');
@@ -9069,10 +9112,29 @@ try {
     _wordlistStudyDirty = true;
     $el('wordlistStudyShowEditedBtn').classList.toggle('active', wordlistStudyShowEdited);
     $el('wordlistStudyShowEditedBtn').textContent = wordlistStudyShowEdited ? 'Show all' : 'Show added/edited';
-    wordlistStudyLetter = '';
     _wordlistStudyDirty = true;
     renderWordlistStudy();
   });
+
+  // Word/IPA filter inputs
+  const wordFilterInput = $el('wordlistFilterWord');
+  const ipaFilterInput  = $el('wordlistFilterIpa');
+  if (wordFilterInput) {
+    wordFilterInput.addEventListener('input', () => {
+      wordlistFilterWordVal = wordFilterInput.value.trim();
+      wordlistStudyLetter = '';
+      _wordlistStudyDirty = true;
+      renderWordlistStudy();
+    });
+  }
+  if (ipaFilterInput) {
+    ipaFilterInput.addEventListener('input', () => {
+      wordlistFilterIpaVal = ipaFilterInput.value.trim();
+      wordlistStudyLetter = '';
+      _wordlistStudyDirty = true;
+      renderWordlistStudy();
+    });
+  }
 
   // Add word button
   window.toggleStudyActions = function() {
