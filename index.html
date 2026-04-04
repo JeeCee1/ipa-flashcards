@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- RP IPA Flashcards v11.304 | cards v1.17 | words v1.8 -->
+<!-- RP IPA Flashcards v11.305 | cards v1.17 | words v1.8 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -4457,7 +4457,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '11.304';
+const APP_VERSION = '11.305';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -8626,13 +8626,13 @@ const MORE_SECTIONS = [
     ['endings-s-plural'],
   ]},
   { label: 'Transcription', filterId: 'trans', rows: [
-    ['transcription', 'lpd'],
+    ['transcription', 'lpd', 'placenames'],
   ]},
   { label: 'Silent letters', filterId: 'silent', rows: [
     ['silent-h', 'silent-clusters'],
   ]},
   { label: 'Concepts', filterId: 'cat', rows: [
-    ['phoneme', 'syllable', 'stress'],
+    ['phoneme', 'syllable', 'stress', 'stress-homographs', 'stress-abl'],
     ['vowel-position', 'vowel-quality', 'roundedness', 'place', 'manner'],
     ['fortis-lenis', 'voicing-independence', 'airflow-obstruction'],
   ]},
@@ -10774,8 +10774,8 @@ function syncCharts() {
     'lax','mono','diph','weak',
     'obstruent','sonorant','plosive','fricative','affricate','nasal','approx','fortis','lenis',
     'endings-s-plural','endings','grammatical-s','grammatical-ed',
-    'transcription','lpd','silent-h','silent-clusters',
-    'phoneme','syllable','stress','vowel-position','vowel-quality','roundedness','place','manner','lateral','syllabic',
+    'transcription','lpd','placenames','silent-h','silent-clusters',
+    'phoneme','syllable','stress','stress-homographs','stress-abl','vowel-position','vowel-quality','roundedness','place','manner','lateral','syllabic',
     'fortis-lenis','voicing-independence','airflow-obstruction',
     'homographs','homoph-homogr','phon-interf','accent-dialect',
   ]);
