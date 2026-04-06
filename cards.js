@@ -1,5 +1,5 @@
 // RP IPA Flashcards — card data
-const CARDS_VERSION = '1.21';
+const CARDS_VERSION = '1.22';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FLASHCARD DATA
@@ -1825,7 +1825,7 @@ const theoryCards = [
     examples:[{w:'',s:'m',e:' map'},{w:'',s:'n',e:' nap'},{w:'',s:'ŋ',e:' pang'}],
     rules:'Nasals have a <b>complete oral closure</b> while the velum (soft palate) is lowered, letting air pass through the nose. They are always voiced.<br><b>/ŋ/</b> never occurs word-initially in English.',
     rulesSrc:["TB p.25", "TB p.24"],
-    images:[{src:'./images/Nasal.png', line:0}],
+    images:[{src:'./images/nasal.png', line:0}],
     related:[
       {symbol:'m',          reason:'Bilabial nasal',                 src:'TB'},
       {symbol:'n',          reason:'Alveolar nasal',                 src:'TB'},
@@ -1884,7 +1884,7 @@ const theoryCards = [
     examples:[{w:'',s:'p b',e:' bilabial'},{w:'',s:'t d',e:' alveolar'},{w:'',s:'k ɡ',e:' velar'}],
     rules:'<b>Alveolar</b> — tongue tip against the ridge just behind the upper teeth: /t d s z n l r/.<br><b>Bilabial</b> — both lips come together: /p b m/.<br><b>Dental</b> — tongue tip near or between the teeth: /θ ð/.<br><b>Glottal</b> — constriction at the larynx itself: /h/.<br><b>Labial-velar</b> — simultaneous lip rounding and back-tongue raising: /w/.<br><b>Labiodental</b> — upper teeth against lower lip: /f v/.<br><b>Palatal</b> — tongue body raised toward the hard palate: /j/.<br><b>Postalveolar</b> — tongue blade just behind the alveolar ridge: /ʃ ʒ tʃ dʒ/.<br><b>Velar</b> — back of tongue against the soft palate: /k ɡ ŋ/.<br><b>Terminology note:</b> the postalveolar sounds /ʃ ʒ tʃ dʒ/ are also commonly called <em>palato-alveolar</em> in the British RP tradition (Gimson, Cruttenden, Roach), reflecting their dual alveolar–palatal articulation. This course uses <em>postalveolar</em>, the official IPA term also preferred by Wells in the LPD. Both refer to the same sounds; the difference is one of tradition, not phonetic disagreement.',
     rulesSrc:["TB p.24","TB p.24","TB p.24","TB p.24","TB p.24","TB p.24","TB p.24","TB p.24","TB p.24","WP"],
-    images:[{src:'./images/Place-of-Articulation/Alveolar.jpg',       line:0},{src:'./images/Place-of-Articulation/Bilabial.jpg',        line:1},{src:'./images/Place-of-Articulation/Dental.jpg',          line:2},{src:'./images/Place-of-Articulation/Glottal.jpg',         line:3},{src:'./images/Place-of-Articulation/Labiodental.jpg',     line:5},{src:'./images/Place-of-Articulation/Palatal.jpg',         line:6},{src:'./images/Place-of-Articulation/Palato-Alveolar.jpg', line:7},{src:'./images/Place-of-Articulation/Velar.jpg',           line:8},],
+    images:[{src:'./images/place-of-articulation/alveolar.jpg',       line:0},{src:'./images/place-of-articulation/bilabial.jpg',        line:1},{src:'./images/place-of-articulation/dental.jpg',          line:2},{src:'./images/place-of-articulation/glottal.jpg',         line:3},{src:'./images/place-of-articulation/labiodental.jpg',     line:5},{src:'./images/place-of-articulation/palatal.jpg',         line:6},{src:'./images/place-of-articulation/palato-alveolar.jpg', line:7},{src:'./images/place-of-articulation/velar.jpg',           line:8},],
     related:[
       {symbol:'p',  reason:'Bilabial fortis plosive',     src:'TB'},
       {symbol:'t',  reason:'Alveolar fortis plosive',     src:'TB'},
