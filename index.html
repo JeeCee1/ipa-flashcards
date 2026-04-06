@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- RP IPA Flashcards v11.305 | cards v1.17 | words v1.8 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -359,6 +358,16 @@
   .more-pills-col { display: flex; flex-direction: column; flex: 1; }
   .more-pills-col .more-pills { border-bottom: 1px dashed var(--border); }
   .more-pills-col.no-divider .more-pills { border-bottom: none; padding-top: 0.2rem; padding-bottom: 0.2rem; }
+  .more-sub-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.35rem 0.5rem 0.1rem;
+    opacity: 0.7;
+  }
   .more-pills-col.no-divider .more-pills:first-child { padding-top: 0.5rem; }
   .more-pills-col.no-divider .more-pills:last-child { padding-bottom: 0.5rem; }
   .more-pill {
@@ -2043,7 +2052,23 @@
     transition: max-height 0.2s ease;
   }
   .wordlist-study-actions.open {
-    max-height: 12rem;
+    max-height: 22rem;
+  }
+  .wl-tag-bar-divider {
+    width: 100%;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.4rem 0 0.15rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.2rem;
+  }
+  .wordlist-study-actions .wl-tag-bar {
+    padding: 0;
+    width: 100%;
   }
   .wordlist-study-actions .ctrl-btn {
     flex: 1 1 calc(50% - 0.5rem);
@@ -2164,6 +2189,42 @@
   }
 
   /* ── WORD LIST SUB-MODE SWITCHER ── */
+  .wl-tag-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    width: 100%;
+    max-width: var(--app-width);
+    padding: 0.4rem 0.2rem 0.2rem;
+  }
+  .wl-tag-bar-pill {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.55rem;
+    border-radius: 2rem;
+    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .wl-tag-bar-pill:hover   { border-color: var(--accent2); color: var(--accent2); }
+  .wl-tag-bar-pill.active  { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+  .wl-tag-bar-pill.active.homograph    { background: var(--accent2);    border-color: var(--accent2); }
+  .wl-tag-bar-pill.active.stress-shift { background: var(--rule-c);     border-color: var(--rule-c); }
+  .wl-tag-bar-pill.active.voicing      { background: var(--lenis-c);    border-color: var(--lenis-c); }
+  .wl-tag-bar-pill.active.vowel-change { background: var(--diph-c);     border-color: var(--diph-c); }
+  .wl-tag-bar-pill.active.plural       { background: var(--fric-c);     border-color: var(--fric-c); }
+  .wl-tag-bar-pill.active.past         { background: var(--plos-c);     border-color: var(--plos-c); }
+  .wl-tag-bar-pill.active.placename    { background: var(--nasal-c);    border-color: var(--nasal-c); }
+  .wl-tag-bar-pill.active.proper-name  { background: var(--muted);      border-color: var(--muted); }
+  .wl-tag-bar-pill.active.verb         { background: var(--accent-dark);border-color: var(--accent-dark); }
+  .wl-tag-bar-pill.active.noun         { background: var(--weak-c);     border-color: var(--weak-c); }
+  .wl-tag-bar-pill.active.adj          { background: var(--affr-c);     border-color: var(--affr-c); }
   .wordlist-submode-switcher {
     display: flex;
     gap: 0.4rem;
@@ -2277,18 +2338,18 @@
 
   .wordlist-quiz-card {
     width: 100%;
-    height: 260px;
+    height: 300px;
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
+    cursor: default;
   }
   .wordlist-quiz-card.flipped { transform: rotateY(180deg); }
 
   .wordlist-quiz-face {
     position: absolute;
     width: 100%;
-    height: 260px;
+    height: 300px;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     background: var(--card-bg);
@@ -2322,7 +2383,7 @@
     box-sizing: border-box;
   }
   .wordlist-quiz-main-zone {
-    flex: 0 0 auto;
+    flex: 0 0 140px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2331,6 +2392,7 @@
     gap: 1rem;
     width: 100%;
     box-sizing: border-box;
+    overflow: hidden;
   }
   .wordlist-quiz-bottom-zone {
     flex: 1 1 0;
@@ -2358,6 +2420,44 @@
   }
   .wordlist-quiz-word:hover { color: var(--accent2); }
 
+  .wordlist-quiz-back-pair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+  }
+  .wordlist-quiz-pair-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+  .wordlist-quiz-pair-col .wordlist-quiz-input {
+    width: 90%;
+    max-width: none;
+    box-sizing: border-box;
+  }
+  .wordlist-quiz-back-pair .wordlist-quiz-back-word {
+    font-size: clamp(1rem, 4vw, 1.6rem);
+  }
+  .wordlist-quiz-back-pair .wordlist-quiz-back-ipa {
+    font-size: 0.95rem;
+    padding: 0.3rem 0.5rem;
+  }
+  .wordlist-quiz-pair-divider {
+    width: 1px;
+    height: 60px;
+    background: var(--border);
+    flex-shrink: 0;
+    margin: 0 0.75rem;
+  }
+  .wordlist-quiz-back-single {
+    display: contents;
+  }
   .wordlist-quiz-back-ipa {
     font-family: 'Noto Serif', serif;
     font-size: 1.25rem;
@@ -2412,6 +2512,29 @@
     font-size: 0.85rem;
     text-align: center;
     min-height: 1.4rem;
+    width: 100%;
+  }
+  .quiz-wrong-pair-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+  }
+  .quiz-wrong-pair-row .quiz-wrong-col {
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+  .quiz-wrong-pair-row .quiz-wrong-label {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 0 0.5rem;
+    color: var(--accent);
+  }
+  .quiz-wrong-pair-row .correct-ipa {
+    font-size: 1rem;
+    margin-left: 0;
   }
   .wordlist-quiz-result .correct-ipa {
     display: inline;
@@ -2433,6 +2556,34 @@
     align-items: center;
     justify-content: center;
   }
+  .wordlist-quiz-tag-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  .wl-tag-pill {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2rem;
+    border: 1.5px solid;
+  }
+  .wl-tag-pill.homograph    { color: var(--accent2);    background: var(--accent2-tint);  border-color: var(--accent2); }
+  .wl-tag-pill.stress-shift { color: var(--rule-c);     background: var(--mono-bg);       border-color: var(--mono-b); }
+  .wl-tag-pill.voicing      { color: var(--lenis-c);    background: var(--appr-bg);       border-color: var(--appr-b); }
+  .wl-tag-pill.vowel-change { color: var(--diph-c);     background: var(--diph-bg);       border-color: var(--diph-b); }
+  .wl-tag-pill.plural       { color: var(--fric-c);     background: var(--fric-ft);       border-color: var(--fric-b); }
+  .wl-tag-pill.past         { color: var(--plos-c);     background: var(--plos-ft);       border-color: var(--plos-b); }
+  .wl-tag-pill.placename    { color: var(--nasal-c);    background: var(--nasal-bg);      border-color: var(--nasal-b); }
+  .wl-tag-pill.proper-name  { color: var(--muted);      background: var(--grey-bg);       border-color: var(--grey-light); }
+  .wl-tag-pill.verb         { color: var(--accent-dark);background: var(--fortis-bg);     border-color: var(--accent); }
+  .wl-tag-pill.noun         { color: var(--weak-c);     background: var(--weak-bg);       border-color: var(--weak-b); }
+  .wl-tag-pill.adj          { color: var(--affr-c);     background: var(--affr-ft);       border-color: var(--affr-b); }
   .wordlist-quiz-back-meaning {
     font-family: 'Noto Serif', serif;
     font-size: 1.1rem;
@@ -3405,12 +3556,14 @@
         <!-- DIPHTHONG ARROWS — start/end at node edge centers -->
         <line class="diph-arr" x1="191" y1="116" x2="203" y2="102"/>
         <line class="diph-arr" x1="244" y1="295" x2="203" y2="102"/>
-        <line class="diph-arr" x1="479" y1="221" x2="250" y2="87"/>
+        <line class="diph-arr" x1="494" y1="206" x2="203" y2="102"/>
         <line class="diph-arr" x1="276" y1="295" x2="408" y2="102"/>
         <line class="diph-arr" x1="347" y1="161" x2="408" y2="102"/>
         <line class="diph-arr" x1="235" y1="102" x2="315" y2="161"/>
         <line class="diph-arr" x1="159" y1="146" x2="300" y2="176"/>
         <line class="diph-arr" x1="376" y1="102" x2="315" y2="161"/>
+        <!-- LENGTH MARK NODE — outside trapezium, open-mid/front height -->
+        <g class="vpc-vn" data-sym="ː" data-filter-tag="mono" onclick="jumpToSymbol('ː',true)"><rect x="109" y="209" width="30" height="30" fill="var(--mono-bg)" stroke="var(--mono-b)" stroke-width="1.5"/><text x="124" y="229" text-anchor="middle" font-family="Source Code Pro,monospace" font-size="19" fill="var(--mono-c)">ː</text></g>
         <!-- VOWEL NODES -->
         <g class="vpc-vn" data-sym="iː" data-filter-tag="mono" onclick="jumpToSymbol('iː',true)"><rect x="77" y="27" width="30" height="30" fill="var(--mono-bg)" stroke="var(--mono-b)" stroke-width="1.5"/><text x="92"  y="47"  text-anchor="middle" font-family="Source Code Pro,monospace" font-size="19" fill="var(--mono-c)">iː</text></g>
         <g class="vpc-vn" data-sym="i" data-filter-tag="weak"  onclick="jumpToSymbol('i',true)"> <rect x="109" y="27" width="30" height="30" fill="var(--weak-bg)" stroke="var(--weak-b)" stroke-width="1.5"/><text x="124" y="47"  text-anchor="middle" font-family="Source Code Pro,monospace" font-size="19" fill="var(--weak-c)">i</text></g>
@@ -3479,58 +3632,58 @@
         </thead>
         <tbody>
           <tr class="r-plos r-nasal r-appr">
-            <td class="place-lbl">Bilabial</td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('p',true)" data-filter-tag="plosive,fortis">p</span><span class="vpc-pill ln" onclick="jumpToSymbol('b',true)" data-filter-tag="plosive,lenis">b</span></div></td>
+            <td class="place-lbl" onclick="setFilter('bilabial')" data-filter="bilabial" style="cursor:pointer" title="Bilabial — click to filter">Bilabial</td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('p',true)" data-filter-tag="plosive,fortis,bilabial">p</span><span class="vpc-pill ln" onclick="jumpToSymbol('b',true)" data-filter-tag="plosive,lenis,bilabial">b</span></div></td>
             <td class="empty cell"></td><td class="empty cell"></td>
-            <td class="cell r-nasal"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('m',true)" data-filter-tag="nasal">m</span></div></td>
+            <td class="cell r-nasal"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('m',true)" data-filter-tag="nasal,bilabial">m</span></div></td>
             <td class="empty cell"></td><td class="empty cell"></td>
           </tr>
           <tr class="r-fric">
-            <td class="place-lbl">Labio­dental</td>
+            <td class="place-lbl" onclick="setFilter('labiodental')" data-filter="labiodental" style="cursor:pointer" title="Labio­dental — click to filter">Labio­dental</td>
             <td class="empty cell"></td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('f',true)" data-filter-tag="fricative,fortis">f</span><span class="vpc-pill ln" onclick="jumpToSymbol('v',true)" data-filter-tag="fricative,lenis">v</span></div></td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('f',true)" data-filter-tag="fricative,fortis,labiodental">f</span><span class="vpc-pill ln" onclick="jumpToSymbol('v',true)" data-filter-tag="fricative,lenis,labiodental">v</span></div></td>
             <td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td>
           </tr>
           <tr class="r-fric">
-            <td class="place-lbl">Dental</td>
+            <td class="place-lbl" onclick="setFilter('dental')" data-filter="dental" style="cursor:pointer" title="Dental — click to filter">Dental</td>
             <td class="empty cell"></td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('θ',true)" data-filter-tag="fricative,fortis">θ</span><span class="vpc-pill ln" onclick="jumpToSymbol('ð',true)" data-filter-tag="fricative,lenis">ð</span></div></td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('θ',true)" data-filter-tag="fricative,fortis,dental">θ</span><span class="vpc-pill ln" onclick="jumpToSymbol('ð',true)" data-filter-tag="fricative,lenis,dental">ð</span></div></td>
             <td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td>
           </tr>
           <tr class="r-plos r-fric r-nasal r-appr r-lat">
-            <td class="place-lbl">Alveolar</td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('t',true)" data-filter-tag="plosive,fortis">t</span><span class="vpc-pill ln" onclick="jumpToSymbol('d',true)" data-filter-tag="plosive,lenis">d</span></div></td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('s',true)" data-filter-tag="fricative,fortis">s</span><span class="vpc-pill ln" onclick="jumpToSymbol('z',true)" data-filter-tag="fricative,lenis">z</span></div></td>
+            <td class="place-lbl" onclick="setFilter('alveolar')" data-filter="alveolar" style="cursor:pointer" title="Alveolar — click to filter">Alveolar</td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('t',true)" data-filter-tag="plosive,fortis,alveolar">t</span><span class="vpc-pill ln" onclick="jumpToSymbol('d',true)" data-filter-tag="plosive,lenis,alveolar">d</span></div></td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('s',true)" data-filter-tag="fricative,fortis,alveolar">s</span><span class="vpc-pill ln" onclick="jumpToSymbol('z',true)" data-filter-tag="fricative,lenis,alveolar">z</span></div></td>
             <td class="empty cell"></td>
-            <td class="cell r-nasal"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('n',true)" data-filter-tag="nasal">n</span><span class="vpc-pill syll" onclick="jumpToSymbol('n̩',true)" data-filter-tag="nasal,syllabic">n̩</span></div></td>
-            <td class="cell r-appr"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('r',true)" data-filter-tag="approx">r</span></div></td>
-            <td class="cell r-lat"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('l',true)" data-filter-tag="lateral">l</span><span class="vpc-pill syll" onclick="jumpToSymbol('l̩',true)" data-filter-tag="lateral,syllabic">l̩</span></div></td>
+            <td class="cell r-nasal"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('n',true)" data-filter-tag="nasal,alveolar">n</span><span class="vpc-pill syll" onclick="jumpToSymbol('n̩',true)" data-filter-tag="nasal,syllabic,alveolar">n̩</span></div></td>
+            <td class="cell r-appr"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('r',true)" data-filter-tag="approx,alveolar">r</span></div></td>
+            <td class="cell r-lat"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('l',true)" data-filter-tag="lateral,alveolar">l</span><span class="vpc-pill syll" onclick="jumpToSymbol('l̩',true)" data-filter-tag="lateral,syllabic,alveolar">l̩</span></div></td>
           </tr>
           <tr class="r-fric r-affr">
-            <td class="place-lbl">Post-alveolar</td>
+            <td class="place-lbl" onclick="setFilter('post-alveolar')" data-filter="post-alveolar" style="cursor:pointer" title="Post-alveolar — click to filter">Post-alveolar</td>
             <td class="empty cell"></td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('ʃ',true)" data-filter-tag="fricative,fortis">ʃ</span><span class="vpc-pill ln" onclick="jumpToSymbol('ʒ',true)" data-filter-tag="fricative,lenis">ʒ</span></div></td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('tʃ',true)" data-filter-tag="affricate,fortis">tʃ</span><span class="vpc-pill ln" onclick="jumpToSymbol('dʒ',true)" data-filter-tag="affricate,lenis">dʒ</span></div></td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('ʃ',true)" data-filter-tag="fricative,fortis,post-alveolar">ʃ</span><span class="vpc-pill ln" onclick="jumpToSymbol('ʒ',true)" data-filter-tag="fricative,lenis,post-alveolar">ʒ</span></div></td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('tʃ',true)" data-filter-tag="affricate,fortis,post-alveolar">tʃ</span><span class="vpc-pill ln" onclick="jumpToSymbol('dʒ',true)" data-filter-tag="affricate,lenis,post-alveolar">dʒ</span></div></td>
             <td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td>
           </tr>
           <tr class="r-appr">
-            <td class="place-lbl">Palatal</td>
+            <td class="place-lbl" onclick="setFilter('palatal')" data-filter="palatal" style="cursor:pointer" title="Palatal — click to filter">Palatal</td>
             <td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td>
-            <td class="cell r-appr"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('j',true)" data-filter-tag="approx">j</span></div></td>
+            <td class="cell r-appr"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('j',true)" data-filter-tag="approx,palatal">j</span></div></td>
             <td class="empty cell"></td>
           </tr>
           <tr class="r-plos r-nasal r-appr">
-            <td class="place-lbl">Velar</td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('k',true)" data-filter-tag="plosive,fortis">k</span><span class="vpc-pill ln" onclick="jumpToSymbol('ɡ',true)" data-filter-tag="plosive,lenis">ɡ</span></div></td>
+            <td class="place-lbl" onclick="setFilter('velar')" data-filter="velar" style="cursor:pointer" title="Velar — click to filter">Velar</td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('k',true)" data-filter-tag="plosive,fortis,velar">k</span><span class="vpc-pill ln" onclick="jumpToSymbol('ɡ',true)" data-filter-tag="plosive,lenis,velar">ɡ</span></div></td>
             <td class="empty cell"></td><td class="empty cell"></td>
-            <td class="cell r-nasal"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('ŋ',true)" data-filter-tag="nasal">ŋ</span></div></td>
-            <td class="cell r-appr"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('w',true)" data-filter-tag="approx">w</span></div></td>
+            <td class="cell r-nasal"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('ŋ',true)" data-filter-tag="nasal,velar">ŋ</span></div></td>
+            <td class="cell r-appr"><div class="vpc-cell-inner"><span class="vpc-pill" onclick="jumpToSymbol('w',true)" data-filter-tag="approx,labio-velar">w</span></div></td>
             <td class="empty cell"></td>
           </tr>
           <tr class="r-fric">
-            <td class="place-lbl">Glottal</td>
+            <td class="place-lbl" onclick="setFilter('glottal')" data-filter="glottal" style="cursor:pointer" title="Glottal — click to filter">Glottal</td>
             <td class="empty cell"></td>
-            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('h',true)" data-filter-tag="fricative,fortis">h</span></div></td>
+            <td class="cell"><div class="vpc-cell-inner"><span class="vpc-pill ft" onclick="jumpToSymbol('h',true)" data-filter-tag="fricative,fortis,glottal">h</span></div></td>
             <td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td><td class="empty cell"></td>
           </tr>
         </tbody>
@@ -3661,6 +3814,8 @@
       <button class="ctrl-btn" id="wordlistStudyResetPlayedBtn">Reset played</button>
       <button class="ctrl-btn secondary" id="wordlistStudyAddWordBtn">+ Add word</button>
       <button class="ctrl-btn" id="pronResetScoresBtn" title="Reset all pronunciation scores">Reset pron scores</button>
+      <div class="wl-tag-bar-divider">Filter by type</div>
+      <div class="wl-tag-bar" id="wlTagBar"></div>
     </div>
   </div>
 
@@ -3680,7 +3835,9 @@
     <div class="wordlist-study-filter-row" id="wordlistStudyFilterRow">
       <input class="wordlist-filter-input" id="wordlistFilterWord" placeholder="filter word…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
       <input class="wordlist-filter-input" id="wordlistFilterIpa" placeholder="filter IPA…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+
     </div>
+    <div class="wordlist-quiz-ipa-bar" id="wordlistFilterIpaBar" style="display:none"></div>
     <div id="wordlistStudyRows"></div>
   </div>
 
@@ -3710,7 +3867,16 @@
     <!-- Wordlist quiz alphabet index -->
     <div class="wordlist-quiz-alpha-index" id="wordlistQuizAlphaIndex"></div>
 
-    <p class="kbd-hint nav-hint" style="margin-bottom:0.6rem">Tap <strong>word</strong> or <svg width="32" height="16" viewBox="0 0 42 20" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;display:inline-block"><rect x="1" y="1" width="40" height="13" rx="3" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.5"/><rect x="5" y="12" width="32" height="5" rx="2" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1"/><line x1="5" y1="12" x2="1" y2="14" stroke="var(--border)" stroke-width="1"/><line x1="37" y1="12" x2="41" y2="14" stroke="var(--border)" stroke-width="1"/><text x="21" y="10" text-anchor="middle" fill="var(--muted)" font-family="Source Code Pro,monospace" font-size="6" font-weight="700" letter-spacing="0.05em">SPACE</text></svg> to reveal IPA &nbsp;·&nbsp; Tap <strong>left/right</strong> or swipe to navigate</p>
+    <p class="kbd-hint nav-hint" style="margin-bottom:0.6rem">Tap <strong>word</strong> or <svg width="32" height="16" viewBox="0 0 42 20" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;display:inline-block"><rect x="1" y="1" width="40" height="13" rx="3" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1.5"/><rect x="5" y="12" width="32" height="5" rx="2" fill="var(--card-bg)" stroke="var(--border)" stroke-width="1"/><line x1="5" y1="12" x2="1" y2="14" stroke="var(--border)" stroke-width="1"/><line x1="37" y1="12" x2="41" y2="14" stroke="var(--border)" stroke-width="1"/><text x="21" y="10" text-anchor="middle" fill="var(--muted)" font-family="Source Code Pro,monospace" font-size="6" font-weight="700" letter-spacing="0.05em">SPACE</text></svg> to reveal IPA &nbsp;·&nbsp; Tap <strong>Back/Next</strong> or swipe to navigate &nbsp;·&nbsp; Click <strong>Homograph</strong> pill to show both forms</p>
+
+    <div class="wordlist-study-actions-wrap">
+      <button class="wordlist-study-actions-toggle" id="wordlistQuizFilterToggle" onclick="toggleQuizFilter()">
+        <span id="wordlistQuizFilterArrow">▶</span> Filter by type
+      </button>
+      <div class="wordlist-study-actions" id="wordlistQuizFilterPanel">
+        <div class="wl-tag-bar" id="wlTagBarQuiz"></div>
+      </div>
+    </div>
 
     <div class="wordlist-quiz-scene">
       <div class="wordlist-quiz-card" id="wordlistQuizCard">
@@ -3723,14 +3889,39 @@
             <button class="tts-btn wordlist-quiz-tts-btn" id="wordlistQuizTtsBtnFront" title="Play pronunciation">🔊</button>
             <button class="pron-btn" id="wordlistQuizPronBtnFront" title="Assess pronunciation">🎤</button>
           </div>
-          <!-- Middle zone: word + input -->
+          <!-- Middle zone: word + input (single or pair) -->
           <div class="wordlist-quiz-main-zone">
-            <div class="wordlist-quiz-word" id="wordlistQuizWord" title="Tap to reveal IPA">–</div>
-            <input class="wordlist-quiz-input" id="wordlistQuizInput" type="text"
-              placeholder="type IPA…" autocomplete="off" autocorrect="off"
-              autocapitalize="off" spellcheck="false"
-              onclick="event.stopPropagation()"
-              onfocus="setTimeout(()=>this.closest('.wordlist-quiz-scene').scrollIntoView({behavior:'smooth',block:'start'}),150)">
+            <!-- Single mode -->
+            <div id="wordlistQuizFrontSingle" style="display:contents">
+              <div class="wordlist-quiz-word" id="wordlistQuizWord" title="Tap to reveal IPA">–</div>
+              <input class="wordlist-quiz-input" id="wordlistQuizInput" type="text"
+                placeholder="type IPA…" autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false"
+                onclick="event.stopPropagation()"
+                onfocus="setTimeout(()=>this.closest('.wordlist-quiz-scene').scrollIntoView({behavior:'smooth',block:'start'}),150)">
+            </div>
+            <!-- Pair mode (homographs) -->
+            <div id="wordlistQuizFrontPair" style="display:none;width:100%;display:none;flex-direction:row;align-items:center;justify-content:center;gap:0">
+              <div class="wordlist-quiz-pair-col" style="gap:0.3rem">
+                <div class="wordlist-quiz-back-word" id="wordlistQuizFrontWord1" style="font-size:clamp(1rem,4vw,1.6rem)"></div>
+                <input class="wordlist-quiz-input" id="wordlistQuizInputMain" type="text"
+                  placeholder="type IPA…" autocomplete="off" autocorrect="off"
+                  autocapitalize="off" spellcheck="false"
+                  onclick="event.stopPropagation()"
+                  onfocus="setTimeout(()=>this.closest('.wordlist-quiz-scene').scrollIntoView({behavior:'smooth',block:'start'}),150)"
+                  style="font-size:0.9rem;padding:0.3rem 0.5rem">
+              </div>
+              <div class="wordlist-quiz-pair-divider"></div>
+              <div class="wordlist-quiz-pair-col" style="gap:0.3rem">
+                <div class="wordlist-quiz-back-word" id="wordlistQuizFrontWord2" style="font-size:clamp(1rem,4vw,1.6rem)"></div>
+                <input class="wordlist-quiz-input" id="wordlistQuizInputPair" type="text"
+                  placeholder="type IPA…" autocomplete="off" autocorrect="off"
+                  autocapitalize="off" spellcheck="false"
+                  onclick="event.stopPropagation()"
+                  onfocus="setTimeout(()=>this.closest('.wordlist-quiz-scene').scrollIntoView({behavior:'smooth',block:'start'}),150)"
+                  style="font-size:0.9rem;padding:0.3rem 0.5rem">
+              </div>
+            </div>
           </div>
           <!-- Bottom zone: quiz result + pron result side by side, hidden when empty -->
           <div class="wordlist-quiz-bottom-zone">
@@ -3747,14 +3938,28 @@
           <div class="wordlist-quiz-btn-row">
             <button class="tts-btn wordlist-quiz-tts-btn" id="wordlistQuizTtsBtnBack" title="Play pronunciation">🔊</button>
           </div>
-          <!-- Middle zone: word + IPA -->
-          <div class="wordlist-quiz-main-zone">
-            <div class="wordlist-quiz-back-word" id="wordlistQuizBackWord">–</div>
-            <div class="wordlist-quiz-back-ipa" id="wordlistQuizBackIpa">–</div>
+          <!-- Middle zone: word + IPA (+ optional pair side-by-side) -->
+          <div class="wordlist-quiz-main-zone" id="wordlistQuizMainZone">
+            <div class="wordlist-quiz-back-pair" id="wordlistQuizBackPair" style="display:none">
+              <div class="wordlist-quiz-pair-col">
+                <div class="wordlist-quiz-back-word" id="wordlistQuizBackWord">–</div>
+                <div class="wordlist-quiz-back-ipa" id="wordlistQuizBackIpa">–</div>
+              </div>
+              <div class="wordlist-quiz-pair-divider"></div>
+              <div class="wordlist-quiz-pair-col">
+                <div class="wordlist-quiz-back-word" id="wordlistQuizPairWord"></div>
+                <div class="wordlist-quiz-back-ipa" id="wordlistQuizPairIpa"></div>
+              </div>
+            </div>
+            <div class="wordlist-quiz-back-single" id="wordlistQuizBackSingle">
+              <div class="wordlist-quiz-back-word" id="wordlistQuizBackWordSingle">–</div>
+              <div class="wordlist-quiz-back-ipa" id="wordlistQuizBackIpaSingle">–</div>
+            </div>
           </div>
-          <!-- Bottom zone: meaning -->
+          <!-- Bottom zone: meaning + tag pills -->
           <div class="wordlist-quiz-bottom-zone">
             <div class="wordlist-quiz-back-meaning" id="wordlistQuizBackMeaning"></div>
+            <div class="wordlist-quiz-tag-pills" id="wordlistQuizTagPills"></div>
           </div>
         </div>
       </div>
@@ -3762,7 +3967,7 @@
 
     <div class="wordlist-quiz-ipa-bar" id="wordlistQuizIpaBar"></div>
 
-    <div class="wordlist-quiz-controls">
+    <div class="wordlist-quiz-controls" id="wordlistQuizControls">
       <button class="ctrl-btn" id="wordlistQuizBackBtn">← Back</button>
       <button class="ctrl-btn" id="wordlistQuizNextBtn">Next →</button>
       <button class="ctrl-btn" id="wordlistQuizShuffleBtn">Shuffle</button>
@@ -4060,6 +4265,13 @@
       <label class="settings-toggle-row">
         <span>Show navigation hints</span>
         <input type="checkbox" id="settingShowHints">
+      </label>
+    </div>
+    <div class="modal-section-title" style="margin-top:0.8rem">Word list quiz</div>
+    <div>
+      <label class="settings-toggle-row">
+        <span>Show homograph pair by default</span>
+        <input type="checkbox" id="settingHomographPair">
       </label>
     </div>
 
@@ -4439,6 +4651,8 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
       { word:'achieve',    ipa:"əˈtʃiːv",   meaning:"to accomplish" },
       { word:'acoustic',   ipa:"əˈkuːstɪk", meaning:"relating to sound" },
       { word:'address',    ipa:"əˈdres",    meaning:"location or to speak to" },
+      { word:'record',     ipa:"ˈrekɔːd",   meaning:"",    tags:['noun','homograph','stress-shift'] },
+      { word:'record (v)', ipa:"rɪˈkɔːd",   meaning:"to record", tags:['verb','homograph','stress-shift'] },
     ];
   }
 }
@@ -4457,7 +4671,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '11.305';
+const APP_VERSION = '11.353';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -4578,7 +4792,8 @@ let theoryShowingDesc    = false;
 // theoryActiveFilters: the user's current filter selection — which card tags to show.
 // Distinct from c.tag (card metadata): filters are extrinsic UI state, tags are intrinsic card properties.
 const VOWEL_FILTER_TAGS     = ['lax','mono','diph','weak'];
-const CONSONANT_FILTER_TAGS = ['plosive','fricative','affricate','nasal','lateral','approx'];
+const CONSONANT_FILTER_TAGS = ['plosive','fricative','affricate','nasal','lateral','approx','syllabic','fortis','lenis'];
+const CONSONANT_PLACE_TAGS  = ['bilabial','labiodental','dental','alveolar','post-alveolar','palatal','velar','labio-velar','glottal'];
 const MORE_FILTER_TAGS      = ['supra','rule'];
 let theoryActiveFilters   = new Set(['all']);
 // theoryContentFilter: secondary filter by content presence ('mnemonic', 'note', or null)
@@ -4804,6 +5019,7 @@ let wordlistStudyReviewMode = false;
 let wordlistStudyShowEdited   = false;
 let wordlistFilterWordVal     = '';
 let wordlistFilterIpaVal      = '';
+let wordlistFilterTagVal      = '';
 let theoryHideNameArtic       = lsGet('ipa_hide_name_artic','') === 'true';
 let wordlistReviewIds      = new Set(lsGetJSON('ipa_wordlist_review', []));
 let _wordlistStudyDirty    = true;  // true = rows need rebuild; set false after render
@@ -5618,6 +5834,9 @@ function getWordlistStudySource() {
     const fi = wordlistFilterIpaVal;
     src = src.filter(w => w.ipa && w.ipa.includes(fi));
   }
+  if (wordlistFilterTagVal) {
+    src = src.filter(w => w.tags && w.tags.includes(wordlistFilterTagVal));
+  }
   return src;
 }
 
@@ -5708,7 +5927,7 @@ function renderWordlistStudy() {
   const pageWords = wordlistStudyLetter ? src.filter(w => w.word[0].toUpperCase() === wordlistStudyLetter) : src;
 
   // ── Item 17: skip expensive row rebuild on mode switch if nothing changed ──
-  const renderKey = `${wordlistStudyLetter}|${wordlistStudyReviewMode}|${wordlistStudyShowEdited}|${wordlistFilterWordVal}|${wordlistFilterIpaVal}`;
+  const renderKey = `${wordlistStudyLetter}|${wordlistStudyReviewMode}|${wordlistStudyShowEdited}|${wordlistFilterWordVal}|${wordlistFilterIpaVal}|${wordlistFilterTagVal}`;
   const skipRows = !_wordlistStudyDirty && $el('wordlistStudyRows').dataset.renderKey === renderKey;
   _wordlistStudyDirty = false;
 
@@ -6162,12 +6381,25 @@ function syncWordlistQuizStars(word) {
 
 function getWordlistQuizView() {
   const mispronWords = wordlistQuizFilter.mispronOnly ? new Set(pronGetMispronounced()) : null;
-  return wordlistQuizWords.filter(w =>
-    (!wordlistQuizFilter.letter      || w.word[0].toUpperCase() === wordlistQuizFilter.letter) &&
-    (!wordlistQuizFilter.reviewOnly  || wordlistReviewIds.has(w.word)) &&
+  let view = wordlistQuizWords.filter(w =>
+    (!wordlistQuizFilter.letter        || w.word[0].toUpperCase() === wordlistQuizFilter.letter) &&
+    (!wordlistQuizFilter.reviewOnly    || wordlistReviewIds.has(w.word)) &&
     (!wordlistQuizFilter.incorrectOnly || w.quizResult === 'incorrect') &&
-    (!wordlistQuizFilter.mispronOnly   || (mispronWords && mispronWords.has(w.word)))
+    (!wordlistQuizFilter.mispronOnly   || (mispronWords && mispronWords.has(w.word))) &&
+    (!wordlistFilterTagVal             || (w.tags && w.tags.includes(wordlistFilterTagVal)))
   );
+  // When homograph pair mode is on, deduplicate: keep only the first of each pair
+  if (lsGet('ipa_setting_homograph_pair', 'true') !== 'false') {
+    const seen = new Set();
+    view = view.filter(w => {
+      if (!w.tags || !w.tags.includes('homograph')) return true;
+      const base = w.word.replace(/\s*\([^)]*\)/, '').trim().toLowerCase();
+      if (seen.has(base)) return false;
+      seen.add(base);
+      return true;
+    });
+  }
+  return view;
 }
 
 // AUDIT NOTE (5.2): card rendering logic (IPA display, pron badge, TTS button)
@@ -6218,13 +6450,122 @@ function renderWordlistQuizCard() {
   inp.value          = '';
   inp.className      = 'wordlist-quiz-input';
   inp.disabled       = false;
+  const inpMain = $el('wordlistQuizInputMain');
+  if (inpMain) { inpMain.value = ''; inpMain.className = 'wordlist-quiz-input'; inpMain.disabled = false; }
 
   // Front face
+  // Determine if homograph pair mode applies
+  const pairSettingOn = lsGet('ipa_setting_homograph_pair', 'true') !== 'false';
+  const isHomograph   = item && item.tags && item.tags.includes('homograph');
+  const allWords      = getEffectiveWordlistWords();
+  const homoPair      = isHomograph ? allWords.find(w =>
+    w !== item &&
+    w.word.replace(/\s*\([^)]*\)/, '').trim().toLowerCase() ===
+      item.word.replace(/\s*\([^)]*\)/, '').trim().toLowerCase() &&
+    w.ipa !== item.ipa
+  ) : null;
+  const showPair = pairSettingOn && !!homoPair;
+
+  // Front face: single or pair mode
+  const frontSingle = $el('wordlistQuizFrontSingle');
+  const frontPair   = $el('wordlistQuizFrontPair');
+  if (showPair) {
+    frontSingle.style.display = 'none';
+    frontPair.style.display   = 'flex';
+    frontPair.style.flexDirection = 'row';
+    // Always: noun (base) on left, (v) on right
+    const isVerb = item.word.includes('(v)');
+    const nounEntry = isVerb ? homoPair : item;
+    const verbEntry = isVerb ? item     : homoPair;
+    $el('wordlistQuizFrontWord1').textContent = nounEntry.word;
+    $el('wordlistQuizFrontWord2').textContent = verbEntry.word;
+    const pairInput = $el('wordlistQuizInputPair');
+    if (pairInput) { pairInput.value = ''; pairInput.disabled = false; pairInput.className = 'wordlist-quiz-input'; }
+  } else {
+    frontSingle.style.display = '';
+    frontPair.style.display   = 'none';
+  }
   $el('wordlistQuizWord').textContent = item ? item.word : '–';
   // Back face
-  $el('wordlistQuizBackIpa').textContent     = item ? item.ipa     : '–';
-  $el('wordlistQuizBackWord').textContent    = item ? item.word    : '–';
+  // Populate both single and pair word/ipa fields
+  $el('wordlistQuizBackIpaSingle').textContent  = item ? item.ipa  : '–';
+  $el('wordlistQuizBackWordSingle').textContent = item ? item.word : '–';
+  $el('wordlistQuizBackIpa').textContent        = item ? item.ipa  : '–';
+  $el('wordlistQuizBackWord').textContent       = item ? item.word : '–';
+  // Show back pair view based on setting
+  const pairView   = $el('wordlistQuizBackPair');
+  const singleView = $el('wordlistQuizBackSingle');
+  if (pairView && singleView) {
+    if (showPair) {
+      const isVerbBack  = item.word.includes('(v)');
+      const nounEntryB  = isVerbBack ? homoPair : item;
+      const verbEntryB  = isVerbBack ? item     : homoPair;
+      $el('wordlistQuizBackWord').textContent  = nounEntryB.word;
+      $el('wordlistQuizBackIpa').textContent   = nounEntryB.ipa;
+      $el('wordlistQuizPairWord').textContent  = verbEntryB.word;
+      $el('wordlistQuizPairIpa').textContent   = verbEntryB.ipa;
+      pairView.style.display   = '';
+      singleView.style.display = 'none';
+    } else {
+      pairView.style.display   = 'none';
+      singleView.style.display = '';
+    }
+  }
   $el('wordlistQuizBackMeaning').textContent = item ? (item.meaning || '') : '';
+  // Tag pills on back
+  const pillsEl = $el('wordlistQuizTagPills');
+  if (pillsEl) {
+    pillsEl.innerHTML = '';
+    const SHOWN_TAGS = ['homograph','stress-shift','voicing','vowel-change','plural','plural-or-3sg','past','placename','proper-name','verb','noun','adj','adv'];
+    const TAG_LABELS = {'plural-or-3sg':'plural/3sg','proper-name':'proper name','stress-shift':'stress shift','vowel-change':'vowel change'};
+    (item && item.tags || []).filter(t => SHOWN_TAGS.includes(t)).forEach(t => {
+      const pill = document.createElement('span');
+      pill.className = 'wl-tag-pill ' + t;
+      pill.textContent = TAG_LABELS[t] || t;
+      if (t === 'homograph') {
+        const baseWord = item.word.replace(/\s*\([^)]*\)/, '').trim().toLowerCase();
+        const pair = getEffectiveWordlistWords().find(w =>
+          w !== item &&
+          w.word.replace(/\s*\([^)]*\)/, '').trim().toLowerCase() === baseWord &&
+          w.ipa !== item.ipa
+        );
+        if (pair) {
+          pill.title = pair.word + '  /' + pair.ipa + '/';
+          pill.style.cursor = 'pointer';
+          pill.addEventListener('click', e => {
+            e.stopPropagation();
+            const pairView   = $el('wordlistQuizBackPair');
+            const singleView = $el('wordlistQuizBackSingle');
+            if (!pairView || !singleView) return;
+            // Toggle back face
+            const showingPair = pairView.style.display !== 'none';
+            if (showingPair) {
+              pairView.style.display   = 'none';
+              singleView.style.display = '';
+            } else {
+              $el('wordlistQuizPairWord').textContent = pair.word;
+              $el('wordlistQuizPairIpa').textContent  = pair.ipa;
+              singleView.style.display = 'none';
+              pairView.style.display   = '';
+            }
+            // Mirror change to front face
+            const frontPairEl   = $el('wordlistQuizFrontPair');
+            const frontSingleEl = $el('wordlistQuizFrontSingle');
+            if (frontPairEl && frontSingleEl) {
+              if (showingPair) {
+                frontPairEl.style.display   = 'none';
+                frontSingleEl.style.display = '';
+              } else {
+                frontPairEl.style.display   = 'flex';
+                frontSingleEl.style.display = 'none';
+              }
+            }
+          });
+        }
+      }
+      pillsEl.appendChild(pill);
+    });
+  }
 
   // Restore stored pronunciation result (if any) for this word
   if (item) {
@@ -6301,7 +6642,7 @@ function renderWordlistQuizCard() {
 
 function wordlistQuizCardClick(event) {
   if (window.getSelection && window.getSelection().toString().length > 0) return;
-  if (event.target.tagName === 'INPUT' || event.target.closest?.('.review-btn') || event.target.closest?.('.wordlist-quiz-tts-btn')) return;
+  if (event.target.tagName === 'INPUT' || event.target.closest?.('.review-btn') || event.target.closest?.('.wordlist-quiz-tts-btn') || event.target.closest?.('.wl-tag-pill')) return;
   const quizCard = $el('wordlistQuizCard');
   // if card is flipped, any click flips it back
   if (wordlistQuizFlipped) {
@@ -6315,6 +6656,9 @@ function wordlistQuizCardClick(event) {
     quizCard.classList.add('flipped');
     return;
   }
+  // In pair mode, disable left/right navigation to avoid swapping words
+  const frontPairEl = $el('wordlistQuizFrontPair');
+  if (frontPairEl && frontPairEl.style.display !== 'none') return;
   // left/right halves navigate
   const rect = quizCard.getBoundingClientRect();
   const midX = rect.left + rect.width / 2;
@@ -6336,13 +6680,34 @@ function wordlistQuizPrev() {
 function wordlistQuizCheck() {
   if (wordlistQuizChecked) return;
   const item  = getWordlistQuizView()[wordlistQuizIdx];
-  const input = $el('wordlistQuizInput');
+  const pairShown  = $el('wordlistQuizFrontPair') && $el('wordlistQuizFrontPair').style.display !== 'none';
+  const input = pairShown ? $el('wordlistQuizInputMain') : $el('wordlistQuizInput');
   const val   = input.value.trim();
   if (!val) return;
 
+  // In pair mode: left=noun, right=verb — determine which is which
+  const pairInput  = $el('wordlistQuizInputPair');
+  const isVerbItem = pairShown && item.word.includes('(v)');
+  const allWords2  = getEffectiveWordlistWords();
+  const homoPair2  = pairShown ? allWords2.find(w =>
+    w !== item &&
+    w.word.replace(/\s*\([^)]*\)/, '').trim().toLowerCase() ===
+      item.word.replace(/\s*\([^)]*\)/, '').trim().toLowerCase() &&
+    w.ipa !== item.ipa
+  ) : null;
+  const pairVal    = pairShown && pairInput ? pairInput.value.trim() : null;
+  if (pairShown && !pairVal) return;
+
   wordlistQuizChecked = true;
   input.disabled  = true;
-  const correct   = val === item.ipa.trim();
+  if (pairInput) pairInput.disabled = true;
+  // Left col = noun, right col = verb
+  const nounIpa2   = pairShown ? (isVerbItem ? homoPair2 && homoPair2.ipa : item.ipa) : item.ipa;
+  const verbIpa2   = pairShown ? (isVerbItem ? item.ipa : homoPair2 && homoPair2.ipa) : null;
+  const correct1  = val === (nounIpa2 || '').trim();
+  const correct2  = !pairShown || (verbIpa2 && pairVal === verbIpa2.trim());
+  const correct   = correct1 && correct2;
+  if (pairInput && pairShown) pairInput.classList.add(correct2 ? 'correct' : 'wrong');
 
   item.quizResult = correct ? 'correct' : 'incorrect';
   saveWordlistQuizResults();
@@ -6360,7 +6725,16 @@ function wordlistQuizCheck() {
   } else {
     wordlistQuizWrong++;
     result.className = 'wordlist-quiz-result wrong';
-    result.innerHTML = `✗ Wrong <span class="correct-ipa">${escHtml(item.ipa)}</span>`;
+    if (pairShown && nounIpa2 && verbIpa2) {
+      result.innerHTML =
+        `<div class="quiz-wrong-pair-row">` +
+          `<div class="quiz-wrong-col"><span class="correct-ipa">${escHtml(nounIpa2)}</span></div>` +
+          `<span class="quiz-wrong-label">✗ Wrong</span>` +
+          `<div class="quiz-wrong-col"><span class="correct-ipa">${escHtml(verbIpa2)}</span></div>` +
+        `</div>`;
+    } else {
+      result.innerHTML = `✗ Wrong <span class="correct-ipa">${escHtml(item.ipa)}</span>`;
+    }
   }
   syncQuizScoreLabel();
   syncWordlistQuizScoreBtn();
@@ -6587,7 +6961,22 @@ function buildIpaKeys() {
   }
 
   // Wordlist quiz IPA bar (always visible)
-  buildBar($el('wordlistQuizIpaBar'), () => $el('wordlistQuizInput'));
+  buildBar($el('wordlistQuizIpaBar'), () => {
+    // Return whichever quiz input is currently focused
+    const focused = document.activeElement;
+    if (focused && (focused.id === 'wordlistQuizInputMain' || focused.id === 'wordlistQuizInputPair')) return focused;
+    return $el('wordlistQuizInput');
+  });
+
+  // Wordlist study IPA filter bar — shown only when filter input is focused
+  buildBar($el('wordlistFilterIpaBar'), () => $el('wordlistFilterIpa'));
+  (function() {
+    const inp = $el('wordlistFilterIpa');
+    const bar = $el('wordlistFilterIpaBar');
+    if (!inp || !bar) return;
+    inp.addEventListener('focus', () => { bar.style.display = ''; });
+    inp.addEventListener('blur',  () => { bar.style.display = 'none'; });
+  })();
 
   // Expose buildBar globally for edit modal
   window._ipaBarBuilder = buildBar;
@@ -8609,35 +8998,34 @@ async function executePrint(includeCards, selectedEntries) {
 // Symbols are resolved against theoryCards at render time.
 // filterId: when set, this section is highlighted when that filter is active.
 const MORE_SECTIONS = [
-  { label: 'Suprasegmentals', filterId: 'supra', rows: [
-    ['ˈ', 'ˌ', 'ː', 'supra'],
-  ]},
   { label: 'Vowels', filterId: 'vowel', rows: [
-    ['lax', 'mono', 'diph', 'weak'],
+    ['ː', 'lax', 'mono', 'weak', 'diph'],
   ]},
-  { label: 'Consonants', filterId: 'consonant', rows: [
-    ['obstruent', 'sonorant'],
-    ['plosive', 'fricative', 'affricate'],
-    ['nasal', 'approx', 'lateral'],
-    ['fortis', 'lenis', 'syllabic'],
+  { label: 'Consonants', filterId: 'consonant', noDivider: true, rows: [
+    ['fortis-lenis', 'obstruent', 'plosive', 'fricative', 'affricate', 'fortis', 'lenis', 'syllabic', 'sonorant', 'nasal', 'approx', 'lateral', 'place', 'manner'],
+    ['bilabial', 'labiodental', 'dental', 'alveolar', 'post-alveolar', 'palatal', 'velar', 'labio-velar', 'glottal'],
+  ]},
+  { label: 'Stress', filterId: 'supra', rows: [
+    ['ˈ', 'supra', 'stress', 'stress-homographs', 'stress-abl'],
   ]},
   { label: 'Endings', filterId: 'endings', noDivider: true, rows: [
     ['endings', 'grammatical-s', 'grammatical-ed'],
     ['endings-s-plural'],
   ]},
-  { label: 'Transcription', filterId: 'trans', rows: [
-    ['transcription', 'lpd', 'placenames'],
-  ]},
   { label: 'Silent letters', filterId: 'silent', rows: [
     ['silent-h', 'silent-clusters'],
   ]},
   { label: 'Concepts', filterId: 'cat', rows: [
-    ['phoneme', 'syllable', 'stress', 'stress-homographs', 'stress-abl'],
+    { divider: 'Foundations' },
+    ['phoneme', 'syllable'],
+    { divider: 'Articulation' },
     ['vowel-position', 'vowel-quality', 'roundedness', 'place', 'manner'],
+    { divider: 'Phonology' },
     ['fortis-lenis', 'voicing-independence', 'airflow-obstruction'],
-  ]},
-  { label: 'Topics', filterId: 'cat', rows: [
+    { divider: 'Phenomena' },
     ['homographs', 'homoph-homogr', 'phon-interf', 'accent-dialect'],
+    { divider: 'Transcription' },
+    ['transcription', 'lpd', 'placenames'],
   ]},
 ];
 
@@ -9136,6 +9524,106 @@ try {
     });
   }
 
+  // Build tag filter bar
+  (function buildTagBar() {
+    const bar = $el('wlTagBar');
+    if (!bar) return;
+    const TAGS = [
+      { tag: 'homograph',    label: 'Homograph' },
+      { tag: 'stress-shift', label: 'Stress shift' },
+      { tag: 'voicing',      label: 'Voicing' },
+      { tag: 'vowel-change', label: 'Vowel change' },
+      { tag: 'plural',       label: 'Plural' },
+      { tag: 'plural-or-3sg',label: 'Plural/3sg' },
+      { tag: 'past',         label: 'Past/pp' },
+      { tag: 'placename',    label: 'Placename' },
+      { tag: 'proper-name',  label: 'Proper name' },
+      { tag: 'verb',         label: 'Verb' },
+      { tag: 'noun',         label: 'Noun' },
+      { tag: 'adj',          label: 'Adj.' },
+      { tag: 'adv',          label: 'Adv.' },
+    ];
+    TAGS.forEach(({ tag, label }) => {
+      const pill = document.createElement('button');
+      pill.className = 'wl-tag-bar-pill ' + tag;
+      pill.textContent = label;
+      pill.dataset.tag = tag;
+      pill.addEventListener('click', () => {
+        const active = wordlistFilterTagVal === tag;
+        wordlistFilterTagVal = active ? '' : tag;
+        // sync pill states
+        bar.querySelectorAll('.wl-tag-bar-pill').forEach(p => {
+          p.classList.toggle('active', p.dataset.tag === wordlistFilterTagVal);
+        });
+        // reset letter when tag filter changes
+        wordlistStudyLetter = '';
+        _wordlistStudyDirty = true;
+        renderWordlistStudy();
+        // also reload quiz words so quiz respects tag filter
+        wordlistQuizWords = loadWordlistQuizWords();
+        wordlistQuizIdx   = 0;
+        renderWordlistQuizCard();
+      });
+      bar.appendChild(pill);
+    });
+  })();
+
+  // Quiz filter toggle
+  window.toggleQuizFilter = function() {
+    const el = $el('wordlistQuizFilterPanel');
+    const arrow = $el('wordlistQuizFilterArrow');
+    const open = el.classList.toggle('open');
+    arrow.textContent = open ? '▼' : '▶';
+  };
+
+  // Build quiz tag bar (shares wordlistFilterTagVal with study bar)
+  (function buildQuizTagBar() {
+    const bar = $el('wlTagBarQuiz');
+    if (!bar) return;
+    const TAGS = [
+      { tag: 'homograph',    label: 'Homograph' },
+      { tag: 'stress-shift', label: 'Stress shift' },
+      { tag: 'voicing',      label: 'Voicing' },
+      { tag: 'vowel-change', label: 'Vowel change' },
+      { tag: 'plural',       label: 'Plural' },
+      { tag: 'plural-or-3sg',label: 'Plural/3sg' },
+      { tag: 'past',         label: 'Past/pp' },
+      { tag: 'placename',    label: 'Placename' },
+      { tag: 'proper-name',  label: 'Proper name' },
+      { tag: 'verb',         label: 'Verb' },
+      { tag: 'noun',         label: 'Noun' },
+      { tag: 'adj',          label: 'Adj.' },
+      { tag: 'adv',          label: 'Adv.' },
+    ];
+    function syncAllTagBars() {
+      [bar, $el('wlTagBar')].forEach(b => {
+        if (!b) return;
+        b.querySelectorAll('.wl-tag-bar-pill').forEach(p => {
+          p.classList.toggle('active', p.dataset.tag === wordlistFilterTagVal);
+        });
+      });
+    }
+    window._syncTagBars = syncAllTagBars;
+    TAGS.forEach(({ tag, label }) => {
+      const pill = document.createElement('button');
+      pill.className = 'wl-tag-bar-pill ' + tag;
+      pill.textContent = label;
+      pill.dataset.tag = tag;
+      pill.addEventListener('click', () => {
+        wordlistFilterTagVal = wordlistFilterTagVal === tag ? '' : tag;
+        syncAllTagBars();
+        wordlistStudyLetter = '';
+        _wordlistStudyDirty = true;
+        renderWordlistStudy();
+        wordlistQuizWords = loadWordlistQuizWords();
+        wordlistQuizIdx   = 0;
+        renderWordlistQuizCard();
+        if (window._syncTagBars) window._syncTagBars();
+      });
+      bar.appendChild(pill);
+    });
+  })();
+
   // Add word button
   window.toggleStudyActions = function() {
     const el = $el('wordlistStudyActions');
@@ -9196,8 +9684,11 @@ try {
   });
   $el('wordlistQuizReviewOnlyBtn').addEventListener('click', toggleWordlistQuizReviewOnly);
   $el('wordlistQuizResetReviewBtn').addEventListener('click', wordlistQuizResetReview);
-  $el('wordlistQuizInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); wordlistQuizChecked ? wordlistQuizNext() : wordlistQuizCheck(); }
+  ['wordlistQuizInput','wordlistQuizInputMain','wordlistQuizInputPair'].forEach(id => {
+    const el = $el(id);
+    if (el) el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); wordlistQuizChecked ? wordlistQuizNext() : wordlistQuizCheck(); }
+    });
   });
 
   // ── Scroll so IPA bar sits just above the software keyboard (iOS + Android) ──
@@ -9629,10 +10120,14 @@ try {
     $el('settingShowNotes').checked       = lsGet('ipa_setting_show_notes',       'true') !== 'false';
     $el('settingShowSrcMarkers').checked  = lsGet('ipa_setting_show_src_markers', 'false') !== 'false';
     $el('settingShowHints').checked       = lsGet('ipa_setting_show_hints',       'true') !== 'false';
+    $el('settingHomographPair').checked   = lsGet('ipa_setting_homograph_pair',   'true') !== 'false';
     $el('settingPrintSrcMarkers') && ($el('settingPrintSrcMarkers').checked = false); // removed — handled in print modal
     openOverlay(settingsModal);
   });
   $el('settingsModalClose').addEventListener('click', () => closeOverlay(settingsModal));
+  $el('settingHomographPair').addEventListener('change', e => {
+    localStorage.setItem('ipa_setting_homograph_pair', e.target.checked ? 'true' : 'false');
+  });
   settingsModal.addEventListener('click', e => { if (e.target === settingsModal) closeOverlay(settingsModal); });
 
   // ── LOCAL STORAGE RESET MODAL ──
@@ -10205,6 +10700,47 @@ try {
         </svg>`,
         body: `The word list contains hundreds of RP vocabulary words with their IPA transcriptions. Each row shows the <strong>word</strong>, its <strong>IPA transcription</strong> (click to copy), and optionally a <strong>meaning</strong> (toggle with Show meaning). The <strong>★ button</strong> marks a word for review. The <strong>✏ button</strong> lets you edit the IPA transcription for any word. Use <strong>+ Add word</strong> to add your own words with custom IPA — added words appear in both Study and Quiz and are saved locally. Words from card rules and exceptions have also been added to the list — those whose IPA was generated by Claude rather than taken directly from the textbook are <span style="display:inline-block;border-left:2px solid var(--accent2);background:var(--accent2-faint);padding:0 0.3em;border-radius:0 2px 2px 0">highlighted in blue</span>. Use <strong>Show added/edited</strong> in Options to filter to these words for review.`
       },
+      // ── WORDLIST: TAG FILTER BAR ──
+      {
+        title: 'Word list — filtering by word type',
+        mode: 'wordlist',
+        submode: 'study',
+        highlight: '#wordlistStudyActions',
+        illustration: `<svg viewBox="0 0 520 58" xmlns="http://www.w3.org/2000/svg" font-family="Noto Serif,serif">
+          <rect x="0" y="0" width="520" height="58" rx="4" fill="#fffdf7" stroke="#d4cfc4" stroke-width="1.5"/>
+          <rect x="6"   y="8" width="76" height="18" rx="9" fill="#2c3e7a" stroke="#2c3e7a" stroke-width="1.2"/>
+          <text x="44"  y="20" text-anchor="middle" fill="white"   font-size="7" font-family="Source Code Pro,monospace" font-weight="700">Homograph</text>
+          <rect x="88"  y="8" width="72" height="18" rx="9" fill="#f5f0e8" stroke="#d4cfc4" stroke-width="1.2"/>
+          <text x="124" y="20" text-anchor="middle" fill="#7d6608" font-size="7" font-family="Source Code Pro,monospace" font-weight="700">Stress shift</text>
+          <rect x="166" y="8" width="50" height="18" rx="9" fill="#f5f0e8" stroke="#d4cfc4" stroke-width="1.2"/>
+          <text x="191" y="20" text-anchor="middle" fill="#7a7060" font-size="7" font-family="Source Code Pro,monospace" font-weight="700">Voicing</text>
+          <rect x="222" y="8" width="76" height="18" rx="9" fill="#f5f0e8" stroke="#d4cfc4" stroke-width="1.2"/>
+          <text x="260" y="20" text-anchor="middle" fill="#7a7060" font-size="7" font-family="Source Code Pro,monospace" font-weight="700">Vowel change</text>
+          <rect x="304" y="8" width="46" height="18" rx="9" fill="#f5f0e8" stroke="#d4cfc4" stroke-width="1.2"/>
+          <text x="327" y="20" text-anchor="middle" fill="#7a7060" font-size="7" font-family="Source Code Pro,monospace" font-weight="700">Plural</text>
+          <rect x="356" y="8" width="52" height="18" rx="9" fill="#f5f0e8" stroke="#d4cfc4" stroke-width="1.2"/>
+          <text x="382" y="20" text-anchor="middle" fill="#7a7060" font-size="7" font-family="Source Code Pro,monospace" font-weight="700">Past/pp</text>
+          <rect x="414" y="8" width="66" height="18" rx="9" fill="#f5f0e8" stroke="#d4cfc4" stroke-width="1.2"/>
+          <text x="447" y="20" text-anchor="middle" fill="#7a7060" font-size="7" font-family="Source Code Pro,monospace" font-weight="700">Placename</text>
+          <line x1="0" y1="32" x2="520" y2="32" stroke="#d4cfc4" stroke-width="0.5"/>
+          <text x="10" y="44" text-anchor="start" fill="#1a1a2e" font-size="9" font-weight="400" font-family="Noto Serif,serif">record</text>
+          <text x="120" y="44" text-anchor="start" fill="#2c3e7a" font-size="9" font-family="Source Code Pro,monospace">ˈrekɔːd</text>
+          <text x="10" y="56" text-anchor="start" fill="#1a1a2e" font-size="9" font-weight="400" font-family="Noto Serif,serif">record (v)</text>
+          <text x="120" y="56" text-anchor="start" fill="#2c3e7a" font-size="9" font-family="Source Code Pro,monospace">rɪˈkɔːd</text>
+        </svg>`,
+        body: `The <strong>tag filter bar</strong> above the word list lets you filter by grammatical or phonological word type. Click any pill to show only matching words — click again to clear.<br><br>
+<strong>Homograph</strong> — words spelled the same but pronounced differently by word class (noun vs verb). Sub-types:<br>
+· <strong>Stress shift</strong> — stress moves: <em>ˈrecord</em> (n) vs <em>reˈcord</em> (v)<br>
+· <strong>Voicing</strong> — final consonant changes: <em>house</em> /s/ (n) vs /z/ (v)<br>
+· <strong>Vowel change</strong> — vowel changes: <em>sow</em> /aʊ/ (n) vs /əʊ/ (v)<br><br>
+<strong>Plural</strong> — irregular plural forms (halves, analyses…)<br>
+<strong>Plural/3sg</strong> — ambiguous -s/-es forms (loves, coughs…)<br>
+<strong>Past/pp</strong> — past tense and past participle forms<br>
+<strong>Placename</strong> — geographical places<br>
+<strong>Proper name</strong> — personal names, brands, nationalities<br>
+<strong>Verb / Noun / Adj. / Adv.</strong> — words annotated with their grammatical class<br><br>
+The same filter applies to both <strong>Study</strong> and <strong>Quiz</strong> mode.`
+      },
       // ── WORDLIST: SPEECH ──
       {
         title: 'Speech — playing words',
@@ -10363,7 +10899,7 @@ try {
           <circle cx="500" cy="35" r="10" fill="#f5f0e8" stroke="#d4cfc4" stroke-width="1.5"/>
           <text x="500" y="39" text-anchor="middle" fill="#1a1a2e" font-size="9" font-weight="400" font-family="Noto Serif,serif">🎤</text>
         </svg>`,
-        body: `Flip the quiz card (tap the word or press Space) to reveal the <strong>card back</strong>: the correct IPA, the word, and its meaning. The <strong>🔊 button</strong> plays the word's audio. The <strong>🎤 button</strong> lets you assess your pronunciation — the IPA is coloured per phoneme and your score is saved, so it reappears the next time you visit this card.`
+        body: `Flip the quiz card (tap the word or press Space) to reveal the <strong>card back</strong>: the correct IPA, the word, and its meaning. The <strong>🔊 button</strong> plays the word's audio. The <strong>🎤 button</strong> lets you assess your pronunciation — the IPA is coloured per phoneme and your score is saved, so it reappears the next time you visit this card. <strong>Tag pills</strong> at the bottom of the back face show the word's grammatical and phonological type — Homograph, Stress shift, Plural, Placename, and so on. Click the <strong>Homograph</strong> pill to flip the card and see both forms (e.g. <em>ˈrecord</em> n vs <em>reˈcord</em> v).`
       },
       // ── QUIZ: SLIDER & TICKS ──
       {
@@ -10617,6 +11153,14 @@ function buildMoreGrid() {
     const pillsCol = document.createElement('div');
     pillsCol.className = 'more-pills-col' + (section.noDivider ? ' no-divider' : '');
     section.rows.forEach(innerRow => {
+      // Support divider rows: { divider: 'Label' }
+      if (!Array.isArray(innerRow)) {
+        const lbl = document.createElement('div');
+        lbl.className = 'more-sub-label';
+        lbl.textContent = innerRow.divider;
+        pillsCol.appendChild(lbl);
+        return;
+      }
       const pillsDiv = document.createElement('div');
       pillsDiv.className = 'more-pills';
       innerRow.forEach(symbol => {
@@ -10646,6 +11190,10 @@ function isFullState() {
   if (theoryActiveFilters.has('all')) return true;
   if (VOWEL_FILTER_TAGS.every(t => theoryActiveFilters.has(t)) && theoryActiveFilters.size === VOWEL_FILTER_TAGS.length) return true;
   if (CONSONANT_FILTER_TAGS.every(t => theoryActiveFilters.has(t)) && theoryActiveFilters.size === CONSONANT_FILTER_TAGS.length) return true;
+  if (CONSONANT_PLACE_TAGS.every(t => theoryActiveFilters.has(t)) && theoryActiveFilters.size === CONSONANT_PLACE_TAGS.length) return true;
+  // Combined manner + place full state (set by clicking the Consonants tab)
+  const allConsonantTags = [...CONSONANT_FILTER_TAGS, ...CONSONANT_PLACE_TAGS];
+  if (allConsonantTags.every(t => theoryActiveFilters.has(t)) && theoryActiveFilters.size === allConsonantTags.length) return true;
   if (MORE_FILTER_TAGS.every(t => theoryActiveFilters.has(t)) && theoryActiveFilters.size === MORE_FILTER_TAGS.length) return true;
   return false;
 }
@@ -10669,7 +11217,7 @@ function setFilter(tag) {
     return;
   }
   if (tag === 'consonants') {
-    theoryActiveFilters = new Set(CONSONANT_FILTER_TAGS);
+    theoryActiveFilters = new Set([...CONSONANT_FILTER_TAGS, ...CONSONANT_PLACE_TAGS]);
     suppressTabSwitch = true;
     applyFilter();
     suppressTabSwitch = false;
@@ -10686,13 +11234,45 @@ function setFilter(tag) {
     const allPresent = tags.every(t => theoryActiveFilters.has(t));
     if (allPresent) {
       tags.forEach(t => theoryActiveFilters.delete(t));
+      // If filter set is now empty, restore the relevant tab's full state
+      if (theoryActiveFilters.size === 0) {
+        if ($el('chartTabConsonants')?.classList.contains('active')) {
+          theoryActiveFilters = new Set([...CONSONANT_FILTER_TAGS, ...CONSONANT_PLACE_TAGS]);
+        } else if ($el('chartTabVowels')?.classList.contains('active')) {
+          theoryActiveFilters = new Set(VOWEL_FILTER_TAGS);
+        } else {
+          theoryActiveFilters = new Set(MORE_FILTER_TAGS);
+        }
+      }
     } else {
       tags.forEach(t => theoryActiveFilters.add(t));
     }
   }
+  // Auto-sync derived pills only when a manner tag drove the change
+  const DERIVED_PILLS = new Set(['fortis','lenis','syllabic']);
+  if (!tags.every(t => DERIVED_PILLS.has(t))) syncDerivedConsonantPills();
   suppressTabSwitch = true;
   applyFilter();
   suppressTabSwitch = false;
+}
+
+// Auto-add fortis/lenis when all obstruents active; auto-add syllabic when nasal+lateral active.
+// Auto-remove when conditions no longer met (unless user explicitly added them).
+function syncDerivedConsonantPills() {
+  const allObstruents = ['plosive','fricative','affricate'].every(t => theoryActiveFilters.has(t));
+  const allSyllabicManners = ['nasal','lateral'].every(t => theoryActiveFilters.has(t));
+  if (allObstruents) {
+    theoryActiveFilters.add('fortis');
+    theoryActiveFilters.add('lenis');
+  } else {
+    theoryActiveFilters.delete('fortis');
+    theoryActiveFilters.delete('lenis');
+  }
+  if (allSyllabicManners) {
+    theoryActiveFilters.add('syllabic');
+  } else {
+    theoryActiveFilters.delete('syllabic');
+  }
 }
 
 function allForCurrentTab() {
@@ -10762,7 +11342,7 @@ function syncCharts() {
   // Auto-switch tab to show where the active card lives
   const vowelSyms = new Set([
     'iː','i','uː','u','ɪ','ɪə','ʊə','ʊ','eə','e','eɪ','ə','əʊ','ɜː','ʌ','ɔː','ɔɪ','æ','aɪ','aʊ','ɑː','ɒ',
-    'lax','mono','diph','weak',
+    'lax','mono','diph','weak','ː',
   ]);
   const consonantSyms = new Set([
     'p','b','t','d','k','ɡ','f','v','θ','ð','s','z','ʃ','ʒ','tʃ','dʒ','h','m','n','n̩','ŋ','r','j','w','l','l̩',
@@ -10770,12 +11350,13 @@ function syncCharts() {
     'fortis','lenis',
   ]);
   const moreSyms = new Set([
-    'ˈ','ˌ','ː','supra',
+    'ˈ','supra','stress','stress-homographs','stress-abl',
     'lax','mono','diph','weak',
     'obstruent','sonorant','plosive','fricative','affricate','nasal','approx','fortis','lenis',
     'endings-s-plural','endings','grammatical-s','grammatical-ed',
-    'transcription','lpd','placenames','silent-h','silent-clusters',
-    'phoneme','syllable','stress','stress-homographs','stress-abl','vowel-position','vowel-quality','roundedness','place','manner','lateral','syllabic',
+    'silent-h','silent-clusters',
+    'phoneme','syllable','vowel-position','vowel-quality','roundedness','place','manner','lateral','syllabic',
+    'transcription','lpd','placenames',
     'fortis-lenis','voicing-independence','airflow-obstruction',
     'homographs','homoph-homogr','phon-interf','accent-dialect',
   ]);
@@ -10851,8 +11432,7 @@ function syncCharts() {
   const hasObstruents = [...theoryActiveFilters].some(t => OBSTRUENT_MANNERS.has(t));
   document.querySelectorAll('[data-filter]').forEach(el => {
     const tag = el.dataset.filter;
-    const visible = isAll || theoryActiveFilters.has(tag)
-      || (['fortis','lenis'].includes(tag) && hasObstruents);
+    const visible = isAll || theoryActiveFilters.has(tag);
     el.style.opacity = visible ? FULL : DIM;
   });
   document.querySelectorAll('[data-filter-group]').forEach(el => {
@@ -10866,10 +11446,27 @@ function syncCharts() {
     el.style.opacity = isAll || theoryActiveFilters.has(tag) ? FULL : DIM;
   });
 
-  // Consonant grid pills — dim if none of their tags are active
+  // Consonant grid pills — dim based on active filter type:
+  // if a place filter is active → match on place tags only
+  // if a manner filter is active → match on manner tags only
+  // if both → pill must satisfy both
+  const PLACE_TAGS = new Set(CONSONANT_PLACE_TAGS);
+  const MANNER_TAGS = new Set(['plosive','fricative','affricate','nasal','approx','lateral','fortis','lenis','syllabic']);
+  const activePlaces  = [...theoryActiveFilters].filter(t => PLACE_TAGS.has(t));
+  const activeManners = [...theoryActiveFilters].filter(t => MANNER_TAGS.has(t));
+  const hasPlace   = activePlaces.length > 0;
+  const hasManner  = activeManners.length > 0;
   document.querySelectorAll('.vpc-pill[data-filter-tag]').forEach(el => {
     const tags = el.dataset.filterTag.split(',');
-    el.style.opacity = isAll || tags.some(t => theoryActiveFilters.has(t)) ? FULL : DIM;
+    const placeOk  = !hasPlace  || tags.some(t => PLACE_TAGS.has(t)  && theoryActiveFilters.has(t));
+    const mannerOk = !hasManner || tags.some(t => MANNER_TAGS.has(t) && theoryActiveFilters.has(t));
+    el.style.opacity = isAll || (placeOk && mannerOk) ? FULL : DIM;
+  });
+
+  // Consonant chart place row labels — dim if their place tag not active
+  document.querySelectorAll('.place-lbl[data-filter]').forEach(el => {
+    const tag = el.dataset.filter;
+    el.style.opacity = isAll || !hasPlace || theoryActiveFilters.has(tag) ? FULL : DIM;
   });
 
   // Diphthong arrows — dim when diph is not active
