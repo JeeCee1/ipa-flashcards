@@ -1,5 +1,5 @@
 // RP IPA Flashcards — card data
-const CARDS_VERSION = '2.0';
+const CARDS_VERSION = '2.1';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FLASHCARD DATA
@@ -65,8 +65,30 @@ const theoryCards = [
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
     examples:[{w:'p',s:'u',e:'t', src:'TB'},{w:'b',s:'u',e:'ll', src:'TB'},{w:'s',s:'u',e:'gar', src:'TB'},{w:'b',s:'o',e:'som', src:'TB'},{w:'w',s:'o',e:'lf', src:'TB'},{w:'w',s:'o',e:'man', src:'TB'}],
-    rules:'Spelling <em>oo</em> = /ʊ/ only in: <span class="exc-word" data-src="TB">f<em>oo</em>t <span class="exc-ipa">fʊt</span></span> <span class="exc-word" data-src="TB">g<em>oo</em>d <span class="exc-ipa">ɡʊd</span></span> <span class="exc-word" data-src="TB">h<em>oo</em>d <span class="exc-ipa">hʊd</span></span> <span class="exc-word" data-src="TB">st<em>oo</em>d <span class="exc-ipa">stʊd</span></span> <span class="exc-word" data-src="TB">w<em>oo</em>d <span class="exc-ipa">wʊd</span></span> <span class="exc-word" data-src="TB">w<em>oo</em>l <span class="exc-ipa">wʊl</span></span> and all <em>-ook</em> words — except <span class="exc-word" data-src="CAI">sp<em>oo</em>k <span class="exc-ipa">spuːk</span></span> (AmE for ghost) and <span class="exc-word" data-src="CAI">sn<em>oo</em>ker <span class="exc-ipa">ˈsnuːkə</span></span> which have /uː/.<br><span class="exc-word" data-src="TB">R<em>oo</em>m <span class="exc-ipa">ruːm, rʊm</span></span><br>Also occurs in unstressed syllables as alternative for /ə/: <span class="exc-word" data-src="CAI">pop<em>u</em>lar <span class="exc-ipa">ˈpɒpjʊlə</span></span>',
-    rulesSrc:["TB p.32", "TB p.24"],
+    content:[
+      { type:'exceptionGroups', src:'TB p.32', groups:[
+        { text:'Spelling <em>oo</em> = /ʊ/ only in:', items:[
+          { pre:'f',  hl:'oo', post:'t',   ipa:'fʊt',      src:'TB' },
+          { pre:'g',  hl:'oo', post:'d',   ipa:'ɡʊd',      src:'TB' },
+          { pre:'h',  hl:'oo', post:'d',   ipa:'hʊd',      src:'TB' },
+          { pre:'st', hl:'oo', post:'d',   ipa:'stʊd',     src:'TB' },
+          { pre:'w',  hl:'oo', post:'d',   ipa:'wʊd',      src:'TB' },
+          { pre:'w',  hl:'oo', post:'l',   ipa:'wʊl',      src:'TB' },
+        ]},
+        { text:'and all <em>-ook</em> words — except:', items:[
+          { pre:'sp', hl:'oo', post:'k',   ipa:'spuːk',    src:'CAI' },
+          { pre:'sn', hl:'oo', post:'ker', ipa:'ˈsnuːkə',  src:'CAI' },
+        ]},
+        { text:'which have /uː/. Variant:', items:[
+          { pre:'R',  hl:'oo', post:'m',   ipa:'ruːm, rʊm', src:'TB' },
+        ]},
+      ]},
+      { type:'exceptionGroups', src:'TB p.24', groups:[
+        { text:'Also occurs in unstressed syllables as alternative for /ə/:', items:[
+          { pre:'pop', hl:'u', post:'lar', ipa:'ˈpɒpjʊlə', src:'CAI' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'uː', reason:'Tense counterpart', src:'TB'},
       {symbol:'ə', reason:'Also in unstressed syllables', src:'TB'},
@@ -89,8 +111,29 @@ const theoryCards = [
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
     examples:[{w:'b',s:'e',e:'d', src:'TB'},{w:'br',s:'ea',e:'d', src:'TB'}],
-    rules:'<span class="exc-spelling-group"><span class="exc-spelling-label"><em>a</em></span><span class="exc-word" data-src="CAI"><em>a</em>ny <span class="exc-ipa">ˈeni</span></span> <span class="exc-word" data-src="CAI">m<em>a</em>ny <span class="exc-ipa">ˈmeni</span></span> <span class="exc-word" data-src="CAI">Th<em>a</em>mes <span class="exc-ipa">temz</span></span> <span class="exc-word" data-src="TB"><em>a</em>te <span class="exc-ipa">et, eɪt</span></span></span><br><span class="exc-spelling-group"><span class="exc-spelling-label"><em>ay, ai</em></span><span class="exc-word" data-src="TB">s<em>ay</em>s <span class="exc-ipa">sez</span></span> <span class="exc-word" data-src="CAI">s<em>ai</em>d <span class="exc-ipa">sed</span></span> <span class="exc-word" data-src="TB">ag<em>ai</em>n <span class="exc-ipa">əˈɡen, əˈɡeɪn</span></span></span><br><span class="exc-spelling-group"><span class="exc-spelling-label"><em>u</em></span><span class="exc-word" data-src="CAI">b<em>u</em>ry <span class="exc-ipa">ˈberi</span></span> <span class="exc-word" data-src="CAI">b<em>u</em>rial <span class="exc-ipa">ˈberiəl</span></span></span>',
-    rulesSrc:["TB p.30", "TB p.24"],
+    content:[
+      { type:'block', title:'<em>a</em>', src:'TB p.30', groups:[
+        { items:[
+          { pre:'',   hl:'a', post:'ny',   ipa:'ˈeni',        src:'CAI' },
+          { pre:'m',  hl:'a', post:'ny',   ipa:'ˈmeni',       src:'CAI' },
+          { pre:'Th', hl:'a', post:'mes',  ipa:'temz',        src:'CAI' },
+          { pre:'',   hl:'a', post:'te',   ipa:'et, eɪt',     src:'TB'  },
+        ]},
+      ]},
+      { type:'block', title:'<em>ay, ai</em>', src:'TB p.30', groups:[
+        { items:[
+          { pre:'s',  hl:'ay', post:'s',  ipa:'sez',          src:'TB'  },
+          { pre:'s',  hl:'ai', post:'d',  ipa:'sed',          src:'CAI' },
+          { pre:'ag', hl:'ai', post:'n',  ipa:'əˈɡen, əˈɡeɪn', src:'TB' },
+        ]},
+      ]},
+      { type:'block', title:'<em>u</em>', src:'TB p.24', groups:[
+        { items:[
+          { pre:'b',  hl:'u', post:'ry',   ipa:'ˈberi',       src:'CAI' },
+          { pre:'b',  hl:'u', post:'rial', ipa:'ˈberiəl',     src:'CAI' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'æ',  reason:'Lower, more open variant', src:'GPF'},
       {symbol:'eɪ', reason:'Diphthong starting at /e/', src:'GPF'},
@@ -113,8 +156,15 @@ const theoryCards = [
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
     examples:[{w:'l',s:'a',e:'nd', src:'TB'},{w:'comp',s:'a',e:'rison', src:'TB'},{w:'tr',s:'a',e:'nsparent', src:'TB'},{w:'',s:'a',e:'rid', src:'TB'},{w:'sw',s:'a',e:'m', src:'TB'},{w:'qu',s:'a',e:'ck', src:'TB'}],
-    rules:'Exceptional spelling: <span class="exc-word" data-src="CAI">pl<em>ai</em>d <span class="exc-ipa">plæd</span></span> <span class="exc-word" data-src="CAI">pl<em>ai</em>t <span class="exc-ipa">plæt</span></span><br>Words with <u>medial</u> <em>-are-/-ari-</em> normally have /æ/ (see /eə/) but /eə/ occurs in <span class="ctx-word"><em>ar</em>ea</span> <span class="ctx-word">g<em>ar</em>ish</span> <span class="ctx-word">h<em>ar</em>em</span> <span class="ctx-word">p<em>ar</em>ent</span>',
-    rulesSrc:["TB p.30", "TB p.31"],
+    content:[
+      { type:'exceptionGroups', src:'TB p.30', groups:[
+        { text:'Exceptional spelling:', items:[
+          { pre:'pl', hl:'ai', post:'d', ipa:'plæd', src:'CAI' },
+          { pre:'pl', hl:'ai', post:'t', ipa:'plæt', src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'Words with <u>medial</u> <em>-are-/-ari-</em> normally have /æ/ (see /eə/) but /eə/ occurs in <span class="ctx-word"><em>ar</em>ea</span> <span class="ctx-word">g<em>ar</em>ish</span> <span class="ctx-word">h<em>ar</em>em</span> <span class="ctx-word">p<em>ar</em>ent</span>', src:'TB p.31' },
+    ],
         related:[
       {symbol:'e', reason:'Higher, less open variant', src:'GPF'},
       {symbol:'ɑː', reason:'Before /f θ s/ in RP', src:'TB'},
@@ -188,8 +238,25 @@ const theoryCards = [
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
     examples:[{w:'w',s:'a',e:'tch', src:'TB'},{w:'qu',s:'a',e:'lity', src:'TB'},{w:'c',s:'o',e:'ffee', src:'TB'},{w:'b',s:'o',e:'mb', src:'TB'},{w:'s',s:'o',e:'rry', src:'TB'},{w:'h',s:'o',e:'liday', src:'TB'},{w:'f',s:'o',e:'reign', src:'TB'},{w:'m',s:'o',e:'ral', src:'TB'}],
-    rules:'<div class="s-step-block s-step-block--lax"><div class="s-step-header"><span class="s-step-num"><em>au</em></span></div><div class="s-step-body"><div class="s-step-exc-row"><span class="exc-word" data-src="TB"><em>Au</em>stin <span class="exc-ipa">ˈɒstɪn</span></span> <span class="exc-word" data-src="TB"><em>Au</em>stralia <span class="exc-ipa">ɒˈstreɪliə</span></span> <span class="exc-word" data-src="TB"><em>Au</em>stria <span class="exc-ipa">ˈɒstriə</span></span> <span class="exc-word" data-src="TB">bec<em>au</em>se <span class="exc-ipa">bɪˈkɒz</span></span> <span class="exc-word" data-src="TB">c<em>au</em>liflower <span class="exc-ipa">ˈkɒliˌflaʊə</span></span> <span class="exc-word" data-src="TB">l<em>au</em>rel <span class="exc-ipa">ˈlɒrəl</span></span> <span class="exc-word" data-src="TB">s<em>au</em>sage <span class="exc-ipa">ˈsɒsɪdʒ</span></span> <span class="exc-word" data-src="TB">V<em>au</em>xhall <span class="exc-ipa">ˈvɒksɔːl</span></span></div></div></div><div class="s-step-block s-step-block--lax"><div class="s-step-header"><span class="s-step-num"><em>-other</em></span></div><div class="s-step-body"><div class="s-step-desc">Only <span class="ctx-word">b<em>oth</em>er</span> = /ɒðə/. All other <em>-other</em> words have /ʌðə/.</div><div class="s-step-exc-row"><span class="exc-word" data-src="TB">b<em>oth</em>er <span class="exc-ipa">ˈbɒðə</span></span></div></div></div>',
-    rulesSrc:["TB p.31"],
+    content:[
+      { type:'block', variant:'lax', title:'<em>au</em>', src:'TB p.31', groups:[
+        { items:[
+          { pre:'',    hl:'Au', post:'stin',      ipa:'ˈɒstɪn',       src:'TB' },
+          { pre:'',    hl:'Au', post:'stralia',   ipa:'ɒˈstreɪliə',   src:'TB' },
+          { pre:'',    hl:'Au', post:'stria',     ipa:'ˈɒstriə',      src:'TB' },
+          { pre:'bec', hl:'au', post:'se',        ipa:'bɪˈkɒz',       src:'TB' },
+          { pre:'c',   hl:'au', post:'liflower',  ipa:'ˈkɒliˌflaʊə', src:'TB' },
+          { pre:'l',   hl:'au', post:'rel',       ipa:'ˈlɒrəl',       src:'TB' },
+          { pre:'s',   hl:'au', post:'sage',      ipa:'ˈsɒsɪdʒ',      src:'TB' },
+          { pre:'V',   hl:'au', post:'xhall',     ipa:'ˈvɒksɔːl',     src:'TB' },
+        ]},
+      ]},
+      { type:'block', variant:'lax', title:'<em>-other</em>', src:'TB p.31', groups:[
+        { text:'Only <span class="ctx-word">b<em>oth</em>er</span> = /ɒðə/. All other <em>-other</em> words have /ʌðə/.', items:[
+          { pre:'b', hl:'oth', post:'er', ipa:'ˈbɒðə', src:'TB' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'ɔː', reason:'Lengthened tense counterpart',   src:'TB'},
       {symbol:'ʌ',  reason:'Same spelling, different vowel', src:'TB'},
@@ -264,8 +331,18 @@ const theoryCards = [
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
     examples:[{w:'b',s:'a',e:'th', src:'TB'},{w:'c',s:'ar',e:'d', src:'TB'},{w:'',s:'au',e:'nt', src:'TB'},{w:'h',s:'al',e:'f', src:'TB'}],
-    rules:'Exceptional spellings: <span class="exc-word" data-src="CAI">B<em>er</em>kshire <span class="exc-ipa">ˈbɑːkʃə</span></span> <span class="exc-word" data-src="CAI">cl<em>er</em>k <span class="exc-ipa">klɑːk</span></span> <span class="exc-word" data-src="CAI">D<em>er</em>by <span class="exc-ipa">ˈdɑːbi</span></span> <span class="exc-word" data-src="CAI">s<em>er</em>geant <span class="exc-ipa">ˈsɑːdʒənt</span></span> <span class="exc-word" data-src="CAI">h<em>ear</em>t <span class="exc-ipa">hɑːt</span></span> <span class="exc-word" data-src="CAI">h<em>ear</em>th <span class="exc-ipa">hɑːθ</span></span>',
-    rulesSrc:["TB p.31"],
+    content:[
+      { type:'exceptionGroups', src:'TB p.31', groups:[
+        { text:'Exceptional spellings:', items:[
+          { pre:'B',  hl:'er', post:'kshire', ipa:'ˈbɑːkʃə',   src:'CAI' },
+          { pre:'cl', hl:'er', post:'k',      ipa:'klɑːk',      src:'CAI' },
+          { pre:'D',  hl:'er', post:'by',     ipa:'ˈdɑːbi',     src:'CAI' },
+          { pre:'s',  hl:'er', post:'geant',  ipa:'ˈsɑːdʒənt',  src:'CAI' },
+          { pre:'h',  hl:'ear', post:'t',     ipa:'hɑːt',       src:'CAI' },
+          { pre:'h',  hl:'ear', post:'th',    ipa:'hɑːθ',       src:'CAI' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'æ',  reason:'Short counterpart', src:'TB'},
       {symbol:'ɒ',  reason:'Both back vowels',  src:'GPF'},
@@ -310,8 +387,18 @@ const theoryCards = [
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
     examples:[{w:'b',s:'ir',e:'d', src:'TB'},{w:'l',s:'ear',e:'n', src:'TB'},{w:'s',s:'er',e:'ve', src:'TB'},{w:'w',s:'or',e:'d', src:'TB'},{w:'t',s:'ur',e:'n', src:'TB'}],
-    rules:'Exceptional spelling: <span class="exc-word" data-src="TB">adj<em>our</em>n <span class="exc-ipa">əˈdʒɜːn</span></span> <span class="exc-word" data-src="TB">j<em>our</em>nal <span class="exc-ipa">ˈdʒɜːnəl</span></span> <span class="exc-word" data-src="TB">j<em>our</em>ney <span class="exc-ipa">ˈdʒɜːni</span></span> <span class="exc-word" data-src="TB">c<em>our</em>teous <span class="exc-ipa">ˈkɜːtiəs</span></span> <span class="exc-word" data-src="TB">c<em>our</em>tesy <span class="exc-ipa">ˈkɜːtəsi</span></span> <span class="exc-word" data-src="TB">sc<em>our</em>ge <span class="exc-ipa">skɜːdʒ</span></span>',
-    rulesSrc:["TB p.31", "TB p.31"],
+    content:[
+      { type:'exceptionGroups', src:'TB p.31', groups:[
+        { text:'Exceptional spelling:', items:[
+          { pre:'adj',  hl:'our', post:'n',     ipa:'əˈdʒɜːn',   src:'TB' },
+          { pre:'j',    hl:'our', post:'nal',   ipa:'ˈdʒɜːnəl',  src:'TB' },
+          { pre:'j',    hl:'our', post:'ney',   ipa:'ˈdʒɜːni',   src:'TB' },
+          { pre:'c',    hl:'our', post:'teous', ipa:'ˈkɜːtiəs',  src:'TB' },
+          { pre:'c',    hl:'our', post:'tesy',  ipa:'ˈkɜːtəsi',  src:'TB' },
+          { pre:'sc',   hl:'our', post:'ge',    ipa:'skɜːdʒ',    src:'TB' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'ə', reason:'Unstressed counterpart', src:'TB'},
     ] },
@@ -403,8 +490,18 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
     examples:[{w:'',s:'a',e:'ce', src:'TB'},{w:'pl',s:'ai',e:'n', src:'TB'},{w:'m',s:'ay',e:'', src:'TB'},{w:'v',s:'ei',e:'l', src:'TB'},{w:'gr',s:'ey',e:'', src:'TB'}],
-    rules:'Exceptional spelling: <span class="exc-word" data-src="CAI">br<em>ea</em>k <span class="exc-ipa">breɪk</span></span> <span class="exc-word" data-src="CAI">gr<em>ea</em>t <span class="exc-ipa">ɡreɪt</span></span> <span class="exc-word" data-src="CAI">st<em>ea</em>k <span class="exc-ipa">steɪk</span></span> <span class="exc-word" data-src="CAI">Y<em>ea</em>ts <span class="exc-ipa">jeɪts</span></span> <span class="exc-word" data-src="CAI">R<em>ea</em>gan <span class="exc-ipa">ˈreɪɡən</span></span> <span class="exc-word" data-src="CAI">McL<em>ea</em>n <span class="exc-ipa">məˈkleɪn</span></span>',
-    rulesSrc:["TB p.33", "TB p.33"],
+    content:[
+      { type:'exceptionGroups', src:'TB p.33', groups:[
+        { text:'Exceptional spelling:', items:[
+          { pre:'br', hl:'ea', post:'k',   ipa:'breɪk',     src:'CAI' },
+          { pre:'gr', hl:'ea', post:'t',   ipa:'ɡreɪt',     src:'CAI' },
+          { pre:'st', hl:'ea', post:'k',   ipa:'steɪk',     src:'CAI' },
+          { pre:'Y',  hl:'ea', post:'ts',  ipa:'jeɪts',     src:'CAI' },
+          { pre:'R',  hl:'ea', post:'gan', ipa:'ˈreɪɡən',   src:'CAI' },
+          { pre:'McL',hl:'ea', post:'n',   ipa:'məˈkleɪn',  src:'CAI' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'e', reason:'Diphthong starting at /e/', src:'GPF'},
       {symbol:'aɪ', reason:'Both closing front diphthongs', src:'GPF'},
@@ -424,8 +521,16 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
     examples:[{w:'l',s:'i',e:'ne', src:'TB'},{w:'m',s:'i',e:'nd', src:'TB'},{w:'f',s:'igh',e:'t', src:'TB'},{w:'d',s:'ie',e:'', src:'TB'},{w:'',s:'eye',e:'', src:'TB'},{w:'(n)',s:'ei',e:'ther', src:'TB'}],
-    rules:'<b>Rule: /aɪ/ rarely occurs before <span class="spell-letter">r</span></b> — <span class="exc-word" data-src="TB">h<em>ir</em>e <span class="exc-ipa">ˈhaɪə</span></span> <span class="exc-word" data-src="TB">h<em>igh</em>er <span class="exc-ipa">ˈhaɪə</span></span> <span class="exc-word" data-src="TB">p<em>ir</em>ate <span class="exc-ipa">ˈpaɪərət</span></span>',
-    rulesSrc:["TB p.33", "TB p.33"],
+    content:[
+      { type:'rules', text:'<b>Rule: /aɪ/ rarely occurs before <span class="spell-letter">r</span></b>', src:'TB p.33' },
+      { type:'exceptionGroups', src:'TB p.33', groups:[
+        { items:[
+          { pre:'h',  hl:'ir',  post:'e',    ipa:'ˈhaɪə',   src:'TB' },
+          { pre:'h',  hl:'igh', post:'er',   ipa:'ˈhaɪə',   src:'TB' },
+          { pre:'p',  hl:'ir',  post:'ate',  ipa:'ˈpaɪərət',src:'TB' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'eɪ', reason:'Both closing front diphthongs', src:'GPF'},
       {symbol:'ɔɪ', reason:'Both ending in /ɪ/', src:'GPF'},
@@ -466,8 +571,15 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
     examples:[{w:'d',s:'ow',e:'n', src:'TB'},{w:'m',s:'ou',e:'th', src:'TB'},{w:'r',s:'ow',e:' (quarrel)', src:'TB'}],
-    rules:'<b>Rule: /aʊ/ never occurs before <span class="spell-letter">r</span></b> — <span class="exc-word" data-src="TB">h<em>our</em> <span class="exc-ipa">ˈaʊə</span></span> <span class="exc-word" data-src="TB">sc<em>our</em>ing <span class="exc-ipa">ˈskaʊərɪŋ</span></span>',
-    rulesSrc:["TB p.33", "TB p.33"],
+    content:[
+      { type:'rules', text:'<b>Rule: /aʊ/ never occurs before <span class="spell-letter">r</span></b>', src:'TB p.33' },
+      { type:'exceptionGroups', src:'TB p.33', groups:[
+        { items:[
+          { pre:'h',  hl:'our', post:'',     ipa:'ˈaʊə',       src:'TB' },
+          { pre:'sc', hl:'our', post:'ing',  ipa:'ˈskaʊərɪŋ',  src:'TB' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'əʊ', reason:'Both back-gliding diphthongs', src:'GPF'},
       {symbol:'ʊə', reason:'Before /r/ instead', src:'TB'},
@@ -529,8 +641,18 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
     examples:[{w:'d',s:'are',e:'', src:'TB'},{w:'v',s:'ar',e:'iable', src:'TB'},{w:'f',s:'air',e:'', src:'TB'},{w:'S',s:'ar',e:'ah', src:'TB'},{w:'sw',s:'ear',e:'', src:'TB'},{w:'th',s:'ere',e:'', src:'TB'},{w:'th',s:'eir',e:'(s)', src:'TB'}],
-    rules:'<div class="s-step-block s-step-block--diph"><div class="s-step-header"><span class="s-step-num">-are, -ary</span></div><div class="s-step-body"><div class="s-step-desc">All words ending in <em>-are, -ary</em> have /eə/ — including derivations.</div><div class="s-step-exc-row"><span class="rule-word" data-src="TB">b<em>are</em> <span class="rule-ipa">beə</span></span> <span class="rule-word" data-src="TB">sh<em>are</em> <span class="rule-ipa">ʃeə</span></span> <span class="rule-word" data-src="TB">M<em>ary</em> <span class="rule-ipa">ˈmeəri</span></span> <span class="rule-word" data-src="TB">v<em>ary</em> <span class="rule-ipa">ˈveəri</span></span> and derivations <span class="rule-word" data-src="TB">b<em>are</em>foot <span class="rule-ipa">ˈbeəfʊt</span></span> <span class="rule-word" data-src="TB">vari<em>able</em> <span class="rule-ipa">ˈveəriəbl</span></span> <span class="rule-word" data-src="TB">vari<em>ous</em> <span class="rule-ipa">ˈveəriəs</span></span></div></div></div><div class="s-step-block s-step-block--diph"><div class="s-step-header"><span class="s-step-num">-arian, -arium, -arius</span></div><div class="s-step-body"><div class="s-step-desc">All words ending in <em>-arian, -arium, -arius</em> have /eə/.</div><div class="s-step-exc-row"><span class="rule-word" data-src="TB">veget<em>arian</em> <span class="rule-ipa">ˌvedʒɪˈteəriən</span></span> <span class="rule-word" data-src="TB">sol<em>arium</em> <span class="rule-ipa">səˈleəriəm</span></span> <span class="rule-word" data-src="TB">Sagitt<em>arius</em> <span class="rule-ipa">ˌsædʒɪˈteəriəs</span></span></div></div></div><div class="s-step-block s-step-block--diph"><div class="s-step-header"><span class="s-step-num"><u>medial</u> -are-, -ari-</span></div><div class="s-step-body"><div class="s-step-desc">Normally /æ/ (see /æ/) but /eə/ occurs in:</div><div class="s-step-exc-row"><span class="rule-word" data-src="TB"><em>ar</em>ea <span class="rule-ipa">ˈeəriə</span></span> <span class="rule-word" data-src="TB">g<em>ar</em>ish <span class="rule-ipa">ˈɡeərɪʃ</span></span> <span class="rule-word" data-src="TB">h<em>ar</em>em <span class="rule-ipa">ˈheərəm</span></span> <span class="rule-word" data-src="TB">p<em>ar</em>ent <span class="rule-ipa">ˈpeərənt</span></span></div></div></div><div class="s-step-block s-step-block--diph"><div class="s-step-header"><span class="s-step-num">ear</span></div><div class="s-step-body"><div class="s-step-desc">Normally /ɪə/ (see /ɪə/) but /eə/ in:</div><div class="s-step-exc-row"><span class="exc-word" data-src="TB">b<em>ear</em> <span class="exc-ipa">beə</span></span> <span class="exc-word" data-src="TB">p<em>ear</em> <span class="exc-ipa">peə</span></span> <span class="exc-word" data-src="TB">sw<em>ear</em> <span class="exc-ipa">sweə</span></span> <span class="exc-word" data-src="TB">t<em>ear</em> (v) <span class="exc-ipa">teə</span></span> <span class="exc-word" data-src="TB">w<em>ear</em> <span class="exc-ipa">weə</span></span></div></div></div>',
-    rulesSrc:["TB p.31", "TB p.31", "TB p.31"],
+    content:[
+      { type:'rules', text:'<div class="s-step-block s-step-block--diph"><div class="s-step-header"><span class="s-step-num">-are, -ary</span></div><div class="s-step-body"><div class="s-step-desc">All words ending in <em>-are, -ary</em> have /eə/ — including derivations.</div><div class="s-step-exc-row"><span class="rule-word" data-src="TB">b<em>are</em> <span class="rule-ipa">beə</span></span> <span class="rule-word" data-src="TB">sh<em>are</em> <span class="rule-ipa">ʃeə</span></span> <span class="rule-word" data-src="TB">M<em>ary</em> <span class="rule-ipa">ˈmeəri</span></span> <span class="rule-word" data-src="TB">v<em>ary</em> <span class="rule-ipa">ˈveəri</span></span> and derivations <span class="rule-word" data-src="TB">b<em>are</em>foot <span class="rule-ipa">ˈbeəfʊt</span></span> <span class="rule-word" data-src="TB">vari<em>able</em> <span class="rule-ipa">ˈveəriəbl</span></span> <span class="rule-word" data-src="TB">vari<em>ous</em> <span class="rule-ipa">ˈveəriəs</span></span></div></div></div><div class="s-step-block s-step-block--diph"><div class="s-step-header"><span class="s-step-num">-arian, -arium, -arius</span></div><div class="s-step-body"><div class="s-step-desc">All words ending in <em>-arian, -arium, -arius</em> have /eə/.</div><div class="s-step-exc-row"><span class="rule-word" data-src="TB">veget<em>arian</em> <span class="rule-ipa">ˌvedʒɪˈteəriən</span></span> <span class="rule-word" data-src="TB">sol<em>arium</em> <span class="rule-ipa">səˈleəriəm</span></span> <span class="rule-word" data-src="TB">Sagitt<em>arius</em> <span class="rule-ipa">ˌsædʒɪˈteəriəs</span></span></div></div></div><div class="s-step-block s-step-block--diph"><div class="s-step-header"><span class="s-step-num"><u>medial</u> -are-, -ari-</span></div><div class="s-step-body"><div class="s-step-desc">Normally /æ/ (see /æ/) but /eə/ occurs in:</div><div class="s-step-exc-row"><span class="rule-word" data-src="TB"><em>ar</em>ea <span class="rule-ipa">ˈeəriə</span></span> <span class="rule-word" data-src="TB">g<em>ar</em>ish <span class="rule-ipa">ˈɡeərɪʃ</span></span> <span class="rule-word" data-src="TB">h<em>ar</em>em <span class="rule-ipa">ˈheərəm</span></span> <span class="rule-word" data-src="TB">p<em>ar</em>ent <span class="rule-ipa">ˈpeərənt</span></span></div></div></div>', src:'TB p.31' },
+      { type:'block', variant:'diph', title:'ear', src:'TB p.31', groups:[
+        { text:'Normally /ɪə/ (see /ɪə/) but /eə/ in:', items:[
+          { pre:'b',  hl:'ear', post:'',    ipa:'beə',  src:'TB' },
+          { pre:'p',  hl:'ear', post:'',    ipa:'peə',  src:'TB' },
+          { pre:'sw', hl:'ear', post:'',    ipa:'sweə', src:'TB' },
+          { pre:'t',  hl:'ear', post:' (v)',ipa:'teə',  src:'TB' },
+          { pre:'w',  hl:'ear', post:'',    ipa:'weə',  src:'TB' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'ɪə', reason:'Both centring diphthongs', src:'GPF'},
       {symbol:'ʊə', reason:'Both centring diphthongs', src:'GPF'},
@@ -705,8 +827,17 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Plosive',
     examples:[{w:'',s:'g',e:'old', src:'TB'},{w:'',s:'g',e:'oal', src:'TB'},{w:'',s:'G',e:'erman', src:'TB'},{w:'',s:'G',e:'ertrude', src:'TB'}],
-    rules:'<b>Lenis</b> obstruent.<br>Plural ending: after /ɡ/ → <b>/z/</b> (bags).<br><b>/g/ vs /dʒ/:</b> before <em>i, e, y</em> the letter <em>g</em> can be either /dʒ/ (<span class="exc-word" data-src="CAI">German <span class="exc-ipa">ˈdʒɜːmən</span></span>) or /g/ (<span class="exc-word" data-src="CAI">Gertrude <span class="exc-ipa">ˈdʒɜːtruːd</span></span>). Elsewhere only /g/ occurs (bargain, goal). Exceptions: <b>margarine, gaol</b>.<br><b>Silent</b>: word-final <em>-gm/-gn</em>: <span class="ctx-word">diaphragm</span> <span class="ctx-word">deign</span> <span class="ctx-word">reign</span> <span class="ctx-word">sign</span>; word-initial <em>gn-</em>: <span class="ctx-word">gnat</span>.',
-    rulesSrc:["TB p.24", "TB p.29", "TB p.37", "TB p.37"],
+    content:[
+      { type:'rules', text:'<b>Lenis</b> obstruent.<br>Plural ending: after /ɡ/ → <b>/z/</b> (bags).', src:'TB p.24' },
+      { type:'rules', text:'<b>/g/ vs /dʒ/:</b> before <em>i, e, y</em> the letter <em>g</em> can be either /dʒ/ or /g/. Elsewhere only /g/ occurs (bargain, goal). Exceptions: <b>margarine, gaol</b>.', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'',   hl:'G',  post:'erman',   ipa:'ˈdʒɜːmən',   src:'CAI' },
+          { pre:'',   hl:'G',  post:'ertrude', ipa:'ˈdʒɜːtruːd', src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>Silent</b>: word-final <em>-gm/-gn</em>: <span class="ctx-word">diaphragm</span> <span class="ctx-word">deign</span> <span class="ctx-word">reign</span> <span class="ctx-word">sign</span>; word-initial <em>gn-</em>: <span class="ctx-word">gnat</span>.', src:'TB p.37' },
+    ],
         related:[
       {symbol:'k', reason:'Fortis counterpart', src:'TB'},
       {symbol:'dʒ', reason:'g before e/i/y can be /dʒ/', src:'TB'},
@@ -732,8 +863,16 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Fricative',
     examples:[{w:'',s:'f',e:'eel', src:'TB'},{w:'ne',s:'ph',e:'ew', src:'TB'},{w:'o',s:'f',e:'', src:'TB'}],
-    rules:'<b>Fortis</b> obstruent.<br>Plural: sg /f/ → pl /vz/ only in: <b>calf, elf, half, knife, leaf, life, loaf, shelf, thief, wife, wolf</b>. The plurals of <em>dwarf, scarf, wharf</em> have either /fs/ or /vz/.<br><b>/f/ vs /v/:</b> <em>f</em> and <em>ph</em> only represent /v/ in <span class="exc-word" data-src="CAI">ne<em>ph</em>ew <span class="exc-ipa">ˈnefjuː</span></span> <span class="exc-word" data-src="CAI">Ste<em>ph</em>en <span class="exc-ipa">ˈstiːvən</span></span> and <b>of</b>.',
-    rulesSrc:["TB p.24", "TB p.29", "TB p.37"],
+    content:[
+      { type:'rules', text:'<b>Fortis</b> obstruent.<br>Plural: sg /f/ → pl /vz/ only in: <b>calf, elf, half, knife, leaf, life, loaf, shelf, thief, wife, wolf</b>. The plurals of <em>dwarf, scarf, wharf</em> have either /fs/ or /vz/.', src:'TB p.29' },
+      { type:'rules', text:'<b>/f/ vs /v/:</b> <em>f</em> and <em>ph</em> only represent /v/ in <b>of</b> and:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'ne',  hl:'ph', post:'ew',  ipa:'ˈnefjuː',  src:'CAI' },
+          { pre:'Ste', hl:'ph', post:'en',  ipa:'ˈstiːvən', src:'CAI' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'v', reason:'Lenis counterpart', src:'TB'},
       {symbol:'θ', reason:'Both voiceless fricatives', src:'GPF'},
@@ -757,8 +896,16 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Fricative',
     examples:[{w:'',s:'v',e:'eal', src:'TB'},{w:'ne',s:'ph',e:'ew', src:'TB'},{w:'Ste',s:'ph',e:'en', src:'TB'}],
-    rules:'<b>Lenis</b> obstruent.<br><b>/f/ vs /v/:</b> <em>f</em> and <em>ph</em> only represent /v/ in <span class="exc-word" data-src="CAI">ne<em>ph</em>ew <span class="exc-ipa">ˈnefjuː</span></span> <span class="exc-word" data-src="CAI">Ste<em>ph</em>en <span class="exc-ipa">ˈstiːvən</span></span> and <b>of</b> (/ɒv/ or /əv/).<br>Plural: some sg /f/ → pl /vz/: calf→calves, knife→knives, etc.',
-    rulesSrc:["TB p.24", "TB p.37", "TB p.29"],
+    content:[
+      { type:'rules', text:'<b>Lenis</b> obstruent.<br><b>/f/ vs /v/:</b> <em>f</em> and <em>ph</em> only represent /v/ in <b>of</b> (/ɒv/ or /əv/) and:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'ne',  hl:'ph', post:'ew',  ipa:'ˈnefjuː',  src:'CAI' },
+          { pre:'Ste', hl:'ph', post:'en',  ipa:'ˈstiːvən', src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'Plural: some sg /f/ → pl /vz/: calf→calves, knife→knives, etc.', src:'TB p.29' },
+    ],
         related:[
       {symbol:'f', reason:'Fortis counterpart', src:'TB'},
       {symbol:'ð', reason:'Both voiced fricatives', src:'GPF'},
@@ -803,8 +950,26 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Fricative',
     examples:[{w:'',s:'th',e:'is', src:'TB'},],
-    rules:'<b>/θ/ vs /ð/ — both spelled <em>th</em>:</b><br><b>Initial th:</b> /ð/ only in grammatical words: <em>the, this, that, these, those, they, their, there, then, than, thus, although</em>.<br><b><u>Medial</u> th:</b> /ð/ in Germanic words: <span class="exc-word" data-src="CAI">gather <span class="exc-ipa">ˈɡæðə</span></span> <span class="exc-word" data-src="CAI">leather <span class="exc-ipa">ˈleðə</span></span> <span class="exc-word" data-src="CAI">mother <span class="exc-ipa">ˈmʌðə</span></span>.<br><b>Final -the:</b> always /ð/ (breathe, soothe).<br>Note: <span class="exc-word" data-src="TB">nor<em>th</em>ern <span class="exc-ipa">ˈnɔːðn</span></span> <span class="exc-word" data-src="TB">sou<em>th</em>ern <span class="exc-ipa">ˈsʌðn</span></span> <em>worthy</em> have final /ð/ from related /θ/ words.',
-    rulesSrc:["TB p.35", "TB p.35", "TB p.35", "TB p.35", "TB p.35"],
+    content:[
+      { type:'rules', text:'<b>/θ/ vs /ð/ — both spelled <em>th</em>:</b>', src:'TB p.35' },
+      { type:'rules', text:'<b>Initial th:</b> /ð/ only in grammatical words: <em>the, this, that, these, those, they, their, there, then, than, thus, although</em>.', src:'TB p.35' },
+      { type:'rules', text:'<b><u>Medial</u> th:</b> /ð/ in Germanic words:', src:'TB p.35' },
+      { type:'exceptionGroups', src:'TB p.35', groups:[
+        { items:[
+          { pre:'g',  hl:'ath', post:'er',  ipa:'ˈɡæðə',  src:'CAI' },
+          { pre:'l',  hl:'eath',post:'er',  ipa:'ˈleðə',  src:'CAI' },
+          { pre:'m',  hl:'oth', post:'er',  ipa:'ˈmʌðə',  src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>Final -the:</b> always /ð/ (breathe, soothe).', src:'TB p.35' },
+      { type:'rules', text:'Note: have final /ð/ from related /θ/ words:', src:'TB p.35' },
+      { type:'exceptionGroups', src:'TB p.35', groups:[
+        { items:[
+          { pre:'nor', hl:'th', post:'ern', ipa:'ˈnɔːðn', src:'TB' },
+          { pre:'sou', hl:'th', post:'ern', ipa:'ˈsʌðn',  src:'TB' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'θ', reason:'Fortis counterpart', src:'TB'},
       {symbol:'fortis-lenis', reason:'Lenis obstruent class', src:'CAI'},
@@ -827,8 +992,20 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Fricative',
     examples:[{w:'',s:'s',e:'ink', src:'TB'},{w:'le',s:'ss',e:'on', src:'TB'},{w:'mi',s:'ce',e:'', src:'TB'}],
-    rules:'<b>/s/ vs /z/ rules:</b><br><em>ss, c, sc</em> = /s/: <span class="exc-word" data-src="CAI">le<em>ss</em>on <span class="exc-ipa">ˈlesən</span></span> <span class="exc-word" data-src="CAI">mi<em>ce</em> <span class="exc-ipa">maɪs</span></span> <span class="exc-word" data-src="CAI">lasci<em>vi</em>ous <span class="exc-ipa">ləˈsɪviəs</span></span>. <br><b>Final s = /s/</b> except: <em>as, does, has, his, is, was</em>; <em>lens, series, species, Mrs, Ms</em>; proper names like Dickens, Williams, Leeds.<br><em>rs</em> is always /s/ (conversation, university) — except lens, cleanse, Mars, parse.<br>Prefix <em>mis-</em> always = /mɪs/.<br><b>Plural -s ending:</b> /s/ after fortis obstruents /p, t, k, f, θ/ (lips, lights, books).',
-    rulesSrc:["TB p.35", "TB p.36", "TB p.36", "TB p.36", "TB p.35", "TB p.28"],
+    content:[
+      { type:'rules', text:'<b>/s/ vs /z/ rules:</b>', src:'TB p.35' },
+      { type:'rules', text:'<em>ss, c, sc</em> = /s/:', src:'TB p.36' },
+      { type:'exceptionGroups', src:'TB p.36', groups:[
+        { items:[
+          { pre:'le',    hl:'ss', post:'on',  ipa:'ˈlesən',     src:'CAI' },
+          { pre:'mi',    hl:'ce', post:'',    ipa:'maɪs',       src:'CAI' },
+          { pre:'lasci', hl:'vi', post:'ous', ipa:'ləˈsɪviəs',  src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>Final s = /s/</b> except: <em>as, does, has, his, is, was</em>; <em>lens, series, species, Mrs, Ms</em>; proper names like Dickens, Williams, Leeds.', src:'TB p.36' },
+      { type:'rules', text:'<em>rs</em> is always /s/ (conversation, university) — except lens, cleanse, Mars, parse.<br>Prefix <em>mis-</em> always = /mɪs/.', src:'TB p.36' },
+      { type:'rules', text:'<b>Plural -s ending:</b> /s/ after fortis obstruents /p, t, k, f, θ/ (lips, lights, books).', src:'TB p.28' },
+    ],
         related:[
       {symbol:'z', reason:'Lenis counterpart', src:'TB'},
       {symbol:'ʃ', reason:'Both alveolar sibilants', src:'GPF'},
@@ -860,8 +1037,19 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Fricative',
     examples:[{w:'',s:'z',e:'inc', src:'TB'},{w:'',s:'sc',e:'issors', src:'TB'}],
-    rules:'<b>/s/ vs /z/ rules:</b><br><em>ss</em> = /z/ in: <b>dessert, dissolve, hussar, possess(ion), scissors</b>.<br><em>s</em> before <em>d, m, l</em> usually = /z/: <span class="exc-word" data-src="CAI">husband <span class="exc-ipa">ˈhʌzbənd</span></span> <span class="exc-word" data-src="CAI">wisdom <span class="exc-ipa">ˈwɪzdəm</span></span> <span class="exc-word" data-src="CAI">prism <span class="exc-ipa">ˈprɪzəm</span></span>.<br>Prefix <em>dis-</em> = /dɪs/ (or /dɪz/ when accented vowel follows): <span class="ctx-word">dishonest</span> <span class="ctx-word">disorder</span>.<br><b>Plural -s ending:</b> /z/ after lenis obstruents and all vowels (tabs, bags, loves, trays).',
-    rulesSrc:["TB p.35", "TB p.36", "TB p.36", "TB p.36", "TB p.36"],
+    content:[
+      { type:'rules', text:'<b>/s/ vs /z/ rules:</b><br><em>ss</em> = /z/ in: <b>dessert, dissolve, hussar, possess(ion), scissors</b>.', src:'TB p.35' },
+      { type:'rules', text:'<em>s</em> before <em>d, m, l</em> usually = /z/:', src:'TB p.36' },
+      { type:'exceptionGroups', src:'TB p.36', groups:[
+        { items:[
+          { pre:'h',  hl:'us', post:'band', ipa:'ˈhʌzbənd', src:'CAI' },
+          { pre:'wi', hl:'s',  post:'dom',  ipa:'ˈwɪzdəm',  src:'CAI' },
+          { pre:'pr', hl:'is', post:'m',    ipa:'ˈprɪzəm',  src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'Prefix <em>dis-</em> = /dɪs/ (or /dɪz/ when accented vowel follows): <span class="ctx-word">dishonest</span> <span class="ctx-word">disorder</span>.', src:'TB p.36' },
+      { type:'rules', text:'<b>Plural -s ending:</b> /z/ after lenis obstruents and all vowels (tabs, bags, loves, trays).', src:'TB p.36' },
+    ],
         related:[
       {symbol:'s', reason:'Fortis counterpart', src:'TB'},
       {symbol:'ʒ', reason:'Both post-alveolar', src:'GPF'},
@@ -888,8 +1076,29 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Fricative',
     examples:[{w:'pre',s:'ss',e:'ure', src:'TB'},{w:'na',s:'ti',e:'on', src:'TB'},{w:'musi',s:'ci',e:'an', src:'TB'}],
-    rules:'<b>/ʃ/ vs /ʒ/:</b><br>/ʃ/ spelled with: <em>ci, ti, Csi, Csu</em> → <span class="exc-word" data-src="CAI">musi<em>ci</em>an <span class="exc-ipa">mjuːˈzɪʃən</span></span> <span class="exc-word" data-src="CAI">Confu<em>ci</em>an <span class="exc-ipa">kənˈfjuːʃən</span></span> <span class="exc-word" data-src="CAI">atten<em>ti</em>on <span class="exc-ipa">əˈtenʃən</span></span> <span class="exc-word" data-src="CAI">na<em>ti</em>on <span class="exc-ipa">ˈneɪʃən</span></span> <span class="exc-word" data-src="CAI">fis<em>si</em>on <span class="exc-ipa">ˈfɪʃən</span></span> <span class="exc-word" data-src="CAI">ten<em>si</em>on <span class="exc-ipa">ˈtenʃən</span></span> <span class="exc-word" data-src="CAI">pres<em>su</em>re <span class="exc-ipa">ˈpreʃə</span></span> <span class="exc-word" data-src="CAI">excur<em>si</em>on <span class="exc-ipa">ɪkˈskɜːʃən</span></span> <span class="exc-word" data-src="CAI">cen<em>su</em>re <span class="exc-ipa">ˈsenʃə</span></span>.<br><br>Exception: <span class="exc-word" data-src="TB"><em>A</em>sia <span class="exc-ipa">ˈeɪʃə</span></span>',
-    rulesSrc:["TB p.36", "TB p.36", "TB p.36"],
+    content:[
+      { type:'rules', text:'<b>/ʃ/ vs /ʒ/:</b>', src:'TB p.36' },
+      { type:'rules', text:'/ʃ/ spelled with: <em>ci, ti, Csi, Csu</em> →', src:'TB p.36' },
+      { type:'exceptionGroups', src:'TB p.36', groups:[
+        { items:[
+          { pre:'musi',   hl:'ci',  post:'an',   ipa:'mjuːˈzɪʃən',  src:'CAI' },
+          { pre:'Confu',  hl:'ci',  post:'an',   ipa:'kənˈfjuːʃən', src:'CAI' },
+          { pre:'atten',  hl:'ti',  post:'on',   ipa:'əˈtenʃən',    src:'CAI' },
+          { pre:'na',     hl:'ti',  post:'on',   ipa:'ˈneɪʃən',     src:'CAI' },
+          { pre:'fis',    hl:'si',  post:'on',   ipa:'ˈfɪʃən',      src:'CAI' },
+          { pre:'ten',    hl:'si',  post:'on',   ipa:'ˈtenʃən',     src:'CAI' },
+          { pre:'pres',   hl:'su',  post:'re',   ipa:'ˈpreʃə',      src:'CAI' },
+          { pre:'excur',  hl:'si',  post:'on',   ipa:'ɪkˈskɜːʃən',  src:'CAI' },
+          { pre:'cen',    hl:'su',  post:'re',   ipa:'ˈsenʃə',      src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'Exception:', src:'TB p.36' },
+      { type:'exceptionGroups', src:'TB p.36', groups:[
+        { items:[
+          { pre:'',  hl:'A', post:'sia', ipa:'ˈeɪʃə', src:'TB' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'ʒ', reason:'Lenis counterpart', src:'TB'},
       {symbol:'tʃ', reason:'Shares post-alveolar place', src:'GPF'},
@@ -914,8 +1123,18 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Fricative',
     examples:[{w:'mea',s:'s',e:'ure', src:'TB'},{w:'vi',s:'si',e:'on', src:'TB'},{w:'u',s:'s',e:'ual', src:'TB'},{w:'sei',s:'z',e:'ure', src:'TB'}],
-    rules:'<b>/ʃ/ vs /ʒ/:</b><br>/ʒ/ spelled with: <em>Vsi, Vsu, zu</em> → <span class="exc-word" data-src="CAI">vi<em>si</em>on <span class="exc-ipa">ˈvɪʒən</span></span> <span class="exc-word" data-src="CAI">eva<em>si</em>on <span class="exc-ipa">ɪˈveɪʒən</span></span> <span class="exc-word" data-src="CAI">mea<em>su</em>re <span class="exc-ipa">ˈmeʒə</span></span> <span class="exc-word" data-src="CAI">u<em>su</em>al <span class="exc-ipa">ˈjuːʒuəl</span></span> <span class="exc-word" data-src="CAI">sei<em>z</em>ure <span class="exc-ipa">ˈsiːʒə</span></span>.',
-    rulesSrc:["TB p.36", "TB p.36"],
+    content:[
+      { type:'rules', text:'<b>/ʃ/ vs /ʒ/:</b><br>/ʒ/ spelled with: <em>Vsi, Vsu, zu</em> →', src:'TB p.36' },
+      { type:'exceptionGroups', src:'TB p.36', groups:[
+        { items:[
+          { pre:'vi',  hl:'si',  post:'on',  ipa:'ˈvɪʒən',    src:'CAI' },
+          { pre:'eva', hl:'si',  post:'on',  ipa:'ɪˈveɪʒən',  src:'CAI' },
+          { pre:'mea', hl:'su',  post:'re',  ipa:'ˈmeʒə',     src:'CAI' },
+          { pre:'u',   hl:'su',  post:'al',  ipa:'ˈjuːʒuəl',  src:'CAI' },
+          { pre:'sei', hl:'z',   post:'ure', ipa:'ˈsiːʒə',    src:'CAI' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'ʃ', reason:'Fortis counterpart', src:'TB'},
       {symbol:'dʒ', reason:'Shares post-alveolar place', src:'GPF'},
@@ -990,8 +1209,18 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Affricate_consonant',
     examples:[{w:'',s:'j',e:'ar', src:'TB'},{w:'',s:'j',e:'am', src:'TB'},{w:'',s:'j',e:'et', src:'TB'},{w:'',s:'J',e:'ones', src:'TB'}],
-    rules:'<b>Lenis</b> affricate — combination of /d/ + /ʒ/.<br><b>/g/ vs /dʒ/:</b> before <em>i, e, y</em> letter <em>g</em> can be either /dʒ/ or /g/. <b>Initial j</b> is always /dʒ/: <span class="exc-word" data-src="TB">j<em>am</em> <span class="exc-ipa">dʒæm</span></span> <span class="exc-word" data-src="TB">j<em>et</em> <span class="exc-ipa">dʒet</span></span> <span class="exc-word" data-src="TB">J<em>ones</em> <span class="exc-ipa">dʒəʊnz</span></span>. <b>Initial y</b> is always /j/ (yet, yoke).<br>Note: <b>veg</b> /vedʒ/ is short for vegetable(s).',
-    rulesSrc:["TB p.24", "TB p.37", "TB p.37"],
+    content:[
+      { type:'rules', text:'<b>Lenis</b> affricate — combination of /d/ + /ʒ/.', src:'TB p.24' },
+      { type:'rules', text:'<b>/g/ vs /dʒ/:</b> before <em>i, e, y</em> letter <em>g</em> can be either /dʒ/ or /g/. <b>Initial j</b> is always /dʒ/:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'j', hl:'am',   post:'',    ipa:'dʒæm',    src:'TB' },
+          { pre:'j', hl:'et',   post:'',    ipa:'dʒet',    src:'TB' },
+          { pre:'J', hl:'ones', post:'',    ipa:'dʒəʊnz',  src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>Initial y</b> is always /j/ (yet, yoke).<br>Note: <b>veg</b> /vedʒ/ is short for vegetable(s).', src:'TB p.37' },
+    ],
         related:[
       {symbol:'tʃ', reason:'Fortis counterpart', src:'TB'},
       {symbol:'ɡ', reason:'g before e/i/y can be /dʒ/', src:'TB'},
@@ -1100,8 +1329,17 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Nasal_consonant',
     examples:[{w:'bott',s:'les',e:' — via /n/', src:'TB'}],
-    rules:'Schwa disappears before /n/ in unstressed syllables, making /n/ syllabic. Written with a subscript line ( ̩) beneath the symbol.<br>Word-final <em>-ten</em> after s/f = /<span class="ipa-syll">n̩</span>/: <b>hasten, moisten, soften</b>. <b>Often</b> has alternative /ˈɒftən/.<br>Examples: <span class="exc-word" data-src="TB">butt<em>on</em> <span class="exc-ipa">ˈbʌtn̩</span></span> <span class="exc-word" data-src="TB">seven<em>teen</em> <span class="exc-ipa">ˌsevn̩ˈtiːn</span></span><br>In AN (American/non-RP), syllabic nasals are less usual.',
-    rulesSrc:["TB p.25", "TB p.37", "TB p.37", "TB p.25"],
+    content:[
+      { type:'rules', text:'Schwa disappears before /n/ in unstressed syllables, making /n/ syllabic. Written with a subscript line ( ̩) beneath the symbol.', src:'TB p.25' },
+      { type:'rules', text:'Word-final <em>-ten</em> after s/f = /<span class="ipa-syll">n̩</span>/: <b>hasten, moisten, soften</b>. <b>Often</b> has alternative /ˈɒftən/.', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'butt', hl:'on',   post:'',   ipa:'ˈbʌtn̩',       src:'TB' },
+          { pre:'seven',hl:'teen', post:'',   ipa:'ˌsevn̩ˈtiːn',  src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'In AN (American/non-RP), syllabic nasals are less usual.', src:'TB p.25' },
+    ],
         related:[
       {symbol:'n', reason:'Non-syllabic base form', src:'TB'},
       {symbol:'l̩', reason:'Both syllabic sonorants', src:'TB'},
@@ -1128,8 +1366,31 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Approximant',
     examples:[{w:'',s:'r',e:'ip', src:'TB'}],
-    rules:'<b>Non-rhotic RP:</b> /r/ only occurs before a vowel sound. Word-final <span class="spell-letter">r</span> in spelling is silent — <span class="exc-word" data-src="CAI">canc<em>er</em> <span class="exc-ipa">ˈkænsə</span></span>, not /ˈkænsər/.<br><b>Linking /r/:</b> when the next word or suffix begins with a vowel, the /r/ is pronounced: <span class="exc-word" data-src="CAI">st<em>ar</em> <span class="exc-ipa">stɑː</span></span> but <span class="exc-word" data-src="CAI">st<em>arr</em>ing <span class="exc-ipa">ˈstɑːrɪŋ</span></span>; <em>It\'s far</em> /fɑː/ but <em>How far is the school?</em> /fɑːr ɪz/.<br><b>Dutch interference — r-colouring:</b> Dutch speakers often pronounce /r/ where it should be silent (e.g. <span class="exc-word" data-src="CAI">canc<em>er</em> <span class="exc-ipa">ˈkænsər</span></span> — incorrect). This is phonological interference and should be avoided in RP. Rule of thumb: <b>transcribe what you hear</b>, not what you see in the spelling.<br><b>Rhotic accents:</b> in some non-standard British accents and in General American (GA), /r/ is pronounced in all positions — before consonants and word-finally. RP is non-rhotic; GA is rhotic.<br>No /w/ in words beginning with <em>wr-</em>: <span class="ctx-word">wrench</span> <span class="ctx-word">write</span> <span class="ctx-word">wrong</span>.',
-    rulesSrc:["TB p.25", "TB p.25", "pdf", "pdf", "TB p.38"],
+    content:[
+      { type:'rules', text:'<b>Non-rhotic RP:</b> /r/ only occurs before a vowel sound. Word-final <span class="spell-letter">r</span> in spelling is silent:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'canc', hl:'er', post:'',    ipa:'ˈkænsə',    src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'not /ˈkænsər/.', src:'TB p.25' },
+      { type:'rules', text:'<b>Linking /r/:</b> when the next word or suffix begins with a vowel, the /r/ is pronounced:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'st',  hl:'ar',  post:'',    ipa:'stɑː',      src:'CAI' },
+          { pre:'st',  hl:'arr', post:'ing', ipa:'ˈstɑːrɪŋ',  src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:"<em>It's far</em> /fɑː/ but <em>How far is the school?</em> /fɑːr ɪz/.", src:'TB p.25' },
+      { type:'rules', text:'<b>Dutch interference — r-colouring:</b> Dutch speakers often pronounce /r/ where it should be silent. This is phonological interference and should be avoided in RP. Rule of thumb: <b>transcribe what you hear</b>, not what you see in the spelling.', src:'pdf' },
+      { type:'exceptionGroups', src:'pdf', groups:[
+        { text:'Incorrect (r-coloured):', items:[
+          { pre:'canc', hl:'er', post:'', ipa:'ˈkænsər', src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>Rhotic accents:</b> in some non-standard British accents and in General American (GA), /r/ is pronounced in all positions. RP is non-rhotic; GA is rhotic.', src:'pdf' },
+      { type:'rules', text:'No /w/ in words beginning with <em>wr-</em>: <span class="ctx-word">wrench</span> <span class="ctx-word">write</span> <span class="ctx-word">wrong</span>.', src:'TB p.38' },
+    ],
         related:[
       {symbol:'l', reason:'Both liquid approximants', src:'GPF'},
       {symbol:'j', reason:'Both glide approximants', src:'GPF'},
@@ -1156,8 +1417,16 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Approximant',
     examples:[{w:'',s:'y',e:'es', src:'TB'},{w:'',s:'y',e:'et', src:'TB'},{w:'',s:'y',e:'oke', src:'TB'}],
-    rules:'Consonantal counterpart of the vowel /iː/ — same tongue position, but too close to the palate to count as a vowel.<br><b>/j/ vs /dʒ/:</b> <b>Initial y</b> is always /j/ (yet, yoke). <b>Initial j</b> is always /dʒ/ (jam, jet).<br>Key spellings: <em>y</em> (yes), <em>i</em> before vowel (<span class="exc-word" data-src="CAI">radi<em>o</em> <span class="exc-ipa">ˈreɪdiəʊ</span></span>)',
-    rulesSrc:["WP", "TB p.37", "TB p.37"],
+    content:[
+      { type:'rules', text:'Consonantal counterpart of the vowel /iː/ — same tongue position, but too close to the palate to count as a vowel.', src:'WP' },
+      { type:'rules', text:'<b>/j/ vs /dʒ/:</b> <b>Initial y</b> is always /j/ (yet, yoke). <b>Initial j</b> is always /dʒ/ (jam, jet).', src:'TB p.37' },
+      { type:'rules', text:'Key spellings: <em>y</em> (yes), <em>i</em> before vowel:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'radi', hl:'o', post:'', ipa:'ˈreɪdiəʊ', src:'CAI' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'dʒ', reason:'Initial j is /dʒ/, not /j/', src:'TB'},
       {symbol:'w', reason:'Both glide approximants', src:'GPF'},
@@ -1207,8 +1476,18 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Lateral_consonant',
     examples:[{w:'',s:'l',e:'ip', src:'TB'}],
-    rules:'<b>Syllabic /<span class="ipa-syll">l̩</span>/:</b> schwa disappears before /l/ in unstressed syllables. Examples: <span class="exc-word" data-src="CAI">bottle <span class="exc-ipa">ˈbɒtl̩</span></span> <span class="exc-word" data-src="TB">castle <span class="exc-ipa">ˈkɑːsl̩</span></span> <span class="exc-word" data-src="CAI">thistle <span class="exc-ipa">ˈθɪsl̩</span></span>.<br>Word-final <em>-tle</em> after <em>s</em> = /<span class="ipa-syll">l̩</span>/: <span class="ctx-word">castle</span> <span class="ctx-word">jostle</span> <span class="ctx-word">thistle</span>.<br>No /w/ in words with <em>wh-</em> before o: <b>who, whose, whole, whore</b>.',
-    rulesSrc:["TB p.25", "TB p.38", "TB p.38"],
+    content:[
+      { type:'rules', text:'<b>Syllabic /<span class="ipa-syll">l̩</span>/:</b> schwa disappears before /l/ in unstressed syllables. Examples:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'bott', hl:'le', post:'',  ipa:'ˈbɒtl̩',  src:'CAI' },
+          { pre:'cast', hl:'le', post:'',  ipa:'ˈkɑːsl̩',  src:'TB'  },
+          { pre:'thist',hl:'le', post:'',  ipa:'ˈθɪsl̩',   src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'Word-final <em>-tle</em> after <em>s</em> = /<span class="ipa-syll">l̩</span>/: <span class="ctx-word">castle</span> <span class="ctx-word">jostle</span> <span class="ctx-word">thistle</span>.', src:'TB p.38' },
+      { type:'rules', text:'No /w/ in words with <em>wh-</em> before o: <b>who, whose, whole, whore</b>.', src:'TB p.38' },
+    ],
         related:[
       {symbol:'l̩', reason:'Syllabic variant of /l/', src:'TB'},
       {symbol:'r', reason:'Both liquid approximants', src:'GPF'},
@@ -1234,8 +1513,15 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Lateral_consonant',
     examples:[{w:'bott',s:'le',e:' /ˈbɒtl̩/', src:'TB'},{w:'thist',s:'le',e:'', src:'TB'}],
-    rules:'Schwa disappears before /l/ in unstressed syllables, making /l/ syllabic. Written with a subscript line ( ̩) beneath the symbol.<br>Word-final <em>-tle</em> after <em>s</em> always produces syllabic /<span class="ipa-syll">l̩</span>/: <span class="exc-word" data-src="TB">cast<em>le</em> <span class="exc-ipa">ˈkɑːsl̩</span></span> <span class="ctx-word">thist<em>le</em></span> <span class="ctx-word">jost<em>le</em></span> <span class="ctx-word">mistlet<em>oe</em></span>',
-    rulesSrc:["TB p.25", "TB p.38", "TB p.38"],
+    content:[
+      { type:'rules', text:'Schwa disappears before /l/ in unstressed syllables, making /l/ syllabic. Written with a subscript line ( ̩) beneath the symbol.', src:'TB p.25' },
+      { type:'rules', text:'Word-final <em>-tle</em> after <em>s</em> always produces syllabic /<span class="ipa-syll">l̩</span>/: <span class="ctx-word">thist<em>le</em></span> <span class="ctx-word">jost<em>le</em></span> <span class="ctx-word">mistlet<em>oe</em></span>', src:'TB p.38' },
+      { type:'exceptionGroups', src:'TB p.38', groups:[
+        { items:[
+          { pre:'cast', hl:'le', post:'', ipa:'ˈkɑːsl̩', src:'TB' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'l',  reason:'Non-syllabic base form',         src:'TB'},
       {symbol:'n̩', reason:'Both syllabic sonorants',        src:'TB'},
@@ -1257,8 +1543,49 @@ const theoryCards = [
     descSrc:'TB p.37',
     wiki:'https://en.wikipedia.org/wiki/List_of_generic_forms_in_place_names_in_Ireland_and_the_United_Kingdom',
     examples:[],
-    rules:'<b>-borough, -burgh</b> = /brə/: <span class="ctx-word">Middlesbrough</span> <span class="ctx-word">Peterborough</span> <span class="ctx-word">Edinburgh</span><br><b>-bury</b> = /bri/: <span class="ctx-word">Canterbury</span> <span class="ctx-word">Salisbury</span> <span class="ctx-word">Shaftesbury</span> — note also <b>-berry</b> = /bri/: <span class="ctx-word">cranberry</span> <span class="ctx-word">strawberry</span><br><b>-chester</b> = /tʃɪstə/: <span class="ctx-word">Chichester</span> <span class="ctx-word">Dorchester</span> <span class="ctx-word">Manchester</span><br><b>-combe, -combe</b> = /kəm/: <span class="ctx-word">Ilfracombe</span> <span class="ctx-word">Widecombe</span><br><b>-ham</b> = /əm/: <span class="ctx-word">Birmingham</span> <span class="ctx-word">Coldingham</span> <span class="ctx-word">Oldham</span> — when <em>s</em> precedes: /ʃəm/: <span class="exc-word" data-src="TB">Eve<em>sh</em>am <span class="exc-ipa">ˈiːvʃəm</span></span> <span class="exc-word" data-src="TB">Lewi<em>sh</em>am <span class="exc-ipa">ˈluːɪʃəm</span></span><br><b>-mouth</b> = /məθ/: <span class="ctx-word">Bournemouth</span> <span class="ctx-word">Eyemouth</span> <span class="ctx-word">Weymouth</span> — exception: <span class="exc-word" data-src="TB">Exmouth <span class="exc-ipa">ˈeksmαʊθ</span></span><br><b>-ford</b> = /fəd/: <span class="ctx-word">Ashford</span> <span class="ctx-word">Bedford</span> <span class="ctx-word">Oxford</span><br><b>-shire</b> = /ʃə/: <span class="ctx-word">Cambridgeshire</span> <span class="ctx-word">Lancashire</span> <span class="ctx-word">Wiltshire</span><br><b>-wich</b> often = /ɪdʒ/: <span class="exc-word" data-src="TB">Dul<em>wich</em> <span class="exc-ipa">ˈdʌlɪdʒ</span></span> <span class="exc-word" data-src="TB">Green<em>wich</em> <span class="exc-ipa">ˈɡrenɪdʒ</span></span> <span class="exc-word" data-src="TB">Nor<em>wich</em> <span class="exc-ipa">ˈnɒrɪdʒ</span></span> — exception: <span class="exc-word" data-src="TB">Ips<em>wich</em> <span class="exc-ipa">ˈɪpswɪtʃ</span></span><br><b>-wick</b> often = /ɪk/: <span class="exc-word" data-src="TB">Aln<em>wick</em> <span class="exc-ipa">ˈænɪk</span></span> <span class="exc-word" data-src="TB">Ber<em>wick</em> <span class="exc-ipa">ˈberɪk</span></span> <span class="exc-word" data-src="TB">Kes<em>wick</em> <span class="exc-ipa">ˈkezɪk</span></span>',
-    rulesSrc:['TB p.37','TB p.37','TB p.37','TB p.37','TB p.37','TB p.37','TB p.37','TB p.37','TB p.37','TB p.37'],
+    content:[
+      { type:'rules', text:'<b>-borough, -burgh</b> = /brə/: <span class="ctx-word">Middlesbrough</span> <span class="ctx-word">Peterborough</span> <span class="ctx-word">Edinburgh</span>', src:'TB p.37' },
+      { type:'rules', text:'<b>-bury</b> = /bri/: <span class="ctx-word">Canterbury</span> <span class="ctx-word">Salisbury</span> <span class="ctx-word">Shaftesbury</span> — note also <b>-berry</b> = /bri/: <span class="ctx-word">cranberry</span> <span class="ctx-word">strawberry</span>', src:'TB p.37' },
+      { type:'rules', text:'<b>-chester</b> = /tʃɪstə/: <span class="ctx-word">Chichester</span> <span class="ctx-word">Dorchester</span> <span class="ctx-word">Manchester</span>', src:'TB p.37' },
+      { type:'rules', text:'<b>-combe, -combe</b> = /kəm/: <span class="ctx-word">Ilfracombe</span> <span class="ctx-word">Widecombe</span>', src:'TB p.37' },
+      { type:'rules', text:'<b>-ham</b> = /əm/: <span class="ctx-word">Birmingham</span> <span class="ctx-word">Coldingham</span> <span class="ctx-word">Oldham</span> — when <em>s</em> precedes: /ʃəm/:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'Eve',  hl:'sh', post:'am', ipa:'ˈiːvʃəm',   src:'TB' },
+          { pre:'Lewi', hl:'sh', post:'am', ipa:'ˈluːɪʃəm',  src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>-mouth</b> = /məθ/: <span class="ctx-word">Bournemouth</span> <span class="ctx-word">Eyemouth</span> <span class="ctx-word">Weymouth</span> — exception:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'Ex', hl:'mouth', post:'', ipa:'ˈeksmαʊθ', src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>-ford</b> = /fəd/: <span class="ctx-word">Ashford</span> <span class="ctx-word">Bedford</span> <span class="ctx-word">Oxford</span>', src:'TB p.37' },
+      { type:'rules', text:'<b>-shire</b> = /ʃə/: <span class="ctx-word">Cambridgeshire</span> <span class="ctx-word">Lancashire</span> <span class="ctx-word">Wiltshire</span>', src:'TB p.37' },
+      { type:'rules', text:'<b>-wich</b> often = /ɪdʒ/:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'Dul',   hl:'wich', post:'', ipa:'ˈdʌlɪdʒ',  src:'TB' },
+          { pre:'Green', hl:'wich', post:'', ipa:'ˈɡrenɪdʒ',  src:'TB' },
+          { pre:'Nor',   hl:'wich', post:'', ipa:'ˈnɒrɪdʒ',   src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'— exception:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'Ips', hl:'wich', post:'', ipa:'ˈɪpswɪtʃ', src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>-wick</b> often = /ɪk/:', src:'TB p.37' },
+      { type:'exceptionGroups', src:'TB p.37', groups:[
+        { items:[
+          { pre:'Aln', hl:'wick', post:'', ipa:'ˈænɪk',  src:'TB' },
+          { pre:'Ber', hl:'wick', post:'', ipa:'ˈberɪk',  src:'TB' },
+          { pre:'Kes', hl:'wick', post:'', ipa:'ˈkezɪk',  src:'TB' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'transcription', reason:'Transcription conventions', src:'TB'},
       {symbol:'lpd',           reason:'LPD covers place names',    src:'TB'},
@@ -1309,7 +1636,40 @@ const theoryCards = [
     desc:'Some nouns change their final consonant when forming the plural. These are fixed word-lists — there is no rule predicting which words change. They must be learnt.',
     descSrc:'TB p.29',
     examples:[],
-    rules:'<div class="s-step-block s-step-block--s"><div class="s-step-header"><span class="s-step-num">a.</span><span class="s-step-arrow"> </span><span class="s-step-phoneme">/f/ → /vz/</span></div><div class="s-step-body"><div class="s-step-desc">Spelling changes too: <em>calf → calves</em> etc.<br>The plurals of <em>dwarf, scarf, wharf</em> have either /fs/ or /vz/.</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="exc-word" data-src="TB">cal<em>f</em> <span class="exc-ipa">→ calves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">el<em>f</em> <span class="exc-ipa">→ elves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">hal<em>f</em> <span class="exc-ipa">→ halves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">kni<em>f</em>e <span class="exc-ipa">→ knives</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">lea<em>f</em> <span class="exc-ipa">→ leaves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">li<em>f</em>e <span class="exc-ipa">→ lives</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">loa<em>f</em> <span class="exc-ipa">→ loaves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">sel<em>f</em> <span class="exc-ipa">→ selves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">shea<em>f</em> <span class="exc-ipa">→ sheaves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">shel<em>f</em> <span class="exc-ipa">→ shelves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">thie<em>f</em> <span class="exc-ipa">→ thieves</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">wi<em>f</em>e <span class="exc-ipa">→ wives</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">wol<em>f</em> <span class="exc-ipa">→ wolves</span></span></span></div></div></div><div class="s-step-block s-step-block--iz"><div class="s-step-header"><span class="s-step-num">b.</span><span class="s-step-arrow"> </span><span class="s-step-phoneme">/θ/ → /ðz/</span></div><div class="s-step-body"><div class="s-step-desc">Spelling unchanged. The plurals of <em>lath, oath, sheath, truth, wreath</em> have either /θs/ or /ðz/.</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="exc-word" data-src="TB">ba<em>th</em> <span class="exc-ipa">→ baths /ðz/</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">pa<em>th</em> <span class="exc-ipa">→ paths /ðz/</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">mou<em>th</em> <span class="exc-ipa">→ mouths /ðz/</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">you<em>th</em> <span class="exc-ipa">→ youths /ðz/</span></span></span></div></div></div><div class="s-step-block s-step-block--z"><div class="s-step-header"><span class="s-step-num">c.</span><span class="s-step-arrow"> </span><span class="s-step-phoneme">/s/ → /zɪz/</span></div><div class="s-step-body"><div class="s-step-desc">Only one word. Also: all nouns ending in <b>-sis</b> /sɪs/ → <b>-ses</b> /siːz/.</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="exc-word" data-src="TB">hou<em>s</em>e <span class="exc-ipa">→ houses /ˈhaʊzɪz/</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">analy<em>s</em>is <span class="exc-ipa">→ analyses /əˈnæləsiːz/</span></span></span><span class="s-step-exc-item"><span class="exc-word" data-src="TB">ba<em>s</em>is <span class="exc-ipa">→ bases /ˈbeɪsiːz/</span></span></span></div></div></div>',
+    content:[
+      { type:'block', variant:'s', title:'a.', arrow:'→', phoneme:'/f/ → /vz/', src:'TB p.29', groups:[
+        { text:'Spelling changes too: <em>calf → calves</em> etc.<br>The plurals of <em>dwarf, scarf, wharf</em> have either /fs/ or /vz/.', items:[
+          { pre:'cal',  hl:'f', post:'',    ipa:'→ calves',   src:'TB', label:'Plural' },
+          { pre:'el',   hl:'f', post:'',    ipa:'→ elves',    src:'TB' },
+          { pre:'hal',  hl:'f', post:'',    ipa:'→ halves',   src:'TB' },
+          { pre:'kni',  hl:'f', post:'e',   ipa:'→ knives',   src:'TB' },
+          { pre:'lea',  hl:'f', post:'',    ipa:'→ leaves',   src:'TB' },
+          { pre:'li',   hl:'f', post:'e',   ipa:'→ lives',    src:'TB' },
+          { pre:'loa',  hl:'f', post:'',    ipa:'→ loaves',   src:'TB' },
+          { pre:'sel',  hl:'f', post:'',    ipa:'→ selves',   src:'TB' },
+          { pre:'shea', hl:'f', post:'',    ipa:'→ sheaves',  src:'TB' },
+          { pre:'shel', hl:'f', post:'',    ipa:'→ shelves',  src:'TB' },
+          { pre:'thie', hl:'f', post:'',    ipa:'→ thieves',  src:'TB' },
+          { pre:'wi',   hl:'f', post:'e',   ipa:'→ wives',    src:'TB' },
+          { pre:'wol',  hl:'f', post:'',    ipa:'→ wolves',   src:'TB' },
+        ]},
+      ]},
+      { type:'block', variant:'iz', title:'b.', arrow:'→', phoneme:'/θ/ → /ðz/', src:'TB p.29', groups:[
+        { text:'Spelling unchanged. The plurals of <em>lath, oath, sheath, truth, wreath</em> have either /θs/ or /ðz/.', items:[
+          { pre:'ba',   hl:'th', post:'', ipa:'→ baths /ðz/',  src:'TB' },
+          { pre:'pa',   hl:'th', post:'', ipa:'→ paths /ðz/',  src:'TB' },
+          { pre:'mou',  hl:'th', post:'', ipa:'→ mouths /ðz/', src:'TB' },
+          { pre:'you',  hl:'th', post:'', ipa:'→ youths /ðz/', src:'TB' },
+        ]},
+      ]},
+      { type:'block', variant:'z', title:'c.', arrow:'→', phoneme:'/s/ → /zɪz/', src:'TB p.29', groups:[
+        { text:'Only one word. Also: all nouns ending in <b>-sis</b> /sɪs/ → <b>-ses</b> /siːz/.', items:[
+          { pre:'hou',   hl:'s', post:'e',   ipa:'→ houses /ˈhaʊzɪz/',         src:'TB' },
+          { pre:'analy', hl:'s', post:'is',  ipa:'→ analyses /əˈnæləsiːz/',    src:'TB' },
+          { pre:'ba',    hl:'s', post:'is',  ipa:'→ bases /ˈbeɪsiːz/',         src:'TB' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'grammatical-s', reason:'-s endings rule',                src:'TB'},
       {symbol:'f',    reason:'/f/ → /vz/ plurals',            src:'TB'},
@@ -1330,8 +1690,38 @@ const theoryCards = [
     desc:'Key rules to apply when writing IPA transcriptions from this course.',
     descSrc:'TB p.25',
     examples:[{w:'',s:'ˈkɒntest',e:' (noun)', src:'TB'},{w:'',s:'piˈænəʊ',e:'', src:'TB'},{w:'',s:'ˈbʌtn̩',e:' (button)', src:'TB'}],
-    rules:'<b>1. Stress mark [ˈ]</b> placed immediately <em>before</em> the stressed syllable: <span class="exc-word" data-src="TB">con<em>test</em> <span class="exc-ipa">ˈkɒntest</span></span> <span class="exc-word" data-src="TB">pi<em>an</em>o <span class="exc-ipa">piˈænəʊ</span></span> <span class="exc-word" data-src="TB">re<em>al</em>ity <span class="exc-ipa">rɪˈæləti</span></span><br><br><b>2. Syllabic consonants:</b> schwa disappears before sonorant in unstressed syllable — mark with subscript line: <span class="exc-word" data-src="TB">butt<em>on</em> <span class="exc-ipa">ˈbʌtn̩</span></span> <span class="exc-word" data-src="TB">bott<em>les</em> <span class="exc-ipa">ˈbɒtl̩z</span></span> <span class="exc-word" data-src="TB">seven<em>teen</em> <span class="exc-ipa">ˌsevn̩ˈtiːn</span></span><br><br><b>3. Linking /r/:</b> RP is non-rhotic — /r/ only occurs before a vowel. Final spelling-r is silent (<span class="exc-word" data-src="TB">st<em>ar</em> <span class="exc-ipa">stɑː</span></span>) but resurfaces before a vowel (<span class="exc-word" data-src="TB">st<em>arr</em>ing <span class="exc-ipa">ˈstɑːrɪŋ</span></span>, <span class="exc-word" data-src="TB">f<em>ar</em> away <span class="exc-ipa">fɑːr əˈweɪ</span></span>).<br><br><b>4. Secondary stress:</b> in this course written as a second primary stress mark rather than /ˌ/: <span class="exc-word" data-src="TB">ac<em>a</em>demic <span class="exc-ipa">ˈækəˈdemɪk</span></span>',
-    rulesSrc:["TB p.25", "TB p.25", "TB p.25", "TB p.26"],
+    content:[
+      { type:'rules', text:'<b>1. Stress mark [ˈ]</b> placed immediately <em>before</em> the stressed syllable:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'con', hl:'test', post:'',     ipa:'ˈkɒntest',      src:'TB' },
+          { pre:'pi',  hl:'an',   post:'o',    ipa:'piˈænəʊ',       src:'TB' },
+          { pre:'re',  hl:'al',   post:'ity',  ipa:'rɪˈæləti',      src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>2. Syllabic consonants:</b> schwa disappears before sonorant in unstressed syllable — mark with subscript line:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'butt',  hl:'on',   post:'',    ipa:'ˈbʌtn̩',        src:'TB' },
+          { pre:'bott',  hl:'les',  post:'',    ipa:'ˈbɒtl̩z',       src:'TB' },
+          { pre:'seven', hl:'teen', post:'',    ipa:'ˌsevn̩ˈtiːn',   src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>3. Linking /r/:</b> RP is non-rhotic — /r/ only occurs before a vowel. Final spelling-r is silent but resurfaces before a vowel:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'st',  hl:'ar',  post:'',      ipa:'stɑː',           src:'TB' },
+          { pre:'st',  hl:'arr', post:'ing',   ipa:'ˈstɑːrɪŋ',      src:'TB' },
+          { pre:'f',   hl:'ar',  post:' away', ipa:'fɑːr əˈweɪ',    src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>4. Secondary stress:</b> in this course written as a second primary stress mark rather than /ˌ/:', src:'TB p.26' },
+      { type:'exceptionGroups', src:'TB p.26', groups:[
+        { items:[
+          { pre:'ac', hl:'a', post:'demic', ipa:'ˈækəˈdemɪk', src:'TB' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'ˈ',  reason:'Primary stress convention',       src:'TB'},
       {symbol:'ˈ',  reason:'Secondary stress convention',     src:'TB'},
@@ -1403,8 +1793,24 @@ const theoryCards = [
     desc:'ˈ marks the syllable with greatest prominence (primary stress). ˌ marks a syllable with secondary stress — less prominent than primary but more than unstressed.',
     descSrc:'TB p.25',
     examples:[{w:'ˈbʌtə',s:'',e:' (butter)', src:'TB'},{w:'bəˈliːv',s:'',e:' (believe)', src:'TB'},{w:'ˌʌndəˈstænd',s:'',e:' (understand)', src:'TB'}],
-    rules:'Both marks are placed <b>before</b> the stressed syllable (not above it).<br><b>ˈ Primary stress</b> — the most prominent syllable: <span class="exc-word" data-src="TB">con<em>test</em> (n) <span class="exc-ipa">ˈkɒntest</span></span> <span class="exc-word" data-src="TB">pi<em>an</em>o <span class="exc-ipa">piˈænəʊ</span></span> <span class="exc-word" data-src="TB">re<em>al</em>ity <span class="exc-ipa">rɪˈæləti</span></span><br><b>ˌ Secondary stress</b> — less prominent than primary, more than unstressed: <span class="exc-word" data-src="TB">un<em>der</em>stand <span class="exc-ipa">ˌʌndəˈstænd</span></span><br>In this course, words with secondary stress are transcribed with <b>double primary stress</b>: <em>academic</em> = /ˌækəˈdemɪk/ in LPD, written /ˈækəˈdemɪk/ in this book. The LPD tertiary stress mark [,] is <b>not used in this course</b>.',
-    rulesSrc:["TB p.25", "TB p.25", "TB p.26", "TB p.26", "TB p.26"],
+    content:[
+      { type:'rules', text:'Both marks are placed <b>before</b> the stressed syllable (not above it).', src:'TB p.25' },
+      { type:'rules', text:'<b>ˈ Primary stress</b> — the most prominent syllable:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'con', hl:'test', post:' (n)', ipa:'ˈkɒntest',   src:'TB' },
+          { pre:'pi',  hl:'an',   post:'o',    ipa:'piˈænəʊ',    src:'TB' },
+          { pre:'re',  hl:'al',   post:'ity',  ipa:'rɪˈæləti',   src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>ˌ Secondary stress</b> — less prominent than primary, more than unstressed:', src:'TB p.26' },
+      { type:'exceptionGroups', src:'TB p.26', groups:[
+        { items:[
+          { pre:'un', hl:'der', post:'stand', ipa:'ˌʌndəˈstænd', src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'In this course, words with secondary stress are transcribed with <b>double primary stress</b>: <em>academic</em> = /ˌækəˈdemɪk/ in LPD, written /ˈækəˈdemɪk/ in this book. The LPD tertiary stress mark [,] is <b>not used in this course</b>.', src:'TB p.26' },
+    ],
     related:[
       {symbol:'ː',              reason:'Length mark — also a diacritic',   src:'CAI'},
       {symbol:'stress',          reason:'Stress concept explained',          src:'TB'},
@@ -1833,8 +2239,25 @@ const theoryCards = [
     desc:'A syllabic consonant forms the nucleus of a syllable without a vowel.',
     descSrc:'TB p.25',
     examples:[{w:'',s:'n̩',e:' button, cotton'},{w:'',s:'l̩',e:' bottle, little'}],
-    rules:'Syllabic consonants arise when an unstressed vowel (usually /ə/) is <b>elided</b> before a sonorant. The sonorant then takes over the syllable nucleus.<br><b>Syllabic /<span class="ipa-syll">n̩</span>/</b>: after alveolar consonants — <span class="exc-word" data-src="TB">butt<em>on</em> <span class="exc-ipa">ˈbʌtn̩</span></span> <span class="exc-word" data-src="TB">cott<em>on</em> <span class="exc-ipa">ˈkɒtn̩</span></span> <span class="exc-word" data-src="TB">list<em>en</em> <span class="exc-ipa">ˈlɪsn̩</span></span>.<br><b>Syllabic /<span class="ipa-syll">l̩</span>/</b>: after alveolar consonants — <span class="exc-word" data-src="TB">bott<em>le</em> <span class="exc-ipa">ˈbɒtl̩</span></span> <span class="exc-word" data-src="TB">litt<em>le</em> <span class="exc-ipa">ˈlɪtl̩</span></span> <span class="exc-word" data-src="TB">catt<em>le</em> <span class="exc-ipa">ˈkætl̩</span></span>.',
-    rulesSrc:["TB p.25","TB p.25","TB p.25"],
+    content:[
+      { type:'rules', text:'Syllabic consonants arise when an unstressed vowel (usually /ə/) is <b>elided</b> before a sonorant. The sonorant then takes over the syllable nucleus.', src:'TB p.25' },
+      { type:'rules', text:'<b>Syllabic /<span class="ipa-syll">n̩</span>/</b>: after alveolar consonants:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'butt', hl:'on', post:'',   ipa:'ˈbʌtn̩',  src:'TB' },
+          { pre:'cott', hl:'on', post:'',   ipa:'ˈkɒtn̩',  src:'TB' },
+          { pre:'list', hl:'en', post:'',   ipa:'ˈlɪsn̩',  src:'TB' },
+        ]},
+      ]},
+      { type:'rules', text:'<b>Syllabic /<span class="ipa-syll">l̩</span>/</b>: after alveolar consonants:', src:'TB p.25' },
+      { type:'exceptionGroups', src:'TB p.25', groups:[
+        { items:[
+          { pre:'bott', hl:'le', post:'',   ipa:'ˈbɒtl̩',  src:'TB' },
+          { pre:'litt', hl:'le', post:'',   ipa:'ˈlɪtl̩',  src:'TB' },
+          { pre:'catt', hl:'le', post:'',   ipa:'ˈkætl̩',  src:'TB' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'n̩',   reason:'Syllabic nasal',             src:'TB'},
       {symbol:'l̩',   reason:'Syllabic lateral',            src:'TB'},
@@ -2010,8 +2433,29 @@ const theoryCards = [
     descSrc:'TB p.28',
     examples:[],
     rulesLabel:'Rules &amp; Exceptions',
-    rules:'<div class="s-step-block s-step-block--iz"><div class="s-step-header"><span class="s-step-num">Step 1 — Exception</span><span class="s-step-arrow">→</span><span class="s-step-phoneme">/ɪz/</span></div><div class="s-step-body"><div class="s-step-desc">After a stem ending in a <b>sibilant</b> (hissing/hushing sound) /s z ʃ ʒ tʃ dʒ/ → /ɪz/<br>A vowel is inserted to prevent two sibilants clashing.</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="s-step-exc-label">Plural</span><span class="exc-word" data-src="TB">bus<em>es</em> <span class="exc-ipa">ˈbʌsɪz</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label"><abbr title="Third person singular">3rd p sg</abbr></span><span class="exc-word" data-src="TB">kiss<em>es</em> <span class="exc-ipa">ˈkɪsɪz</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label">Genitive</span><span class="exc-word" data-src="TB">Joyce\'<em>s</em> <span class="exc-ipa">ˈdʒɔɪsɪz</span></span></span></div></div></div><div class="s-step-block s-step-block--s"><div class="s-step-header"><span class="s-step-num">Step 2</span><span class="s-step-arrow">→</span><span class="s-step-phoneme">/s/</span></div><div class="s-step-body"><div class="s-step-desc">After all other <b>fortis obstruents</b> /p t k f θ/ → /s/</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="s-step-exc-label">Plural</span><span class="exc-word" data-src="TB">lip<em>s</em> <span class="exc-ipa">lɪps</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label"><abbr title="Third person singular">3rd p sg</abbr></span><span class="exc-word" data-src="TB">smok<em>es</em> <span class="exc-ipa">sməʊks</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label">Genitive</span><span class="exc-word" data-src="TB">Jack\'<em>s</em> <span class="exc-ipa">dʒæks</span></span></span></div></div></div><div class="s-step-block s-step-block--z"><div class="s-step-header"><span class="s-step-num">Step 3 — Default</span><span class="s-step-arrow">→</span><span class="s-step-phoneme">/z/</span></div><div class="s-step-body"><div class="s-step-desc">Everything else — lenis obstruents, sonorants, vowels → /z/</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="s-step-exc-label">Plural</span><span class="exc-word" data-src="TB">bag<em>s</em> <span class="exc-ipa">bæɡz</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label"><abbr title="Third person singular">3rd p sg</abbr></span><span class="exc-word" data-src="TB">go<em>es</em> <span class="exc-ipa">ɡəʊz</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label">Genitive</span><span class="exc-word" data-src="TB">Mary\'<em>s</em> <span class="exc-ipa">ˈmeərɪz</span></span></span></div></div></div>',
-    rulesSrc:["TB p.29","TB p.29","TB p.29","TB p.29","TB p.29","TB p.29","TB p.29","TB p.29","TB p.29","TB p.29"],
+    content:[
+      { type:'block', variant:'iz', title:'Step 1 — Exception', arrow:'→', phoneme:'/ɪz/', src:'TB p.29', groups:[
+        { text:'After a stem ending in a <b>sibilant</b> (hissing/hushing sound) /s z ʃ ʒ tʃ dʒ/ → /ɪz/<br>A vowel is inserted to prevent two sibilants clashing.', items:[
+          { pre:'bus',   hl:'es',  post:'', ipa:'ˈbʌsɪz',   src:'TB', label:'Plural' },
+          { pre:'kiss',  hl:'es',  post:'', ipa:'ˈkɪsɪz',   src:'TB', label:'3rd p sg' },
+          { pre:"Joyce'",hl:'s',   post:'', ipa:'ˈdʒɔɪsɪz', src:'TB', label:'Genitive' },
+        ]},
+      ]},
+      { type:'block', variant:'s', title:'Step 2', arrow:'→', phoneme:'/s/', src:'TB p.29', groups:[
+        { text:'After all other <b>fortis obstruents</b> /p t k f θ/ → /s/', items:[
+          { pre:'lip',  hl:'s',  post:'',  ipa:'lɪps',   src:'TB', label:'Plural' },
+          { pre:'smok', hl:'es', post:'',  ipa:'sməʊks', src:'TB', label:'3rd p sg' },
+          { pre:"Jack'",hl:'s',  post:'',  ipa:'dʒæks',  src:'TB', label:'Genitive' },
+        ]},
+      ]},
+      { type:'block', variant:'z', title:'Step 3 — Default', arrow:'→', phoneme:'/z/', src:'TB p.29', groups:[
+        { text:'Everything else — lenis obstruents, sonorants, vowels → /z/', items:[
+          { pre:'bag',   hl:'s',  post:'', ipa:'bæɡz',     src:'TB', label:'Plural' },
+          { pre:'go',    hl:'es', post:'', ipa:'ɡəʊz',     src:'TB', label:'3rd p sg' },
+          { pre:"Mary'", hl:'s',  post:'', ipa:'ˈmeərɪz',  src:'TB', label:'Genitive' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'grammatical-ed',reason:'Parallel rule for -ed endings',     src:'CAI'},
       {symbol:'fortis-lenis',  reason:'Determines /s/ vs /z/',             src:'TB'},
@@ -2028,7 +2472,29 @@ const theoryCards = [
     desc:'The written <b>-ed</b> suffix (past tense, past participle) has three possible pronunciations depending on the final sound of the stem. Always apply the steps in order.',
     descSrc:'TB p.29',
     examples:[],
-    rules:'<div class="s-step-block s-step-block--iz"><div class="s-step-header"><span class="s-step-num">Step 1 — Exception</span><span class="s-step-arrow">→</span><span class="s-step-phoneme">/ɪd/</span></div><div class="s-step-body"><div class="s-step-desc">After a stem ending in <b>/t/ or /d/</b> → /ɪd/. The exception exists because you cannot add /t/ or /d/ directly after an identical sound — the /ɪ/ buffer separates them.</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="s-step-exc-label">Past tense</span><span class="exc-word" data-src="TB">fitt<em>ed</em> <span class="exc-ipa">ˈfɪtɪd</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label">Past part.</span><span class="exc-word" data-src="TB">load<em>ed</em> <span class="exc-ipa">ˈləʊdɪd</span></span></span></div></div></div><div class="s-step-block s-step-block--s"><div class="s-step-header"><span class="s-step-num">Step 2</span><span class="s-step-arrow">→</span><span class="s-step-phoneme">/t/</span></div><div class="s-step-body"><div class="s-step-desc">After all other <b>fortis obstruents</b> /p k f θ s ʃ tʃ/ → /t/<br>Special: <b>-edly</b> = /ɪdli/ when accent falls on last syllable of infinitive.</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="s-step-exc-label">Past tense</span><span class="exc-word" data-src="TB">help<em>ed</em> <span class="exc-ipa">helpt</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label">Past part.</span><span class="exc-word" data-src="TB">knock<em>ed</em> <span class="exc-ipa">nɒkt</span></span></span></div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="s-step-exc-label">-edly</span><span class="exc-word" data-src="CAI">mark<em>ed</em>ly <span class="exc-ipa">ˈmɑːkɪdli</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label"></span><span class="exc-word" data-src="CAI">assur<em>ed</em>ly <span class="exc-ipa">əˈʃɔːrɪdli</span></span></span></div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="s-step-exc-label">But</span><span class="exc-word" data-src="CAI">good-humour<em>ed</em>ly <span class="exc-ipa">ˈɡʊd ˈhjuːmərdli</span></span></span></div></div></div><div class="s-step-block s-step-block--z"><div class="s-step-header"><span class="s-step-num">Step 3 — Default</span><span class="s-step-arrow">→</span><span class="s-step-phoneme">/d/</span></div><div class="s-step-body"><div class="s-step-desc">Everything else — lenis obstruents, sonorants, vowels → /d/</div><div class="s-step-exc-row"><span class="s-step-exc-item"><span class="s-step-exc-label">Past tense</span><span class="exc-word" data-src="TB">lov<em>ed</em> <span class="exc-ipa">lʌvd</span></span></span><span class="s-step-exc-item"><span class="s-step-exc-label">Past part.</span><span class="exc-word" data-src="TB">call<em>ed</em> <span class="exc-ipa">kɔːld</span></span></span></div></div></div>',
+    content:[
+      { type:'block', variant:'iz', title:'Step 1 — Exception', arrow:'→', phoneme:'/ɪd/', src:'TB p.29', groups:[
+        { text:'After a stem ending in <b>/t/ or /d/</b> → /ɪd/. The exception exists because you cannot add /t/ or /d/ directly after an identical sound — the /ɪ/ buffer separates them.', items:[
+          { pre:'fitt', hl:'ed', post:'',  ipa:'ˈfɪtɪd',  src:'TB', label:'Past tense' },
+          { pre:'load', hl:'ed', post:'',  ipa:'ˈləʊdɪd', src:'TB', label:'Past part.' },
+        ]},
+      ]},
+      { type:'block', variant:'s', title:'Step 2', arrow:'→', phoneme:'/t/', src:'TB p.29', groups:[
+        { text:'After all other <b>fortis obstruents</b> /p k f θ s ʃ tʃ/ → /t/<br>Special: <b>-edly</b> = /ɪdli/ when accent falls on last syllable of infinitive.', items:[
+          { pre:'help',  hl:'ed', post:'',   ipa:'helpt',           src:'TB',  label:'Past tense' },
+          { pre:'knock', hl:'ed', post:'',   ipa:'nɒkt',            src:'TB',  label:'Past part.' },
+          { pre:'mark',  hl:'ed', post:'ly', ipa:'ˈmɑːkɪdli',      src:'CAI', label:'-edly' },
+          { pre:'assur', hl:'ed', post:'ly', ipa:'əˈʃɔːrɪdli',     src:'CAI', label:'' },
+          { pre:'good-humour', hl:'ed', post:'ly', ipa:'ˈɡʊd ˈhjuːmərdli', src:'CAI', label:'But' },
+        ]},
+      ]},
+      { type:'block', variant:'z', title:'Step 3 — Default', arrow:'→', phoneme:'/d/', src:'TB p.29', groups:[
+        { text:'Everything else — lenis obstruents, sonorants, vowels → /d/', items:[
+          { pre:'lov',  hl:'ed', post:'', ipa:'lʌvd',  src:'TB', label:'Past tense' },
+          { pre:'call', hl:'ed', post:'', ipa:'kɔːld', src:'TB', label:'Past part.' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'grammatical-s',  reason:'Parallel rule for -s endings',   src:'CAI'},
       {symbol:'fortis-lenis',   reason:'Determines /t/ vs /d/',          src:'TB'},
@@ -2044,8 +2510,23 @@ const theoryCards = [
     desc:'Every word is made up of one or more <b>syllables</b> — the basic rhythmic units of speech. Syllables group into <b>feet</b>.',
     descSrc:'pdf',
     examples:[{w:'',s:'chill',e:' (1)'},{w:'',s:'hap·py',e:' (2)'},{w:'',s:'beau·ti·ful',e:' (3)'},{w:'',s:'in·for·ma·tion',e:' (4)'}],
-    rules:'Each syllable contains exactly <b>one vowel sound</b> (its nucleus). Consonants cluster around it.<br><br>Syllables group into <b>feet</b>: a foot = one <b>stressed syllable</b> + any following unstressed syllables. To count feet, count the stressed syllables.<br><br><em>an·ec·dote</em>: foot 1 = <b>an</b>·ec (primary stress) + foot 2 = <b>dote</b> (secondary stress) → <span class="exc-word" data-src="CAI">an<em>ec</em>dote <span class="exc-ipa">ˈænəkdəʊt</span></span><br><em>pos·si·bil·i·ty</em>: foot 1 = <b>pos</b>·si (secondary) + foot 2 = <b>bil</b>·i·ty (primary) → <span class="exc-word" data-src="CAI">possi<em>bil</em>ity <span class="exc-ipa">ˌpɒsəˈbɪləti</span></span><br><br>Understanding feet explains where the stress mark <b>ˈ</b> is placed in transcription.',
-    rulesSrc:["pdf","pdf","pdf","pdf","pdf"],
+    content:[
+      { type:'rules', text:'Each syllable contains exactly <b>one vowel sound</b> (its nucleus). Consonants cluster around it.', src:'pdf' },
+      { type:'rules', text:'Syllables group into <b>feet</b>: a foot = one <b>stressed syllable</b> + any following unstressed syllables. To count feet, count the stressed syllables.', src:'pdf' },
+      { type:'rules', text:'<em>an·ec·dote</em>: foot 1 = <b>an</b>·ec (primary stress) + foot 2 = <b>dote</b> (secondary stress) →', src:'pdf' },
+      { type:'exceptionGroups', src:'pdf', groups:[
+        { items:[
+          { pre:'an', hl:'ec', post:'dote', ipa:'ˈænəkdəʊt', src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:'<em>pos·si·bil·i·ty</em>: foot 1 = <b>pos</b>·si (secondary) + foot 2 = <b>bil</b>·i·ty (primary) →', src:'pdf' },
+      { type:'exceptionGroups', src:'pdf', groups:[
+        { items:[
+          { pre:'possi', hl:'bil', post:'ity', ipa:'ˌpɒsəˈbɪləti', src:'CAI' },
+        ]},
+      ]},
+      { type:'rules', text:"Understanding feet explains where the stress mark <b>ˈ</b> is placed in transcription.", src:'pdf' },
+    ],
     related:[
       {symbol:'stress',         reason:'Stress falls on one syllable per foot', src:'TB'},
       {symbol:'ˈ',              reason:'Primary stress mark',                   src:'TB'},
@@ -2063,8 +2544,26 @@ const theoryCards = [
     desc:'Homographs are words with <b>identical spelling</b> but <b>different pronunciation</b>. The most systematic pattern: stress placement shifts depending on word class.',
     descSrc:'pdf',
     examples:[{w:'',s:'ˈprɒdjuːs',e:' (n.)'},{w:'',s:'prəˈdjuːs',e:' (v.)'},{w:'',s:'ˈrefjuːs',e:' (n.)'},{w:'',s:'rɪˈfjuːz',e:' (v.)'}],
-    rules:'The dominant rule: <b>nouns and adjectives</b> carry stress on the <b>1st syllable</b>; <b>verbs</b> carry stress on the <b>2nd syllable</b>.<br><br><span class="exc-word" data-src="CAI"><em>in</em>crease (n.) <span class="exc-ipa">ˈɪŋkriːs</span></span> / <span class="exc-word" data-src="CAI">in<em>crease</em> (v.) <span class="exc-ipa">ɪŋˈkriːs</span></span><br><span class="exc-word" data-src="CAI"><em>pro</em>duce (n.) <span class="exc-ipa">ˈprɒdjuːs</span></span> / <span class="exc-word" data-src="CAI">pro<em>duce</em> (v.) <span class="exc-ipa">prəˈdjuːs</span></span><br><span class="exc-word" data-src="CAI"><em>re</em>fuse (n.) <span class="exc-ipa">ˈrefjuːs</span></span> / <span class="exc-word" data-src="CAI">re<em>fuse</em> (v.) <span class="exc-ipa">rɪˈfjuːz</span></span><br><span class="exc-word" data-src="CAI"><em>con</em>flict (n.) <span class="exc-ipa">ˈkɒnflɪkt</span></span> / <span class="exc-word" data-src="CAI">con<em>flict</em> (v.) <span class="exc-ipa">kənˈflɪkt</span></span><br><span class="exc-word" data-src="CAI"><em>pro</em>test (n.) <span class="exc-ipa">ˈprəʊtest</span></span> / <span class="exc-word" data-src="CAI">pro<em>test</em> (v.) <span class="exc-ipa">prəˈtest</span></span><br><span class="exc-word" data-src="CAI"><em>per</em>mit (n.) <span class="exc-ipa">ˈpɜːmɪt</span></span> / <span class="exc-word" data-src="CAI">per<em>mit</em> (v.) <span class="exc-ipa">pəˈmɪt</span></span><br><br>Note: the unstressed syllable often reduces toward <b>/ə/</b> as a result of the shift. Not all homographs follow this pattern — some differ in vowel quality only (e.g. <em>bow, row, wind</em>).',
-    rulesSrc:["pdf","pdf","pdf","pdf","pdf","pdf","pdf","pdf"],
+    content:[
+      { type:'rules', text:'The dominant rule: <b>nouns and adjectives</b> carry stress on the <b>1st syllable</b>; <b>verbs</b> carry stress on the <b>2nd syllable</b>.', src:'pdf' },
+      { type:'exceptionGroups', src:'pdf', groups:[
+        { items:[
+          { pre:'',    hl:'in',  post:'crease (n.)', ipa:'ˈɪŋkriːs',   src:'CAI', label:'n.' },
+          { pre:'in',  hl:'crease', post:' (v.)',    ipa:'ɪŋˈkriːs',   src:'CAI', label:'v.' },
+          { pre:'',    hl:'pro', post:'duce (n.)',   ipa:'ˈprɒdjuːs',  src:'CAI', label:'n.' },
+          { pre:'pro', hl:'duce', post:' (v.)',      ipa:'prəˈdjuːs',  src:'CAI', label:'v.' },
+          { pre:'',    hl:'re',  post:'fuse (n.)',   ipa:'ˈrefjuːs',   src:'CAI', label:'n.' },
+          { pre:'re',  hl:'fuse', post:' (v.)',      ipa:'rɪˈfjuːz',   src:'CAI', label:'v.' },
+          { pre:'',    hl:'con', post:'flict (n.)',  ipa:'ˈkɒnflɪkt',  src:'CAI', label:'n.' },
+          { pre:'con', hl:'flict', post:' (v.)',     ipa:'kənˈflɪkt',  src:'CAI', label:'v.' },
+          { pre:'',    hl:'pro', post:'test (n.)',   ipa:'ˈprəʊtest',  src:'CAI', label:'n.' },
+          { pre:'pro', hl:'test', post:' (v.)',      ipa:'prəˈtest',   src:'CAI', label:'v.' },
+          { pre:'',    hl:'per', post:'mit (n.)',    ipa:'ˈpɜːmɪt',    src:'CAI', label:'n.' },
+          { pre:'per', hl:'mit',  post:' (v.)',      ipa:'pəˈmɪt',     src:'CAI', label:'v.' },
+        ]},
+      ]},
+      { type:'rules', text:'Note: the unstressed syllable often reduces toward <b>/ə/</b> as a result of the shift. Not all homographs follow this pattern — some differ in vowel quality only (e.g. <em>bow, row, wind</em>).', src:'pdf' },
+    ],
     related:[
       {symbol:'stress',         reason:'Stress placement drives the difference', src:'TB'},
       {symbol:'syllable',       reason:'Foot structure underlies stress shift',  src:'CAI'},

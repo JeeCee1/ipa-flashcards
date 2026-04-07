@@ -4672,7 +4672,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '12.1';
+const APP_VERSION = '12.3';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -5666,6 +5666,7 @@ function renderImages(c) {
 function renderExcPill(item, overrides) {
   // Renders one exception word pill from structured data.
   // overrides: the ipa_exc_overrides object (plain word → IPA string).
+  // item.label: optional label shown before the pill (e.g. "Plural", "Past tense")
   const word = (item.pre || '') + (item.hl || '') + (item.post || '');
   const ipa  = (overrides && overrides[word] !== undefined)
     ? escHtml(overrides[word])
@@ -5674,7 +5675,11 @@ function renderExcPill(item, overrides) {
   const hl   = escHtml(item.hl   || '');
   const post = escHtml(item.post || '');
   const src  = escHtml(item.src  || '');
-  return `<span class="exc-word" data-src="${src}">${pre}<em>${hl}</em>${post} <span class="exc-ipa">${ipa}</span></span>`;
+  const pill = `<span class="exc-word" data-src="${src}">${pre}<em>${hl}</em>${post} <span class="exc-ipa">${ipa}</span></span>`;
+  if (item.label) {
+    return `<span class="s-step-exc-item"><span class="s-step-exc-label">${item.label}</span>${pill}</span>`;
+  }
+  return pill;
 }
 
 function renderExcGroups(groups, overrides) {
@@ -5690,22 +5695,28 @@ function renderExcGroups(groups, overrides) {
 
 function renderContentBlock(item, overrides, c) {
   // Renders a { type:'block', title?, text?, variant?, src?, groups? } item as an s-step-block.
+  // srcMarker appears exactly once per block — on the last rendered line.
   const variantClass = item.variant ? ` s-step-block--${item.variant}` : '';
   const src = item.src || '';
   const url = (src === 'WP' && c && (c.rulesWiki || c.wiki)) ? (c.rulesWiki || c.wiki) : '';
   const srcHtml = src ? srcMarker(src, url) : '';
-  const headerHtml = item.title
-    ? `<div class="s-step-header"><span class="s-step-num">${item.title}</span></div>`
+  const headerHtml = item.title || item.phoneme
+    ? `<div class="s-step-header">${item.title ? `<span class="s-step-num">${item.title}</span>` : ''}${item.arrow ? `<span class="s-step-arrow">${item.arrow}</span>` : ''}${item.phoneme ? `<span class="s-step-phoneme">${item.phoneme}</span>` : ''}</div>`
     : '';
   let bodyContent = '';
-  if (item.text) bodyContent += `<div class="s-step-desc">${item.text}${srcHtml}</div>`;
-  if (item.groups && item.groups.length) {
-    const pills = item.groups.map(group => {
-      const intro = group.text ? `<div class="s-step-desc">${group.text}${srcHtml}</div>` : '';
+  const hasGroups = item.groups && item.groups.length;
+  // Top-level block text: srcMarker only if there are no groups to carry it
+  if (item.text) bodyContent += `<div class="s-step-desc">${item.text}${hasGroups ? '' : srcHtml}</div>`;
+  if (hasGroups) {
+    const lastGroupIdx = item.groups.length - 1;
+    const groupHtml = item.groups.map((group, gi) => {
+      const isLastGroup = gi === lastGroupIdx;
+      const intro = group.text ? `<div class="s-step-desc">${group.text}</div>` : '';
       const row = (group.items || []).map(i => renderExcPill(i, overrides)).join(' ');
-      return intro + `<div class="s-step-exc-row">${row}${srcHtml}</div>`;
+      // srcMarker goes on the last row only
+      return intro + `<div class="s-step-exc-row">${row}${isLastGroup ? srcHtml : ''}</div>`;
     }).join('');
-    bodyContent += pills;
+    bodyContent += groupHtml;
   }
   return `<div class="s-step-block${variantClass}">${headerHtml}<div class="s-step-body">${bodyContent}</div></div>`;
 }
@@ -10366,6 +10377,8 @@ try {
             groups.forEach(group => {
               (group.items || []).forEach(pill => {
                 const word = (pill.pre || '') + (pill.hl || '') + (pill.post || '');
+                // Skip grammatical examples (labelled rows) and morph-change entries (ipa contains →)
+                if (pill.label || (pill.ipa || '').includes('→')) return;
                 if (!word || seen.has(word)) return;
                 seen.add(word);
                 entries.push({ word, defaultIpa: pill.ipa || '', cardSymbol: card.symbol, cardName: card.name || card.symbol });
