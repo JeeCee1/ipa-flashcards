@@ -1,5 +1,5 @@
 // RP IPA Flashcards — word list data
-const WORDS_VERSION = '1.10';
+const WORDS_VERSION = '2.0';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 'meaning' fields are extracted from the textbook where provided.

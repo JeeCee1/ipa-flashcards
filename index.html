@@ -820,7 +820,7 @@
     align-items: baseline;
     gap: 0.55em;
     font-family: 'Source Code Pro', monospace;
-    font-size: 0.68rem;
+    font-size: 1.0rem;
     background: var(--paper);
     border: 1px solid var(--border);
     border-radius: 3px;
@@ -830,7 +830,7 @@
     vertical-align: middle;
   }
   .exc-ipa {
-    font-size: 0.62rem;
+    font-size: 0.96rem;
     color: var(--muted);
     letter-spacing: 0;
     border-left: 1px solid var(--border);
@@ -4591,7 +4591,8 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
     window.theoryCards = [
       { symbol:'ɪ', tags:['lax','vowel'], name:'Short near-close near-front unrounded',
         desc:'', descSrc:'WP', detail:'Short. Lips unrounded, spread.', detailSrc:'WP',
-        place:'Near-front', manner:'Near-close', mnemonic:'bit, kit, sit', examples:[], related:[] },
+        place:'Near-front', manner:'Near-close', mnemonic:'bit, kit, sit', examples:[], related:[],
+        rules:'Exceptional spellings: <span class="exc-word" data-src="CAI">pr<em>e</em>tty <span class="exc-ipa">ˈprɪti</span></span> <span class="exc-word" data-src="CAI"><em>E</em>ngland <span class="exc-ipa">ˈɪŋɡlənd</span></span> <span class="exc-word" data-src="CAI">b<em>u</em>sy <span class="exc-ipa">ˈbɪzi</span></span> <span class="exc-word" data-src="TB">b<em>u</em>siness <span class="exc-ipa">ˈbɪznɪs</span></span> <span class="exc-word" data-src="TB">w<em>o</em>men <span class="exc-ipa">ˈwɪmɪn</span></span><br>Also occurs in unstressed syllables as alternative for /ə/: <span class="exc-word" data-src="CAI">ros<em>e</em>s <span class="exc-ipa">ˈrəʊzɪz</span></span> <span class="exc-word" data-src="CAI"><em>e</em>ffect <span class="exc-ipa">ɪˈfekt</span></span> <span class="exc-word" data-src="CAI">mark<em>e</em>t <span class="exc-ipa">ˈmɑːkɪt</span></span>' },
       { symbol:'e', tags:['lax','vowel'], name:'Close-mid front unrounded',
         desc:'', descSrc:'WP', detail:'Short. Lips spread.', detailSrc:'WP',
         place:'Front', manner:'Close-mid', mnemonic:'bed, red, said', examples:[], related:[] },
@@ -4671,7 +4672,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '11.353';
+const APP_VERSION = '12.1';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -5658,6 +5659,92 @@ function renderImages(c) {
   return map;
 }
 
+// ── Structured content renderer ───────────────────────────────────────────────
+// Renders c.content[] — ordered array of { type:'rules'|'exceptionGroups'|'block' } items.
+// Replaces renderRules for cards that have been converted to the new format.
+
+function renderExcPill(item, overrides) {
+  // Renders one exception word pill from structured data.
+  // overrides: the ipa_exc_overrides object (plain word → IPA string).
+  const word = (item.pre || '') + (item.hl || '') + (item.post || '');
+  const ipa  = (overrides && overrides[word] !== undefined)
+    ? escHtml(overrides[word])
+    : escHtml(item.ipa || '');
+  const pre  = escHtml(item.pre  || '');
+  const hl   = escHtml(item.hl   || '');
+  const post = escHtml(item.post || '');
+  const src  = escHtml(item.src  || '');
+  return `<span class="exc-word" data-src="${src}">${pre}<em>${hl}</em>${post} <span class="exc-ipa">${ipa}</span></span>`;
+}
+
+function renderExcGroups(groups, overrides) {
+  // Renders an array of { text?, items[] } exception groups.
+  if (!groups || !groups.length) return '';
+  return groups.map(group => {
+    const intro = group.text ? `${group.text} ` : '';
+    const pills = (group.items || []).map(item => renderExcPill(item, overrides)).join(' ');
+    return `<span class="card-rules-line">${intro}${pills}</span>`;
+  }).join('<br>');
+}
+
+
+function renderContentBlock(item, overrides, c) {
+  // Renders a { type:'block', title?, text?, variant?, src?, groups? } item as an s-step-block.
+  const variantClass = item.variant ? ` s-step-block--${item.variant}` : '';
+  const src = item.src || '';
+  const url = (src === 'WP' && c && (c.rulesWiki || c.wiki)) ? (c.rulesWiki || c.wiki) : '';
+  const srcHtml = src ? srcMarker(src, url) : '';
+  const headerHtml = item.title
+    ? `<div class="s-step-header"><span class="s-step-num">${item.title}</span></div>`
+    : '';
+  let bodyContent = '';
+  if (item.text) bodyContent += `<div class="s-step-desc">${item.text}${srcHtml}</div>`;
+  if (item.groups && item.groups.length) {
+    const pills = item.groups.map(group => {
+      const intro = group.text ? `<div class="s-step-desc">${group.text}${srcHtml}</div>` : '';
+      const row = (group.items || []).map(i => renderExcPill(i, overrides)).join(' ');
+      return intro + `<div class="s-step-exc-row">${row}${srcHtml}</div>`;
+    }).join('');
+    bodyContent += pills;
+  }
+  return `<div class="s-step-block${variantClass}">${headerHtml}<div class="s-step-body">${bodyContent}</div></div>`;
+}
+
+function renderContent(c, isCatCard = false) {
+  if (!c.content || !c.content.length) return '';
+  const id = c.symbol.replace(/[^a-z0-9]/gi, '_');
+  const overrides = lsGetJSON('ipa_exc_overrides', {});
+  const rulesLabel = c.rulesLabel || (isCatCard ? 'Explanation' : 'Rules &amp; Exceptions');
+
+  // Items are joined with <br> between adjacent inline items only.
+  // Blocks are block-level elements — their own margin handles spacing, no <br> needed.
+  const parts = c.content.map(item => {
+    if (item.type === 'rules') {
+      const src = item.src || '';
+      const url = (src === 'WP' && (c.rulesWiki || c.wiki)) ? (c.rulesWiki || c.wiki) : '';
+      const text = applyPhonemeRefs(item.text || '');
+      return { html: `<span class="card-rules-line">${text}${srcMarker(src, url)}</span>`, block: false };
+    }
+    if (item.type === 'exceptionGroups') {
+      const src = item.src || '';
+      const url = (src === 'WP' && (c.rulesWiki || c.wiki)) ? (c.rulesWiki || c.wiki) : '';
+      const html = applyPhonemeRefs(renderExcGroups(item.groups, overrides));
+      return { html: html + (src ? srcMarker(src, url) : ''), block: false };
+    }
+    if (item.type === 'block') {
+      return { html: renderContentBlock(item, overrides, c), block: true };
+    }
+    return null;
+  }).filter(Boolean);
+  const inner = parts.map((part, i) => {
+    const prev = parts[i - 1];
+    const sep = (prev && !prev.block && !part.block) ? '<br>' : '';
+    return sep + part.html;
+  }).join('');
+
+  return `<div class="card-rules-wrap" id="rulesWrap_${id}"><div class="card-rules" id="cardRulesEl_${id}"><span class="card-rules-label">${rulesLabel}</span>${inner}</div></div>`;
+}
+
 function renderRules(c, isCatCard = false) {
   if (!c.rules) return '';
   const id = c.symbol.replace(/[^a-z0-9]/gi,'_');
@@ -5740,7 +5827,7 @@ function render() {
   } else {
     audioHtml = `<button class="audio-btn" id="audioBtn" data-action="audio" data-symbol="${c.symbol}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg><span class="btn-label">Play sound</span>${wpBadge}</button>`;
   }
-  const rulesHtml = renderRules(c, isCatCard);
+  const rulesHtml = c.content ? renderContent(c, isCatCard) : renderRules(c, isCatCard);
   const _relCardMap = getCardMap();
   const relatedHtml = (c.related && c.related.length) ? `<div class="card-related"><span class="related-label">See also:</span>${c.related.map(r => {
     const tooltip = r.reason ? `<span class="rel-tooltip">${r.reason}${r.src ? `<span class="rel-source">${r.src}</span>` : ''}</span>` : '';
@@ -8613,6 +8700,11 @@ function printCardHTML(card) {
 
   // For print: extract inner rules content without the .card-rules-wrap interactive wrapper
   function rulesInner(c) {
+    if (c.content) {
+      const full = renderContent(c);
+      const match = full.match(/<span class="card-rules-label">.*?<\/span>([\s\S]*)<\/div><\/div>$/);
+      return match ? match[1] : '';
+    }
     if (!c.rules) return '';
     if (!showSrc) return applyExcIpaOverrides(c.rules.replace(/<button[^>]*>.*?<\/button>/gs, '').trim());
     const full = renderRules(c);
@@ -10265,14 +10357,30 @@ try {
       const entries = [];
       const seen = new Set();
       theoryCards.forEach(card => {
+        // New structured format
+        if (card.content) {
+          card.content.forEach(item => {
+            const groups =
+              item.type === 'exceptionGroups' ? (item.groups || []) :
+              item.type === 'block'           ? (item.groups || []) : [];
+            groups.forEach(group => {
+              (group.items || []).forEach(pill => {
+                const word = (pill.pre || '') + (pill.hl || '') + (pill.post || '');
+                if (!word || seen.has(word)) return;
+                seen.add(word);
+                entries.push({ word, defaultIpa: pill.ipa || '', cardSymbol: card.symbol, cardName: card.name || card.symbol });
+              });
+            });
+          });
+          return;
+        }
+        // Legacy HTML format
         if (!card.rules) return;
         const tmp = document.createElement('div');
         tmp.innerHTML = card.rules;
         tmp.querySelectorAll('.exc-word').forEach(pill => {
-          // word text = all text except the .exc-ipa child
           const ipaEl = pill.querySelector('.exc-ipa');
           const defaultIpa = ipaEl ? ipaEl.textContent.trim() : '';
-          // Extract plain word: clone, remove ipa span, get text
           const clone = pill.cloneNode(true);
           clone.querySelectorAll('.exc-ipa').forEach(el => el.remove());
           const word = clone.textContent.trim();

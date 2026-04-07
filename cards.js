@@ -1,5 +1,5 @@
 // RP IPA Flashcards — card data
-const CARDS_VERSION = '1.22';
+const CARDS_VERSION = '2.0';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FLASHCARD DATA
@@ -24,8 +24,24 @@ const theoryCards = [
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
     examples:[{w:'l',s:'i',e:'p', src:'TB'},{w:'g',s:'ui',e:'ld', src:'TB'}],
-    rules:'Exceptional spellings: <span class="exc-word" data-src="CAI">pr<em>e</em>tty <span class="exc-ipa">ˈprɪti</span></span> <span class="exc-word" data-src="CAI"><em>E</em>ngland <span class="exc-ipa">ˈɪŋɡlənd</span></span> <span class="exc-word" data-src="CAI">b<em>u</em>sy <span class="exc-ipa">ˈbɪzi</span></span> <span class="exc-word" data-src="TB">b<em>u</em>siness <span class="exc-ipa">ˈbɪznɪs</span></span> <span class="exc-word" data-src="TB">w<em>o</em>men <span class="exc-ipa">ˈwɪmɪn</span></span><br>Also occurs in unstressed syllables as alternative for /ə/: <span class="exc-word" data-src="CAI">ros<em>e</em>s <span class="exc-ipa">ˈrəʊzɪz</span></span> <span class="exc-word" data-src="CAI"><em>e</em>ffect <span class="exc-ipa">ɪˈfekt</span></span> <span class="exc-word" data-src="CAI">mark<em>e</em>t <span class="exc-ipa">ˈmɑːkɪt</span></span>',
-    rulesSrc:["TB p.30", "TB p.24"],
+    content:[
+      { type:'exceptionGroups', src:'TB p.30', groups:[
+        { text:'Exceptional spellings:', items:[
+          { pre:'pr', hl:'e', post:'tty',    ipa:'ˈprɪti',     src:'CAI' },
+          { pre:'',   hl:'E', post:'ngland', ipa:'ˈɪŋɡlənd',   src:'CAI' },
+          { pre:'b',  hl:'u', post:'sy',     ipa:'ˈbɪzi',      src:'CAI' },
+          { pre:'b',  hl:'u', post:'siness', ipa:'ˈbɪznɪs',    src:'TB'  },
+          { pre:'w',  hl:'o', post:'men',    ipa:'ˈwɪmɪn',     src:'TB'  },
+        ]},
+      ]},
+      { type:'exceptionGroups', src:'TB p.24', groups:[
+        { text:'Also occurs in unstressed syllables as alternative for /ə/:', items:[
+          { pre:'ros',  hl:'e', post:'s',      ipa:'ˈrəʊzɪz', src:'CAI' },
+          { pre:'',     hl:'e', post:'ffect',  ipa:'ɪˈfekt',   src:'CAI' },
+          { pre:'mark', hl:'e', post:'t',      ipa:'ˈmɑːkɪt',  src:'CAI' },
+        ]},
+      ]},
+    ],
         related:[
       {symbol:'ə', reason:'Also in unstressed syllables', src:'TB'},
       {symbol:'iː', reason:'Tense counterpart', src:'TB'},
@@ -121,8 +137,36 @@ const theoryCards = [
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
     examples:[{w:'n',s:'u',e:'t', src:'TB'},{w:'c',s:'u',e:'rry', src:'TB'},{w:'s',s:'o',e:'n', src:'TB'},{w:'(m)',s:'o',e:'ther', src:'TB'},{w:'',s:'o',e:'ne', src:'TB'},{w:'d',s:'o',e:'ve', src:'TB'},{w:'c',s:'ou',e:'ntry', src:'TB'}],
-    rules:'<div class="s-step-block s-step-block--lax"><div class="s-step-header"><span class="s-step-num"><em>oo</em></span></div><div class="s-step-body"><div class="s-step-exc-row"><span class="exc-word" data-src="TB">bl<em>oo</em>d <span class="exc-ipa">blʌd</span></span> <span class="exc-word" data-src="TB">fl<em>oo</em>d <span class="exc-ipa">flʌd</span></span></div></div></div><div class="s-step-block s-step-block--lax"><div class="s-step-header"><span class="s-step-num"><em>orr</em></span></div><div class="s-step-body"><div class="s-step-exc-row"><span class="exc-word" data-src="TB">w<em>orr</em>y <span class="exc-ipa">ˈwʌri</span></span></div></div></div><div class="s-step-block s-step-block--lax"><div class="s-step-header"><span class="s-step-num"><em>con-</em></span></div><div class="s-step-body"><div class="s-step-exc-row"><span class="exc-word" data-src="TB">c<em>on</em>jure <span class="exc-ipa">ˈkʌndʒə</span></span> <span class="exc-word" data-src="TB">c<em>on</em>stable <span class="exc-ipa">ˈkʌnstəbl</span></span></div></div></div><div class="s-step-block s-step-block--lax"><div class="s-step-header"><span class="s-step-num"><em>-or-</em> (placenames)</span></div><div class="s-step-body"><div class="s-step-exc-row"><span class="exc-word" data-src="TB">b<em>or</em>ough <span class="exc-ipa">ˈbʌrə</span></span> <span class="exc-word" data-src="TB">th<em>or</em>ough <span class="exc-ipa">ˈθʌrə</span></span></div></div></div><div class="s-step-block s-step-block--lax"><div class="s-step-header"><span class="s-step-num"><em>-other</em></span></div><div class="s-step-body"><div class="s-step-desc">All <em>-other</em> words except <span class="ctx-word">b<em>oth</em>er</span> have /ʌðə/.</div><div class="s-step-exc-row"><span class="exc-word" data-src="TB">-(m)<em>oth</em>er <span class="exc-ipa">ˈmʌðə</span></span></div></div></div>',
-    rulesSrc:["TB p.31", "TB p.31"],
+    content:[
+      { type:'block', variant:'lax', title:'<em>oo</em>', src:'TB p.31', groups:[
+        { items:[
+          { pre:'bl', hl:'oo', post:'d', ipa:'blʌd', src:'TB' },
+          { pre:'fl', hl:'oo', post:'d', ipa:'flʌd', src:'TB' },
+        ]},
+      ]},
+      { type:'block', variant:'lax', title:'<em>orr</em>', src:'TB p.31', groups:[
+        { items:[
+          { pre:'w', hl:'orr', post:'y', ipa:'ˈwʌri', src:'TB' },
+        ]},
+      ]},
+      { type:'block', variant:'lax', title:'<em>con-</em>', src:'TB p.31', groups:[
+        { items:[
+          { pre:'c', hl:'on', post:'jure',    ipa:'ˈkʌndʒə',   src:'TB' },
+          { pre:'c', hl:'on', post:'stable',  ipa:'ˈkʌnstəbl', src:'TB' },
+        ]},
+      ]},
+      { type:'block', variant:'lax', title:'<em>-or-</em> (placenames)', src:'TB p.31', groups:[
+        { items:[
+          { pre:'b',  hl:'or', post:'ough', ipa:'ˈbʌrə', src:'TB' },
+          { pre:'th', hl:'or', post:'ough', ipa:'ˈθʌrə', src:'TB' },
+        ]},
+      ]},
+      { type:'block', variant:'lax', title:'<em>-other</em>', src:'TB p.31', groups:[
+        { text:'All <em>-other</em> words except <span class="ctx-word">b<em>oth</em>er</span> have /ʌðə/.', items:[
+          { pre:'-(m)', hl:'oth', post:'er', ipa:'ˈmʌðə', src:'TB' },
+        ]},
+      ]},
+    ],
     related:[
       {symbol:'ə',  reason:'Unstressed counterpart',         src:'TB'},
       {symbol:'ɒ',  reason:'Same spelling, different vowel', src:'TB'},
