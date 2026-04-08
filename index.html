@@ -39,9 +39,12 @@
     --star:          #e6b800;
     --highlight:     #ffe066;
     /* ── Accent2 tints ── */
-    --accent2-faint: rgba(44,62,122,0.05);
+    --blue-faint: rgba(44,62,122,0.05);
     --accent2-tint:  rgba(44,62,122,0.08);
-    --accent2-shadow:rgba(44,62,122,0.25);
+    --blue-shadow:rgba(44,62,122,0.25);
+    /* ── Star (amber) tints ── */
+    --amber-faint:    rgba(230,184,0,0.07);
+    --amber-border:   rgba(230,184,0,0.25);
     /* ── Semantic dark variants ── */
     --accent-dark:   #922b21;
     --correct-dark:  #1d7a47;
@@ -86,7 +89,9 @@
     --grey-bg:  #f7f7f7;
     --grey-bg2: #f9f9f9;
     /* ── Print mnemonic green ── */
-    --print-green: #2c7a4b;}
+    --print-green: #2c7a4b;
+    /* ── Pill font size — used by exc-word, exc-ipa, ctx-word, rule-word, rule-ipa ── */
+    --pill-font-size: 0.7rem;}
 
   html {
     height: 100%;
@@ -105,7 +110,7 @@
     padding: 1rem 1rem 1rem;
     background-image:
       radial-gradient(ellipse at 10% 0%, rgba(192,57,43,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse at 90% 100%, var(--accent2-faint) 0%, transparent 60%);
+      radial-gradient(ellipse at 90% 100%, var(--blue-faint) 0%, transparent 60%);
   }
 
   header {
@@ -533,7 +538,7 @@
     justify-content: center;
     text-align: center;
     line-height: normal;
-    background: var(--accent2-faint);
+    background: var(--blue-faint);
     border: 1.5px solid var(--border);
     border-radius: 6px;
     padding: 0rem 0.6rem 0.1em;
@@ -814,28 +819,85 @@
     color: var(--ink);
   }
 
-  /* Inline exceptional-spelling word pill — used inside rules text */
-  .exc-word {
+  /* ── Pill base — shared by all inline word/phoneme pills ──
+     Using :is() so legacy HTML with just class="ctx-word" etc. also picks up shared styles */
+  :is(.pill, .exc-word, .rule-word, .ctx-word, .phon-ref) {
     display: inline-flex;
     align-items: baseline;
-    gap: 0.55em;
     font-family: 'Source Code Pro', monospace;
-    font-size: 1.0rem;
+    font-size: var(--pill-font-size);
+    border-radius: 3px;
+    white-space: nowrap;
+    vertical-align: baseline;
+    line-height: 1.6;
+  }
+  :is(.pill, .exc-word, .rule-word, .ctx-word, .phon-ref) em {
+    color: var(--accent); font-style: normal; font-weight: 700;
+  }
+
+  /* Exceptional-spelling word pill — same background as example words */
+  .exc-word {
     background: var(--paper);
     border: 1px solid var(--border);
     border-radius: 3px;
-    padding: 0.15rem 0.45rem;
+    padding: 0.05em 0 0.05em 0.4em;
     color: var(--ink);
-    white-space: nowrap;
-    vertical-align: middle;
   }
-  .exc-ipa {
-    font-size: 0.96rem;
-    color: var(--muted);
-    letter-spacing: 0;
+
+  /* Rule-example word pill — blue tint, uniform border */
+  .rule-word {
+    border: 1px solid var(--blue-shadow);
+    border-radius: 3px;
+    background: var(--blue-faint);
+    padding: 0.05em 0 0.05em 0.4em;
+  }
+
+  /* Context word pill — no IPA, plain highlight */
+  .ctx-word {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 0.05em 0.4em;
+    color: var(--ink);
+  }
+
+  /* Phoneme reference pill — /p/, /tʃ/ etc. in prose */
+  .phon-ref {
+    border: 1px solid var(--border);
+    padding: 0.05em 0.3em;
+    color: var(--accent2);
+    background: var(--blue-faint);
+    margin: 0;
+  }
+
+  /* Shared IPA child span — font-size explicit, not relying on inheritance */
+  :is(.exc-ipa, .rule-ipa) {
+    font-size: var(--pill-font-size);
     border-left: 1px solid var(--border);
-    padding-left: 0.45em;
-    margin-left: 0.05em;
+    padding-left: 0.4em;
+    padding-right: 0.05em;
+    margin-left: 0.4em;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+  .exc-ipa  { color: var(--muted); }
+  .rule-ipa { color: var(--accent2); }
+
+  /* Unverified transcription marker — amber on IPA divider (src not from TB/LPD) */
+  .exc-ipa--unverified,
+  .rule-ipa--unverified {
+    border-left-color: var(--star);
+    border-left-width: 2px;
+  }
+  /* Unverified exc pill — solid amber left border */
+  .exc-word--unverified {
+    border-left: 3px solid var(--star);
+  }
+  /* Unverified example word — amber left border on the pill */
+  .example-word--unverified { border-left: 3px solid var(--star); }
+  @media print {
+    .exc-ipa--unverified, .rule-ipa--unverified { border-left-color: #000; border-left-width: 2px; }
+    .example-word--unverified { border-left: 3px solid #000; }
   }
 
   /* Inline IPA notation /n̩/ /l̩/ — subscript diacritic needs breathing room */
@@ -847,91 +909,16 @@
     vertical-align: middle;
   }
 
-  /* Unverified transcription marker — amber on the IPA divider, screen + print */
-  .exc-word[data-src="CAI"] .exc-ipa {
-    border-left-color: var(--star);
-    border-left-width: 2px;
-  }
-  /* Unverified example word — amber left border on the pill */
-  .example-word--unverified {
-    border-left: 3px solid var(--star);
-  }
-  @media print {
-    .exc-word[data-src="CAI"] .exc-ipa {
-      border-left-color: #000;
-      border-left-width: 2px;
-    }
-    .example-word--unverified {
-      border-left: 3px solid #000;
-    }
-  }
+  /* Inline spelling letter — the grapheme letter r/l etc. in prose */
+  .spell-letter { font-style: italic; font-weight: 700; font-family: 'Noto Serif', serif; }
 
-  /* Inline phoneme reference pill — /p/, /tʃ/ etc. in rules text.
-     Must not increase line-height: use vertical-align:baseline, no vertical margin. */
-  .phon-ref {
-    display: inline-block;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.78em;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0 0.3em;
-    color: var(--accent2);
-    background: var(--accent2-faint);
-    white-space: nowrap;
-    vertical-align: baseline;
-    line-height: 1.6;
-    margin: 0;
-    overflow: visible;
-    padding-bottom: 0.22em;
-  }
-
-  /* Inline spelling letter — the *letter* r/l etc. discussed as a grapheme, not a phoneme */
-  .spell-letter {
-    font-style: italic;
-    font-weight: 700;
-    font-family: 'Noto Serif', serif;
-  }
-
-  /* Rule-word — regular spelling rule example with IPA (not exceptional, blue border) */
-  .rule-word {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.25em;
-    border-left: 3px solid var(--accent2);
-    background: var(--accent2-faint);
-    border-radius: 0 3px 3px 0;
-    padding: 0.05em 0.4em 0.05em 0.35em;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.8em;
-    white-space: nowrap;
-  }
-  .rule-ipa {
-    font-size: 0.88em;
-    color: var(--accent2);
-    border-left: 1px solid var(--border);
-    padding-left: 0.3em;
-    margin-left: 0.1em;
-    font-style: normal;
-  }
-
-  /* s-step-block colour variants for vowel cards */
-  .s-step-block--diph .s-step-header { background: rgba(160,64,0,0.09); color: var(--diph-c); border-bottom: 1px solid rgba(160,64,0,0.20); }
-  .s-step-block--lax  .s-step-header { background: rgba(41,128,185,0.09); color: var(--lax-dark); border-bottom: 1px solid rgba(41,128,185,0.20); }
-
-  /* Context word pill — inline word in rules text, no IPA, just highlighting */
-  .ctx-word {
-    display: inline-flex;
-    align-items: baseline;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.68rem;
-    background: var(--paper);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0.15rem 0.45rem;
-    color: var(--ink);
-    white-space: nowrap;
-    vertical-align: middle;
-  }
+  /* s-step-block: default header = brown; named colour variants override */
+  .s-step-header { background: rgba(160,64,0,0.09); color: var(--diph-c); border-bottom: 1px solid rgba(160,64,0,0.20); }
+  .s-step-block--blue       .s-step-header { background: rgba(41,128,185,0.11);  color: var(--lax-dark);     border-bottom: 1px solid rgba(41,128,185,0.22); }
+  .s-step-block--red        .s-step-header { background: rgba(192,57,43,0.10);   color: var(--accent-dark);  border-bottom: 1px solid rgba(192,57,43,0.22); }
+  .s-step-block--green      .s-step-header { background: rgba(39,174,96,0.11);   color: var(--correct-dark); border-bottom: 1px solid rgba(39,174,96,0.22); }
+  .s-step-block--blue-rule  .s-step-header { background: rgba(44,62,122,0.09);   color: var(--accent2);      border-bottom: 1px solid rgba(44,62,122,0.20); }
+  .s-step-block--yellow-exc .s-step-header { background: rgba(230,184,0,0.09);   color: var(--diph-c);       border-bottom: 1px solid rgba(230,184,0,0.20); }
 
   /* Exceptional spelling groups — subtle label + word row */
   .exc-spelling-group {
@@ -1515,11 +1502,12 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
+    flex: 1 1 0;
   }
   .card-rules {
     font-size: 0.78rem;
     color: var(--ink);
-    background: var(--accent2-faint);
+    background: var(--blue-faint);
     border-left: 3px solid var(--accent2);
     border-radius: 0 4px 4px 0;
     padding: 0.45rem 0.7rem 0.6rem;
@@ -1530,7 +1518,8 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
-    max-height: clamp(8rem, 38dvh, 22rem);
+    flex: 1 1 0;
+    min-height: 0;
   }
   /* Fade + scroll cue at bottom — hidden when scrolled to end */
   .card-rules-wrap::after {
@@ -1595,7 +1584,7 @@
   }
   .card-img-thumb:hover {
     border-color: var(--accent2);
-    box-shadow: 0 0 0 2px var(--accent2-faint);
+    box-shadow: 0 0 0 2px var(--blue-faint);
   }
   .card-img-thumb.expanded {
     width: 100%;
@@ -1631,6 +1620,7 @@
   /* Show src-marker on all devices (hover or touch) */
   .desc-line .src-marker,
   .card-rules-line .src-marker,
+  .s-step-body .src-marker,
   .mnemonic-src-marker {
     display: inline-block;
     pointer-events: auto;
@@ -1659,11 +1649,11 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
+  .s-step-header .s-step-num u { text-decoration: underline; font-weight: 700; }
+  .s-step-header .s-step-num em { font-style: normal; font-weight: 600; }
+  .s-step-header .phon-ref { color: inherit; background: transparent; border-color: currentColor; opacity: 0.8; }
   .s-step-header .s-step-arrow { opacity: 0.55; font-size: 0.7rem; }
   .s-step-header .s-step-phoneme { font-size: 0.82rem; font-weight: 700; }
-  .s-step-block--iz .s-step-header { background: rgba(41,128,185,0.12); color: var(--lax-dark); border-bottom: 1px solid rgba(41,128,185,0.25); }
-  .s-step-block--s  .s-step-header { background: rgba(192,57,43,0.10);  color: var(--accent-dark); border-bottom: 1px solid rgba(192,57,43,0.22); }
-  .s-step-block--z  .s-step-header { background: rgba(39,174,96,0.11);  color: var(--correct-dark); border-bottom: 1px solid rgba(39,174,96,0.22); }
   .s-step-body {
     padding: 0.3rem 0.55rem 0.38rem;
     font-size: 0.76rem;
@@ -1921,7 +1911,7 @@
     align-items: center;
     transition: background 0.15s;
   }
-  .wordlist-study-row:hover { background: var(--accent2-faint); }
+  .wordlist-study-row:hover { background: var(--blue-faint); }
 
   .wordlist-study-row.row-correct { background: rgba(39,174,96,0.06); }
   .wordlist-study-row.row-wrong   { background: rgba(192,57,43,0.05); }
@@ -1957,7 +1947,7 @@
   }
   .wordlist-filter-input:focus {
     border-color: var(--accent2);
-    box-shadow: 0 0 0 2px var(--accent2-faint);
+    box-shadow: 0 0 0 2px var(--blue-faint);
   }
   .wordlist-filter-input::placeholder { color: var(--muted); opacity: 0.7; }
   .wordlist-study-col-meaning,
@@ -2634,7 +2624,7 @@
   /* ── USER EDITS ── */
   .wordlist-study-row.row-generated {
     border-left: 2px solid var(--accent2);
-    background: var(--accent2-faint);
+    background: var(--blue-faint);
   }
   .wordlist-study-row.row-edited {
     border-left: 3px solid var(--star);
@@ -2927,7 +2917,7 @@
     cursor: pointer;
     font-size: 0.85rem;
   }
-  .print-src-row:hover { background: var(--accent2-faint); }
+  .print-src-row:hover { background: var(--blue-faint); }
   .print-src-cards-row {
     font-weight: 600;
     font-family: 'Source Code Pro', monospace;
@@ -3031,7 +3021,7 @@
     transition: background 0.12s;
     margin-bottom: 0.4rem;
   }
-  .search-result-item:hover { background: var(--accent2-faint); border-color: var(--accent2); }
+  .search-result-item:hover { background: var(--blue-faint); border-color: var(--accent2); }
   .search-result-symbol {
     font-family: 'Noto Serif', serif;
     font-size: 1.4rem;
@@ -3281,6 +3271,7 @@
     overflow: hidden;
     visibility: hidden;
   }
+  @media print {
   .print-area-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -3378,8 +3369,6 @@
   .print-card-tagstrip .pill-fricative { color: var(--fric-c); background: var(--fric-bg); border-color: var(--fric-b); }
   .print-card-tagstrip .pill-affricate { color: var(--affr-c); background: var(--affr-bg); border-color: var(--affr-b); }
   .print-card-tagstrip .pill-nasal     { color: var(--nasal-c); background: var(--nasal-bg); border-color: var(--nasal-b); }
-  .print-card-tagstrip
-  .print-card-tagstrip
   /* Name as pill row (for cards where name contains · separators) */
   .print-card-name-pills { display: flex; flex-wrap: wrap; gap: 0.8mm; margin-top: 0.5mm; }
   .print-card-name-pills .pill-cat {
@@ -3394,7 +3383,8 @@
   /* Related label */
   .print-card-related-label { font-family: 'Source Code Pro', monospace; font-size: 7pt; color: var(--print-light); text-transform: uppercase; margin-right: 1mm; }
   /* Exceptional spelling pills in print */
-  .exc-word { display: inline-flex; align-items: baseline; gap: 0.2mm; font-family: 'Source Code Pro', monospace; font-size: 7pt; border: 0.5px solid #ccc; border-radius: 1mm; padding: 0.1mm 0.8mm; color: var(--print-dark); background: var(--grey-bg2); white-space: nowrap; }
+  .exc-word { display: inline-flex; align-items: baseline; gap: 0.2mm; font-family: 'Source Code Pro', monospace; font-size: 7pt; border: 0.5px solid rgba(230,184,0,0.5); border-radius: 1mm; padding: 0.1mm 0.8mm; color: var(--print-dark); background: rgba(230,184,0,0.07); white-space: nowrap; }
+  .exc-word--unverified { border-left: 1.5px solid #e6b800; border-radius: 0 1mm 1mm 0; }
   .exc-ipa { font-size: 6.5pt; color: var(--print-muted); border-left: 0.5px solid #ccc; padding-left: 0.5mm; margin-left: 0.1mm; }
   .ctx-word { display: inline-flex; align-items: baseline; font-family: 'Source Code Pro', monospace; font-size: 7pt; border: 0.5px solid #ccc; border-radius: 1mm; padding: 0.1mm 0.8mm; color: var(--print-dark); background: var(--grey-bg2); white-space: nowrap; }
   .print-card-related {
@@ -3407,10 +3397,9 @@
     border-radius: 1.5mm; padding: 0.2mm 1.2mm;
   }
 
+  } /* end @media print — print card templates */
 
-  .example-word em,
-  .exc-word em,
-  .ctx-word em { color: var(--accent); font-style: normal; font-weight: 700; }
+  .example-word em { color: var(--accent); font-style: normal; font-weight: 700; }
   .notes-modal-input:focus,
   .wordlist-study-input:focus,
   .wordlist-quiz-input:focus,
@@ -3481,7 +3470,7 @@
   .mode-btn:hover,
   .modal-close:hover { color: var(--ink); }
   .mode-btn.active,
-  .wordlist-submode-btn.active { background: var(--accent2); box-shadow: 0 2px 8px var(--accent2-shadow); color: white; }
+  .wordlist-submode-btn.active { background: var(--accent2); box-shadow: 0 2px 8px var(--blue-shadow); color: white; }
   .page-footer a,
   .diag-modal-caption a { color: var(--muted); text-decoration: underline; }
   .vpc-leg-btn:hover,
@@ -4109,7 +4098,7 @@
     <div class="modal-section">
       <div class="modal-section-title">Example word transcriptions</div>
       <p>The IPA transcriptions shown in the exception word pills on card backs are Claude.ai generated and may contain errors. You can review and correct any of them in <strong>Settings → Edit exceptional IPA</strong>.</p>
-      <p>The word list is based on the pronunciation word list from the textbook's appendix. Additional words from card rules and exceptions have been added. Words whose IPA was generated by Claude — rather than taken directly from the book — are <span style="display:inline-block;border-left:2px solid var(--accent2);background:var(--accent2-faint);padding:0 0.3em;border-radius:0 2px 2px 0;font-size:0.9em;">highlighted in blue</span> in the word list so you can review and correct them.</p>
+      <p>The word list is based on the pronunciation word list from the textbook's appendix. Additional words from card rules and exceptions have been added. Words whose IPA was generated by Claude — rather than taken directly from the book — are <span style="display:inline-block;border-left:2px solid var(--accent2);background:var(--blue-faint);padding:0 0.3em;border-radius:0 2px 2px 0;font-size:0.9em;">highlighted in blue</span> in the word list so you can review and correct them.</p>
     </div>
 
     <hr class="modal-divider">
@@ -4592,7 +4581,24 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
       { symbol:'ɪ', tags:['lax','vowel'], name:'Short near-close near-front unrounded',
         desc:'', descSrc:'WP', detail:'Short. Lips unrounded, spread.', detailSrc:'WP',
         place:'Near-front', manner:'Near-close', mnemonic:'bit, kit, sit', examples:[], related:[],
-        rules:'Exceptional spellings: <span class="exc-word" data-src="CAI">pr<em>e</em>tty <span class="exc-ipa">ˈprɪti</span></span> <span class="exc-word" data-src="CAI"><em>E</em>ngland <span class="exc-ipa">ˈɪŋɡlənd</span></span> <span class="exc-word" data-src="CAI">b<em>u</em>sy <span class="exc-ipa">ˈbɪzi</span></span> <span class="exc-word" data-src="TB">b<em>u</em>siness <span class="exc-ipa">ˈbɪznɪs</span></span> <span class="exc-word" data-src="TB">w<em>o</em>men <span class="exc-ipa">ˈwɪmɪn</span></span><br>Also occurs in unstressed syllables as alternative for /ə/: <span class="exc-word" data-src="CAI">ros<em>e</em>s <span class="exc-ipa">ˈrəʊzɪz</span></span> <span class="exc-word" data-src="CAI"><em>e</em>ffect <span class="exc-ipa">ɪˈfekt</span></span> <span class="exc-word" data-src="CAI">mark<em>e</em>t <span class="exc-ipa">ˈmɑːkɪt</span></span>' },
+        content:[
+          { type:'exceptionGroups', src:'CAI', groups:[
+            { text:'Exceptional spellings:', items:[
+              { pre:'pr', hl:'e',  post:'tty',    ipa:'ˈprɪti',    src:'TB' },
+              { pre:'',   hl:'E',  post:'ngland',  ipa:'ˈɪŋɡlənd', src:'TB' },
+              { pre:'b',  hl:'u',  post:'sy',      ipa:'ˈbɪzi',     src:'TB' },
+              { pre:'b',  hl:'u',  post:'siness',  ipa:'ˈbɪznɪs',   src:'TB'  },
+              { pre:'w',  hl:'o',  post:'men',     ipa:'ˈwɪmɪn',    src:'TB'  },
+            ]},
+          ]},
+          { type:'exceptionGroups', src:'CAI', groups:[
+            { text:'Also occurs in unstressed syllables as alternative for /ə/:', items:[
+              { pre:'ros', hl:'e',  post:'s',   ipa:'ˈrəʊzɪz', src:'CAI' },
+              { pre:'',    hl:'e',  post:'ffect',ipa:'ɪˈfekt',  src:'CAI' },
+              { pre:'mark',hl:'e',  post:'t',   ipa:'ˈmɑːkɪt', src:'CAI' },
+            ]},
+          ]},
+        ] },
       { symbol:'e', tags:['lax','vowel'], name:'Close-mid front unrounded',
         desc:'', descSrc:'WP', detail:'Short. Lips spread.', detailSrc:'WP',
         place:'Front', manner:'Close-mid', mnemonic:'bed, red, said', examples:[], related:[] },
@@ -4637,6 +4643,56 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
         descSrc:'TB p.23',
         rules:'A vowel\'s quality can be steady — a monophthong — or change within the syllable — a diphthong.',
         rulesSrc:['TB p.23'], examples:[], related:[] },
+      { symbol:'eə', tags:['diph','vowel'], name:'Centring diphthong',
+        isSymbol:true, descSrc:'WP', detailSrc:'CAI',
+        detail:'Long, Usually stressed. Lips Unrounded: Spread→Neutral. Tense.',
+        place:'Close-mid front — centering to — Mid central (schwa).', placeSrc:'WP',
+        manner:'Vowel quality changes within the syllable.', mannerSrc:'WP',
+        mnemonic:'dare, fair, there, their',
+        examples:[{w:'d',s:'are',e:'', src:'TB'},{w:'f',s:'air',e:'', src:'TB'},{w:'sw',s:'ear',e:'', src:'TB'},{w:'th',s:'ere',e:'', src:'TB'}],
+        content:[
+          { type:'block', title:'-are, -ary', src:'TB p.31', groups:[
+            { text:'All words ending in <em>-are, -ary</em> have /eə/ — including derivations.', items:[
+              { pre:'b',   hl:'are', post:'',    ipa:'beə',       src:'TB', variant:'rule' },
+              { pre:'sh',  hl:'are', post:'',    ipa:'ʃeə',       src:'TB', variant:'rule' },
+              { pre:'M',   hl:'ary', post:'',    ipa:'ˈmeəri',    src:'TB', variant:'rule' },
+              { pre:'v',   hl:'ary', post:'',    ipa:'ˈveəri',    src:'TB', variant:'rule' },
+            ]},
+            { items:[
+              { pre:'b',    hl:'are', post:'foot', ipa:'ˈbeəfʊt',   src:'TB', variant:'rule' },
+              { pre:'vari', hl:'able',post:'',      ipa:'ˈveəriəbl', src:'TB', variant:'rule' },
+              { pre:'vari', hl:'ous', post:'',      ipa:'ˈveəriəs',  src:'TB', variant:'rule' },
+            ]},
+          ]},
+          { type:'block', title:'-arian, -arium, -arius', src:'TB p.31', groups:[
+            { text:'All words ending in <em>-arian, -arium, -arius</em> have /eə/.', items:[
+              { pre:'veget',  hl:'arian', post:'', ipa:'ˌvedʒɪˈteəriən', src:'TB', variant:'rule' },
+              { pre:'sol',    hl:'arium', post:'', ipa:'səˈleəriəm',      src:'TB', variant:'rule' },
+              { pre:'Sagitt', hl:'arius', post:'', ipa:'ˌsædʒɪˈteəriəs', src:'TB', variant:'rule' },
+            ]},
+          ]},
+          { type:'block', variant:'blue-rule', title:'<u>Medial</u> -are-, -ari-', src:'TB p.31', groups:[
+            { text:'Normally /æ/ (see /æ/) but /eə/ occurs in:', items:[
+              { pre:'',   hl:'ar', post:'ea',  ipa:'ˈeəriə',   src:'TB', variant:'rule' },
+              { pre:'g',  hl:'ar', post:'ish', ipa:'ˈɡeərɪʃ',  src:'TB', variant:'rule' },
+              { pre:'h',  hl:'ar', post:'em',  ipa:'ˈheərəm',  src:'TB', variant:'rule' },
+              { pre:'p',  hl:'ar', post:'ent', ipa:'ˈpeərənt', src:'TB', variant:'rule' },
+            ]},
+          ]},
+          { type:'block', variant:'yellow-exc', title:'ear', src:'TB p.31', groups:[
+            { text:'Normally /ɪə/ (see /ɪə/) but /eə/ in:', items:[
+              { pre:'b',  hl:'ear', post:'',     ipa:'beə',  src:'TB' },
+              { pre:'p',  hl:'ear', post:'',     ipa:'peə',  src:'TB' },
+              { pre:'sw', hl:'ear', post:'',     ipa:'sweə', src:'TB' },
+              { pre:'t',  hl:'ear', post:' (v)', ipa:'teə',  src:'TB' },
+              { pre:'w',  hl:'ear', post:'',     ipa:'weə',  src:'TB' },
+            ]},
+          ]},
+        ],
+        related:[
+          {symbol:'ɪə', reason:'Both centring diphthongs', src:'GPF'},
+          {symbol:'æ',  reason:'Some -are- words vary',    src:'TB'},
+        ] },
     ];
   }
   if (typeof WORDS_VERSION === 'undefined') {
@@ -4672,7 +4728,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '12.3';
+const APP_VERSION = '12.25';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -5222,6 +5278,27 @@ function applyFilter() {
   }
 
   theoryDeck = buildFilteredDeck(base);
+
+  // If the More tab is active and a specific filter is set (not 'all'),
+  // reorder deck to match the visual pill order in MORE_SECTIONS
+  const isMoreTab = $el('chartTabMore')?.classList.contains('active');
+  if (isMoreTab && MORE_SECTIONS && !theoryActiveFilters.has('all') && !theoryReviewOnly) {
+    const moreOrder = [];
+    MORE_SECTIONS.forEach(section => {
+      section.rows.forEach(row => {
+        if (Array.isArray(row)) row.forEach(sym => moreOrder.push(sym));
+      });
+    });
+    theoryDeck.sort((a, b) => {
+      const ai = moreOrder.indexOf(a.symbol);
+      const bi = moreOrder.indexOf(b.symbol);
+      if (ai === -1 && bi === -1) return 0;
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+  }
+
   cardNavHistory = [];
   theoryIdx = 0;
   if (theoryDeck[0]) theoryDeck[0].seen = true;
@@ -5476,7 +5553,10 @@ function navigate(dir, manual = false) {
   theoryIdx = (theoryIdx + dir + theoryDeck.length) % theoryDeck.length;
   theoryDeck[theoryIdx].seen = true;
   theoryShowingDesc = theoryCardStartSide === 'desc';
+  const wasMore = $el('chartTabMore')?.classList.contains('active');
+  if (wasMore) suppressTabSwitch = true;
   render();
+  if (wasMore) suppressTabSwitch = false;
 }
 
 function flip() {
@@ -5516,7 +5596,7 @@ function shuffle() {
 // FLASHCARD RENDER
 // ─────────────────────────────────────────────────────────────────────────────
 function exampleHTML(ex) {
-  const cls = ex.src === 'CAI' ? ' example-word--unverified' : '';
+  const cls = isSrcUnverified(ex.src) ? ' example-word--unverified' : '';
   if (!ex.s) return `<span class="example-word${cls}">${ex.w}${ex.e}</span>`;
   return `<span class="example-word${cls}">${ex.w}<em>${ex.s}</em>${ex.e}</span>`;
 }
@@ -5557,6 +5637,15 @@ function tagStrip(card) {
 }
 
 // ── Source attribution marker helpers (module scope — used by render() and printCardHTML()) ──
+// Returns true if the source is not from a citable book (TB or LPD).
+// Used to apply the amber unverified marker on pills and example words.
+// Add to BOOK_SOURCES when new citable sources are introduced.
+const BOOK_SOURCES = ['TB', 'LPD'];
+function isSrcUnverified(src) {
+  if (!src) return false;
+  return !BOOK_SOURCES.some(s => src === s || src.startsWith(s + ' '));
+}
+
 function srcMarker(src, url) {
   // src may contain comma-separated multiple sources, e.g. 'TB p.28, pdf'
   // — rendered as-is in the marker text, no special handling needed.
@@ -5664,9 +5753,12 @@ function renderImages(c) {
 // Replaces renderRules for cards that have been converted to the new format.
 
 function renderExcPill(item, overrides) {
-  // Renders one exception word pill from structured data.
-  // overrides: the ipa_exc_overrides object (plain word → IPA string).
+  // Renders one word pill from structured data.
+  // item.variant: 'exc' (default) | 'rule' | 'ctx'
   // item.label: optional label shown before the pill (e.g. "Plural", "Past tense")
+  const variant  = item.variant || 'exc';
+  const wordClass = variant === 'rule' ? 'rule-word' : variant === 'ctx' ? 'ctx-word' : 'exc-word';
+  const ipaClass  = variant === 'rule' ? 'rule-ipa' : 'exc-ipa';
   const word = (item.pre || '') + (item.hl || '') + (item.post || '');
   const ipa  = (overrides && overrides[word] !== undefined)
     ? escHtml(overrides[word])
@@ -5675,7 +5767,10 @@ function renderExcPill(item, overrides) {
   const hl   = escHtml(item.hl   || '');
   const post = escHtml(item.post || '');
   const src  = escHtml(item.src  || '');
-  const pill = `<span class="exc-word" data-src="${src}">${pre}<em>${hl}</em>${post} <span class="exc-ipa">${ipa}</span></span>`;
+  const isUnverified = isSrcUnverified(item.src);
+  const unverifiedPillClass = (isUnverified && variant === 'exc') ? ' exc-word--unverified' : '';
+  const ipaHtml = variant !== 'ctx' ? ` <span class="${ipaClass}${isUnverified ? ` ${ipaClass}--unverified` : ''}">${ipa}</span>` : '';
+  const pill = `<span class="pill ${wordClass}${unverifiedPillClass}" data-src="${src}">${pre}<em>${hl}</em>${post}${ipaHtml}</span>`;
   if (item.label) {
     return `<span class="s-step-exc-item"><span class="s-step-exc-label">${item.label}</span>${pill}</span>`;
   }
@@ -5701,7 +5796,7 @@ function renderContentBlock(item, overrides, c) {
   const url = (src === 'WP' && c && (c.rulesWiki || c.wiki)) ? (c.rulesWiki || c.wiki) : '';
   const srcHtml = src ? srcMarker(src, url) : '';
   const headerHtml = item.title || item.phoneme
-    ? `<div class="s-step-header">${item.title ? `<span class="s-step-num">${item.title}</span>` : ''}${item.arrow ? `<span class="s-step-arrow">${item.arrow}</span>` : ''}${item.phoneme ? `<span class="s-step-phoneme">${item.phoneme}</span>` : ''}</div>`
+    ? `<div class="s-step-header">${item.title ? `<span class="s-step-num">${applyPhonemeRefs(item.title)}</span>` : ''}${item.arrow ? `<span class="s-step-arrow">${item.arrow}</span>` : ''}${item.phoneme ? `<span class="s-step-phoneme">${item.phoneme}</span>` : ''}</div>`
     : '';
   let bodyContent = '';
   const hasGroups = item.groups && item.groups.length;
@@ -8697,7 +8792,7 @@ function printCardHTML(card) {
 
   const examples = (card.examples || []).map(exampleHTML).join(' ');
   const related  = (card.related  || []).map(r => `<span title="${r.reason || ''}">${r.symbol}</span>`).join('');
-  const showSrc = lsGet('ipa_setting_show_src_markers', 'false') !== 'false';
+  const showSrc = lsGet('ipa_setting_show_src_markers', 'true') !== 'false';
   const descHtml = showSrc ? renderDesc(card) : (card.desc ? `<div class="answer-desc">${card.desc}</div>` : '');
 
   // Handle name: if it contains · separators, render as pill row (same as onscreen render())
@@ -10221,7 +10316,7 @@ try {
   $el('settingsBtn').addEventListener('click', () => {
     $el('settingShowMnemonic').checked    = lsGet('ipa_setting_show_mnemonic',    'true') !== 'false';
     $el('settingShowNotes').checked       = lsGet('ipa_setting_show_notes',       'true') !== 'false';
-    $el('settingShowSrcMarkers').checked  = lsGet('ipa_setting_show_src_markers', 'false') !== 'false';
+    $el('settingShowSrcMarkers').checked  = lsGet('ipa_setting_show_src_markers', 'true') !== 'false';
     $el('settingShowHints').checked       = lsGet('ipa_setting_show_hints',       'true') !== 'false';
     $el('settingHomographPair').checked   = lsGet('ipa_setting_homograph_pair',   'true') !== 'false';
     $el('settingPrintSrcMarkers') && ($el('settingPrintSrcMarkers').checked = false); // removed — handled in print modal
@@ -10297,7 +10392,7 @@ try {
         });
         e.target.value = '';
         closeOverlay(settingsModal);
-        if (lsGet('ipa_setting_show_src_markers', 'false') === 'false') {
+        if (lsGet('ipa_setting_show_src_markers', 'true') === 'false') {
           document.body.classList.add('hide-src-markers');
         } else {
           document.body.classList.remove('hide-src-markers');
@@ -10331,7 +10426,7 @@ try {
   });
   // Print source markers now controlled by modal checkbox (printIncludeSrcMarkers)
   // Apply src markers setting on load
-  if (lsGet('ipa_setting_show_src_markers', 'false') === 'false') {
+  if (lsGet('ipa_setting_show_src_markers', 'true') === 'false') {
     document.body.classList.add('hide-src-markers');
   }
   // Apply hints setting on load
@@ -10716,7 +10811,7 @@ try {
           <text x="18" y="54" fill="#1a1a2e" font-size="10" font-family="Noto Serif, serif">fast</text>
           <text x="108" y="54" fill="#7a7060" font-size="9" font-style="italic">← no border = verified against TB</text>
         </svg>`,
-        body: `Some example words and exception pills show a <strong style="border-left:3px solid #e8a020;padding-left:5px;margin-left:2px">thick amber left border</strong>. This marks items whose source could <strong>not be verified</strong> against the TB textbook — they were inferred by the course author (<strong>CAI</strong>) and might be inaccurate. Items without this marker have been confirmed against the textbook.`
+        body: `Some example words and exception pills show a <strong style="border-left:3px solid #e8a020;padding-left:5px;margin-left:2px">thick amber left border</strong>. This marks items whose source could <strong>not be verified</strong> against the TB textbook or LPD — they were inferred by the course author and might be inaccurate. Items without this marker have been confirmed against a citable source.`
       },
       // ── THEORY: START SIDE ──
       {
@@ -10819,7 +10914,7 @@ try {
           <line x1="0" y1="60" x2="520" y2="60" stroke="#d4cfc4" stroke-width="0.5"/>
           <text x="10" y="69" text-anchor="start" fill="#7a7060" font-size="7.5" font-weight="400" font-family="Noto Serif,serif" font-style="italic">+ Add word   Reset played   Show meaning</text>
         </svg>`,
-        body: `The word list contains hundreds of RP vocabulary words with their IPA transcriptions. Each row shows the <strong>word</strong>, its <strong>IPA transcription</strong> (click to copy), and optionally a <strong>meaning</strong> (toggle with Show meaning). The <strong>★ button</strong> marks a word for review. The <strong>✏ button</strong> lets you edit the IPA transcription for any word. Use <strong>+ Add word</strong> to add your own words with custom IPA — added words appear in both Study and Quiz and are saved locally. Words from card rules and exceptions have also been added to the list — those whose IPA was generated by Claude rather than taken directly from the textbook are <span style="display:inline-block;border-left:2px solid var(--accent2);background:var(--accent2-faint);padding:0 0.3em;border-radius:0 2px 2px 0">highlighted in blue</span>. Use <strong>Show added/edited</strong> in Options to filter to these words for review.`
+        body: `The word list contains hundreds of RP vocabulary words with their IPA transcriptions. Each row shows the <strong>word</strong>, its <strong>IPA transcription</strong> (click to copy), and optionally a <strong>meaning</strong> (toggle with Show meaning). The <strong>★ button</strong> marks a word for review. The <strong>✏ button</strong> lets you edit the IPA transcription for any word. Use <strong>+ Add word</strong> to add your own words with custom IPA — added words appear in both Study and Quiz and are saved locally. Words from card rules and exceptions have also been added to the list — those whose IPA was generated by Claude rather than taken directly from the textbook are <span style="display:inline-block;border-left:2px solid var(--accent2);background:var(--blue-faint);padding:0 0.3em;border-radius:0 2px 2px 0">highlighted in blue</span>. Use <strong>Show added/edited</strong> in Options to filter to these words for review.`
       },
       // ── WORDLIST: TAG FILTER BAR ──
       {
