@@ -4728,7 +4728,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '12.25';
+const APP_VERSION = '12.27';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -5278,26 +5278,6 @@ function applyFilter() {
   }
 
   theoryDeck = buildFilteredDeck(base);
-
-  // If the More tab is active and a specific filter is set (not 'all'),
-  // reorder deck to match the visual pill order in MORE_SECTIONS
-  const isMoreTab = $el('chartTabMore')?.classList.contains('active');
-  if (isMoreTab && MORE_SECTIONS && !theoryActiveFilters.has('all') && !theoryReviewOnly) {
-    const moreOrder = [];
-    MORE_SECTIONS.forEach(section => {
-      section.rows.forEach(row => {
-        if (Array.isArray(row)) row.forEach(sym => moreOrder.push(sym));
-      });
-    });
-    theoryDeck.sort((a, b) => {
-      const ai = moreOrder.indexOf(a.symbol);
-      const bi = moreOrder.indexOf(b.symbol);
-      if (ai === -1 && bi === -1) return 0;
-      if (ai === -1) return 1;
-      if (bi === -1) return -1;
-      return ai - bi;
-    });
-  }
 
   cardNavHistory = [];
   theoryIdx = 0;
@@ -11330,13 +11310,44 @@ function switchChartTab(which) {
     _savedIncludeCat = theoryIncludeCat;
     theoryIncludeCat = true;
     if (catBtn) { catBtn.classList.remove('active'); catBtn.classList.add('forced'); }
+    // Set deck to full More sequence in MORE_SECTIONS visual order
+    theoryActiveFilters = new Set(MORE_FILTER_TAGS);
+    theoryDeck = buildMoreDeck();
+    cardNavHistory = [];
+    theoryIdx = 0;
+    if (theoryDeck[0]) theoryDeck[0].seen = true;
+    theoryShowingDesc = theoryCardStartSide === 'desc';
+    suppressTabSwitch = true;
+    render();
+    suppressTabSwitch = false;
   } else if (wasMore) {
     // Only restore saved state when leaving More tab
     theoryIncludeCat = _savedIncludeCat;
     if (catBtn) { catBtn.classList.remove('forced'); catBtn.classList.toggle('active', theoryIncludeCat); }
+    allForCurrentTab();
+  } else {
+    allForCurrentTab();
   }
-  allForCurrentTab();
 }
+
+function buildMoreDeck() {
+  // Full More deck ordered by MORE_SECTIONS visual order (left-to-right, top-to-bottom)
+  const moreOrder = [];
+  MORE_SECTIONS.forEach(section => {
+    section.rows.forEach(row => {
+      if (Array.isArray(row)) row.forEach(sym => moreOrder.push(sym));
+    });
+  });
+  const cardMap = getCardMap();
+  return moreOrder
+    .map(sym => cardMap[sym])
+    .filter(Boolean)
+    .map(c => {
+      const prev = theoryDeck.find(p => p.symbol === c.symbol && p.tags?.[0] === c.tags?.[0]);
+      return { ...c, seen: prev ? prev.seen : false };
+    });
+}
+
 
 function buildMoreGrid() {
   if (!MORE_SECTIONS) return;
@@ -11361,7 +11372,11 @@ function buildMoreGrid() {
     lblBtn.className = 'more-lbl-btn' + (isGroupActive ? ' group-active' : '');
     lblBtn.textContent = section.label;
     lblBtn.dataset.filterId = section.filterId;
-    lblBtn.onclick = () => { setFilter(section.filterId); };
+    lblBtn.onclick = () => {
+      // Jump to first symbol in this section
+      const firstRow = section.rows.find(r => Array.isArray(r) && r.length > 0);
+      if (firstRow) jumpToSymbol(firstRow[0], true);
+    };
     lblDiv.appendChild(lblBtn);
     row.appendChild(lblDiv);
 
@@ -11381,8 +11396,7 @@ function buildMoreGrid() {
       pillsDiv.className = 'more-pills';
       innerRow.forEach(symbol => {
         const card = cardMap[symbol];
-        const btn  = document.createElement('a');
-        btn.href = '#sym=' + encodeURIComponent(symbol);
+        const btn  = document.createElement('button');
         btn.className = moreCardCls(card) +
           (seenSymbols.has(symbol) ? ' seen' : '') +
           (symbol === activeSymbol ? ' chart-active' : '');
@@ -11390,7 +11404,6 @@ function buildMoreGrid() {
         btn.textContent = card?.isSymbol ? symbol : tagPillLabel(symbol);
         btn.title = card ? (card.name || symbol) : symbol;
         btn.dataset.sym = symbol;
-        btn.dataset.filterId = '';
         btn.onclick = (e) => { e.preventDefault(); jumpToSymbol(symbol, true); };
         pillsDiv.appendChild(btn);
       });
