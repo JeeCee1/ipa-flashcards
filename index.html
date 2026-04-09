@@ -909,9 +909,12 @@
   }
   /* Unverified example word — amber left border on the pill */
   .example-word--unverified { border-left: 3px solid var(--star); }
+  /* Unverified example IPA — amber left border on the IPA span (from wordlist lookup) */
+  .example-ipa--unverified { border-left-color: var(--star); border-left-width: 2px; }
   @media print {
     .exc-ipa--unverified, .rule-ipa--unverified { border-left-color: #000; border-left-width: 2px; }
     .example-word--unverified { border-left: 3px solid #000; }
+    .example-ipa--unverified { border-left-color: #000; border-left-width: 2px; }
   }
 
   /* Inline IPA notation /n̩/ /l̩/ — subscript diacritic needs breathing room */
@@ -4746,7 +4749,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '12.35';
+const APP_VERSION = '12.36';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -5604,7 +5607,7 @@ function getWordlistIpa(word) {
     _wordlistIpaCache = {};
     if (typeof getEffectiveWordlistWords === 'function') {
       getEffectiveWordlistWords().forEach(w => {
-        _wordlistIpaCache[w.word.toLowerCase()] = w.ipa;
+        _wordlistIpaCache[w.word.toLowerCase()] = { ipa: w.ipa, unverified: !!w.ipa_generated };
       });
     }
   }
@@ -5615,8 +5618,10 @@ function exampleHTML(ex) {
   const cls = isSrcUnverified(ex.src) ? ' example-word--unverified' : '';
   // Use ex.ipa if present; otherwise look up in wordlist (respects LS overrides)
   const word = (ex.w || '') + (ex.s || '') + (ex.e || '');
-  const ipa = ex.ipa || getWordlistIpa(word.replace(/\s*\(.*?\)/g, '').trim());
-  const ipaHtml = ipa ? `<span class="example-ipa">${ipa}</span>` : '';
+  const lookup = ex.ipa ? null : getWordlistIpa(word.replace(/\s*\(.*?\)/g, '').trim());
+  const ipa = ex.ipa || (lookup && lookup.ipa) || null;
+  const ipaUnverified = !ex.ipa && lookup && lookup.unverified;
+  const ipaHtml = ipa ? `<span class="example-ipa${ipaUnverified ? ' example-ipa--unverified' : ''}">${ipa}</span>` : '';
   if (!ex.s) return `<span class="example-word${cls}">${ex.w}${ex.e}${ipaHtml}</span>`;
   return `<span class="example-word${cls}">${ex.w}<em>${ex.s}</em>${ex.e}${ipaHtml}</span>`;
 }

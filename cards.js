@@ -1,5 +1,5 @@
 // RP IPA Flashcards — card data
-const CARDS_VERSION = '2.18';
+const CARDS_VERSION = '2.19';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SOURCE ABBREVIATIONS
@@ -62,7 +62,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'l',s:'i',e:'p', ipa:'lɪp', src:'TB'},{w:'g',s:'ui',e:'ld', ipa:'ɡɪld', src:'TB'}],
+    examples:[{w:'l',s:'i',e:'p', src:'TB'},{w:'g',s:'ui',e:'ld', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spellings', src:'TB p.30', groups:[
         { items:[
@@ -103,7 +103,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'p',s:'u',e:'t', ipa:'pʊt', src:'TB'},{w:'b',s:'u',e:'ll', ipa:'bʊl', src:'TB'},{w:'s',s:'u',e:'gar', ipa:'ˈʃʊɡə', src:'TB'},{w:'b',s:'o',e:'som', ipa:'ˈbʊzəm', src:'TB'},{w:'w',s:'o',e:'lf', ipa:'wʊlf', src:'TB'},{w:'w',s:'o',e:'man', ipa:'ˈwʊmən', src:'TB'}],
+    examples:[{w:'p',s:'u',e:'t', src:'TB'},{w:'b',s:'u',e:'ll', src:'TB'},{w:'s',s:'u',e:'gar', src:'TB'},{w:'b',s:'o',e:'som', src:'TB'},{w:'w',s:'o',e:'lf', src:'TB'},{w:'w',s:'o',e:'man', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'<em>oo</em> = /ʊ/ — and all <em>-ook</em> words', src:'TB p.32', groups:[
         { items:[
@@ -149,7 +149,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'b',s:'e',e:'d', ipa:'bed', src:'TB'},{w:'br',s:'ea',e:'d', ipa:'bred', src:'TB'}],
+    examples:[{w:'b',s:'e',e:'d', src:'TB'},{w:'br',s:'ea',e:'d', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'<em>a</em>', src:'TB p.30', groups:[
         { items:[
@@ -194,7 +194,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'l',s:'a',e:'nd', ipa:'lænd', src:'TB'},{w:'comp',s:'a',e:'rison', ipa:'kəmˈpærəsn', src:'TB'},{w:'tr',s:'a',e:'nsparent', ipa:'trænˈspærənt', src:'TB'},{w:'',s:'a',e:'rid', ipa:'ˈærd', src:'TB'},{w:'sw',s:'a',e:'m', ipa:'swæm', src:'TB'},{w:'qu',s:'a',e:'ck', ipa:'kwæk', src:'TB'}],
+    examples:[{w:'l',s:'a',e:'nd', src:'TB'},{w:'comp',s:'a',e:'rison', src:'TB'},{w:'tr',s:'a',e:'nsparent', src:'TB'},{w:'',s:'a',e:'rid', src:'TB'},{w:'sw',s:'a',e:'m', src:'TB'},{w:'qu',s:'a',e:'ck', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spelling <em>ai</em> = /æ/', src:'TB p.30', groups:[
         { items:[
@@ -232,7 +232,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'n',s:'u',e:'t', ipa:'nʌt', src:'TB'},{w:'c',s:'u',e:'rry', ipa:'ˈkʌri', src:'TB'},{w:'s',s:'o',e:'n', ipa:'sʌn', src:'TB'},{w:'(m)',s:'o',e:'ther', ipa:'ˈmʌðə', src:'TB'},{w:'',s:'o',e:'ne', ipa:'wʌn', src:'TB'},{w:'d',s:'o',e:'ve', ipa:'dʌv', src:'TB'},{w:'c',s:'ou',e:'ntry', ipa:'ˈkʌntri', src:'TB'}],
+    examples:[{w:'n',s:'u',e:'t', src:'TB'},{w:'c',s:'u',e:'rry', src:'TB'},{w:'s',s:'o',e:'n', src:'TB'},{w:'(m)',s:'o',e:'ther', src:'TB'},{w:'',s:'o',e:'ne', src:'TB'},{w:'d',s:'o',e:'ve', src:'TB'},{w:'c',s:'ou',e:'ntry', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'<em>oo</em>', src:'TB p.31', groups:[
         { items:[
@@ -284,7 +284,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'w',s:'a',e:'tch', ipa:'wɒtʃ', src:'TB'},{w:'qu',s:'a',e:'lity', ipa:'ˈkwɒləti', src:'TB'},{w:'c',s:'o',e:'ffee', ipa:'ˈkɒfi', src:'TB'},{w:'b',s:'o',e:'mb', ipa:'bɒm', src:'TB'},{w:'s',s:'o',e:'rry', ipa:'ˈsɒri', src:'TB'},{w:'h',s:'o',e:'liday', ipa:'ˈhɒlɪdeɪ', src:'TB'},{w:'f',s:'o',e:'reign', ipa:'ˈfɒrən', src:'TB'},{w:'m',s:'o',e:'ral', ipa:'ˈmɒrəl', src:'TB'}],
+    examples:[{w:'w',s:'a',e:'tch', src:'TB'},{w:'qu',s:'a',e:'lity', src:'TB'},{w:'c',s:'o',e:'ffee', src:'TB'},{w:'b',s:'o',e:'mb', src:'TB'},{w:'s',s:'o',e:'rry', src:'TB'},{w:'h',s:'o',e:'liday', src:'TB'},{w:'f',s:'o',e:'reign', src:'TB'},{w:'m',s:'o',e:'ral', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'<em>au</em>', src:'TB p.31', groups:[
         { items:[
@@ -325,7 +325,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'n',s:'ea',e:'t', ipa:'niːt', src:'TB'},{w:'compl',s:'e',e:'te', ipa:'kəmˈpliːt', src:'TB'},{w:'s',s:'ee',e:'', ipa:'siː', src:'TB'},{w:'rec',s:'ei',e:'ve', ipa:'rɪˈsiːv', src:'TB'},{w:'ch',s:'ie',e:'f', ipa:'tʃiːf', src:'TB'},{w:'pol',s:'i',e:'ce', ipa:'pəˈliːs', src:'TB'},{w:'mus',s:'eu',e:'m', ipa:'mjuˈziːəm', src:'TB'}],
+    examples:[{w:'n',s:'ea',e:'t', src:'TB'},{w:'compl',s:'e',e:'te', src:'TB'},{w:'s',s:'ee',e:'', src:'TB'},{w:'rec',s:'ei',e:'ve', src:'TB'},{w:'ch',s:'ie',e:'f', src:'TB'},{w:'pol',s:'i',e:'ce', src:'TB'},{w:'mus',s:'eu',e:'m', src:'TB'}],
     rules:'<b>Rule: /iː/ never occurs before <span class="spell-letter">r</span></b> — words like <em>hearing, near</em> have /ɪə/ instead.',
     rulesSrc:["TB p.30", "TB p.30"],
         related:[
@@ -351,7 +351,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'s',s:'oo',e:'n', ipa:'suːn', src:'TB'},{w:'l',s:'o',e:'se', ipa:'luːz', src:'TB'},{w:'gr',s:'ou',e:'p', ipa:'ɡruːp', src:'TB'},{w:'sh',s:'oe',e:'', ipa:'ʃuː', src:'TB'},{w:'ch',s:'ew',e:'', ipa:'tʃuː', src:'TB'},{w:'n',s:'u',e:'de', ipa:'njuːd', src:'TB'},{w:'fr',s:'ui',e:'t', ipa:'fruːt', src:'TB'},{w:'bl',s:'ue',e:'', ipa:'bluː', src:'TB'},{w:'men',s:'u',e:'', ipa:'ˈmenjuː', src:'TB'},{w:'val',s:'ue',e:'', ipa:'ˈvæljuː', src:'TB'}],
+    examples:[{w:'s',s:'oo',e:'n', src:'TB'},{w:'l',s:'o',e:'se', src:'TB'},{w:'gr',s:'ou',e:'p', src:'TB'},{w:'sh',s:'oe',e:'', src:'TB'},{w:'ch',s:'ew',e:'', src:'TB'},{w:'n',s:'u',e:'de', src:'TB'},{w:'fr',s:'ui',e:'t', src:'TB'},{w:'bl',s:'ue',e:'', src:'TB'},{w:'men',s:'u',e:'', src:'TB'},{w:'val',s:'ue',e:'', src:'TB'}],
     rules:'<b>Rule: /uː/ never occurs before <span class="spell-letter">r</span></b> — <em>touring, moor</em> have /ʊə/ or /ɔː/ instead.',
     rulesSrc:["TB p.31", "TB p.31"],
         related:[
@@ -377,7 +377,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'b',s:'a',e:'th', ipa:'bɑːθ', src:'TB'},{w:'c',s:'ar',e:'d', ipa:'kɑːd', src:'TB'},{w:'',s:'au',e:'nt', ipa:'ɑːnt', src:'TB'},{w:'h',s:'al',e:'f', ipa:'hɑːf', src:'TB'}],
+    examples:[{w:'b',s:'a',e:'th', src:'TB'},{w:'c',s:'ar',e:'d', src:'TB'},{w:'',s:'au',e:'nt', src:'TB'},{w:'h',s:'al',e:'f', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spellings', src:'TB p.31', groups:[
         { items:[
@@ -410,7 +410,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'',s:'a',e:'ll', ipa:'ɔːl', src:'TB'},{w:'l',s:'aw',e:'', ipa:'lɔː', src:'TB'},{w:'s',s:'or',e:'e', ipa:'sɔː', src:'TB'},{w:'d',s:'oor',e:'', ipa:'dɔː', src:'TB'},{w:'b',s:'oar',e:'', ipa:'bɔː', src:'TB'},{w:'',s:'au',e:'ral', ipa:'ˈɔːrəl', src:'TB'},{w:'',s:'or',e:'al', ipa:'ˈɔːrəl', src:'TB'},{w:'b',s:'or',e:'n', ipa:'bɔːn', src:'TB'},{w:'w',s:'ar',e:'', ipa:'wɔː', src:'TB'},{w:'f',s:'ough',e:'t', ipa:'fɔːt', src:'TB'},{w:'d',s:'augh',e:'ter', ipa:'ˈdɔːtə', src:'TB'},{w:'(a)br',s:'oa',e:'d', ipa:'əˈbrɔːd', src:'TB'}],
+    examples:[{w:'',s:'a',e:'ll', src:'TB'},{w:'l',s:'aw',e:'', src:'TB'},{w:'s',s:'or',e:'e', src:'TB'},{w:'d',s:'oor',e:'', src:'TB'},{w:'b',s:'oar',e:'', src:'TB'},{w:'',s:'au',e:'ral', src:'TB'},{w:'',s:'or',e:'al', src:'TB'},{w:'b',s:'or',e:'n', src:'TB'},{w:'w',s:'ar',e:'', src:'TB'},{w:'f',s:'ough',e:'t', src:'TB'},{w:'d',s:'augh',e:'ter', src:'TB'},{w:'(a)br',s:'oa',e:'d', src:'TB'}],
     content:[
       { type:'block', title:'Note', src:'TB p.33', groups:[
         { text:'/ʊə/ can in most cases be replaced with /ɔː/.' },
@@ -437,7 +437,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'b',s:'ir',e:'d', ipa:'bɜːd', src:'TB'},{w:'l',s:'ear',e:'n', ipa:'lɜːn', src:'TB'},{w:'s',s:'er',e:'ve', ipa:'sɜːv', src:'TB'},{w:'w',s:'or',e:'d', ipa:'wɜːd', src:'TB'},{w:'t',s:'ur',e:'n', ipa:'tɜːn', src:'TB'}],
+    examples:[{w:'b',s:'ir',e:'d', src:'TB'},{w:'l',s:'ear',e:'n', src:'TB'},{w:'s',s:'er',e:'ve', src:'TB'},{w:'w',s:'or',e:'d', src:'TB'},{w:'t',s:'ur',e:'n', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spelling <em>-our-</em> = /ɜː/', src:'TB p.31', groups:[
         { items:[
@@ -470,7 +470,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'',s:'a',e:'bout', ipa:'əˈbaʊt', src:'TB'},{w:'surpris',s:'e',e:'', ipa:'səˈpraɪz', src:'TB'},{w:'',s:'a',e:'norak', ipa:'ˈænəræk', src:'TB'},{w:'vill',s:'a',e:'', ipa:'ˈvɪlə', src:'TB'},{w:'thor',s:'ough',e:'', ipa:'ˈθʌrə', src:'TB'}],
+    examples:[{w:'',s:'a',e:'bout', src:'TB'},{w:'surpris',s:'e',e:'', src:'TB'},{w:'',s:'a',e:'norak', src:'TB'},{w:'vill',s:'a',e:'', src:'TB'},{w:'thor',s:'ough',e:'', src:'TB'}],
     rules:'Occurs <b>only in unstressed syllables</b>. Has many possible spellings.<br>The weak vowels /ɪ/ and /ʊ/ can also occur in unstressed syllables as alternatives for /ə/.',
     rulesSrc:["TB p.24", "TB p.34", "TB p.24"],
         related:[
@@ -495,7 +495,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'happ',s:'y',e:'', ipa:'ˈhæpi', src:'TB'},{w:'committ',s:'ee',e:'', ipa:'kəˈmɪti', src:'TB'},{w:'psych',s:'e',e:'', ipa:'ˈsaɪki', src:'TB'},{w:'Ann',s:'ie',e:'', ipa:'ˈæni', src:'TB'},{w:'radi',s:'o',e:'', ipa:'ˈreɪdiəʊ', src:'TB'},{w:'tiar',s:'a',e:'', ipa:'tiˈɑːrə', src:'TB'}],
+    examples:[{w:'happ',s:'y',e:'', src:'TB'},{w:'committ',s:'ee',e:'', src:'TB'},{w:'psych',s:'e',e:'', src:'TB'},{w:'Ann',s:'ie',e:'', src:'TB'},{w:'radi',s:'o',e:'', src:'TB'},{w:'tiar',s:'a',e:'', src:'TB'}],
     rules:'Occurs <b>only in unstressed syllables</b>, word-finally or before a vowel.',
     rulesSrc:["TB p.34", "TB p.34"],
     related:[
@@ -518,7 +518,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'fat',s:'u',e:'ous', ipa:'ˈfætʃuəs', src:'TB'},{w:'biv',s:'u',e:'ouac', ipa:'ˈbɪvuæk', src:'TB'},{w:'K',s:'u',e:'wait', ipa:'kuˈweɪt', src:'TB'}],
+    examples:[{w:'fat',s:'u',e:'ous', src:'TB'},{w:'biv',s:'ou',e:'ac', src:'TB'},{w:'K',s:'u',e:'wait', src:'TB'}],
     rules:'Occurs <b>only in unstressed syllables</b>, but <b>not word-finally</b>.',
     rulesSrc:["TB p.34", "TB p.34"],
     related:[
@@ -540,7 +540,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'',s:'a',e:'ce', ipa:'eɪs', src:'TB'},{w:'pl',s:'ai',e:'n', ipa:'pleɪn', src:'TB'},{w:'m',s:'ay',e:'', ipa:'meɪ', src:'TB'},{w:'v',s:'ei',e:'l', ipa:'veɪl', src:'TB'},{w:'gr',s:'ey',e:'', ipa:'ɡreɪ', src:'TB'}],
+    examples:[{w:'',s:'a',e:'ce', src:'TB'},{w:'pl',s:'ai',e:'n', src:'TB'},{w:'m',s:'ay',e:'', src:'TB'},{w:'v',s:'ei',e:'l', src:'TB'},{w:'gr',s:'ey',e:'', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spelling <em>ea</em> = /eɪ/', src:'TB p.33', groups:[
         { items:[
@@ -571,7 +571,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'l',s:'i',e:'ne', ipa:'laɪn', src:'TB'},{w:'m',s:'i',e:'nd', ipa:'maɪnd', src:'TB'},{w:'f',s:'igh',e:'t', ipa:'faɪt', src:'TB'},{w:'d',s:'ie',e:'', ipa:'daɪ', src:'TB'},{w:'',s:'eye',e:'', ipa:'aɪ', src:'TB'},{w:'(n)',s:'ei',e:'ther', ipa:'ˈnaɪðə', src:'TB'}],
+    examples:[{w:'l',s:'i',e:'ne', src:'TB'},{w:'m',s:'i',e:'nd', src:'TB'},{w:'f',s:'igh',e:'t', src:'TB'},{w:'d',s:'ie',e:'', src:'TB'},{w:'',s:'eye',e:'', src:'TB'},{w:'(n)',s:'ei',e:'ther', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'/aɪ/ rarely occurs before <span class="spell-letter">r</span> — exceptions', src:'TB p.33', groups:[
         { items:[
@@ -600,7 +600,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'l',s:'oi',e:'n', ipa:'lɔɪn', src:'TB'},{w:'b',s:'oy',e:'', ipa:'bɔɪ', src:'TB'},{w:'b',s:'uo',e:'y', ipa:'bɔɪ', src:'TB'}],
+    examples:[{w:'l',s:'oi',e:'n', src:'TB'},{w:'b',s:'oy',e:'', src:'TB'},{w:'b',s:'uo',e:'y', src:'TB'}],
     rules:'',
     rulesSrc:["TB p.32", "TB p.32"],
     related:[
@@ -620,7 +620,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'d',s:'ow',e:'n', ipa:'daʊn', src:'TB'},{w:'m',s:'ou',e:'th', ipa:'maʊθ', src:'TB'},{w:'r',s:'ow',e:' (quarrel)', ipa:'raʊ', src:'TB'}],
+    examples:[{w:'d',s:'ow',e:'n', src:'TB'},{w:'m',s:'ou',e:'th', src:'TB'},{w:'r',s:'ow',e:' (quarrel)', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'/aʊ/ never occurs before <span class="spell-letter">r</span> — exceptions', src:'TB p.33', groups:[
         { items:[
@@ -647,7 +647,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'',s:'o',e:'ld', ipa:'əʊld', src:'TB'},{w:'sh',s:'ou',e:'lder', ipa:'ˈʃəʊldə', src:'TB'},{w:'r',s:'ow',e:' (rij)', ipa:'rəʊ', src:'TB'},{w:'l',s:'oa',e:'d', ipa:'ləʊd', src:'TB'},{w:'g',s:'oe',e:'s', ipa:'ɡəʊz', src:'TB'},{w:'th',s:'ough',e:'', ipa:'ðəʊ', src:'TB'}],
+    examples:[{w:'',s:'o',e:'ld', src:'TB'},{w:'sh',s:'ou',e:'lder', src:'TB'},{w:'r',s:'ow',e:' (rij)', src:'TB'},{w:'l',s:'oa',e:'d', src:'TB'},{w:'g',s:'oe',e:'s', src:'TB'},{w:'th',s:'ough',e:'', src:'TB'}],
     rules:'',
     rulesSrc:["TB p.32", "TB p.32"],
     related:[
@@ -667,7 +667,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'t',s:'ear',e:' (traan)', ipa:'tɪə', src:'TB'},{w:'d',s:'eer',e:'', ipa:'dɪə', src:'TB'},{w:'h',s:'ere',e:'', ipa:'hɪə', src:'TB'},{w:'p',s:'ier',e:'ce', ipa:'pɪəs', src:'TB'},{w:'id',s:'ea',e:'(l)', ipa:'aɪˈdɪəl', src:'TB'},{w:'r',s:'ea',e:'l', ipa:'rɪəl', src:'TB'},{w:'th',s:'eor',e:'y', ipa:'ˈθɪəri', src:'TB'}],
+    examples:[{w:'t',s:'ear',e:' (traan)', src:'TB'},{w:'d',s:'eer',e:'', src:'TB'},{w:'h',s:'ere',e:'', src:'TB'},{w:'p',s:'ier',e:'ce', src:'TB'},{w:'id',s:'ea',e:'(l)', src:'TB'},{w:'r',s:'ea',e:'l', src:'TB'},{w:'th',s:'eor',e:'y', src:'TB'}],
     content:[
       { type:'rules', text:'Arises because <b>/iː/ never occurs before <span class="spell-letter">r</span></b> in RP — <em>hearing, near</em> etc. all have /ɪə/.', src:'TB p.32' },
       { type:'block', variant:'blue-rule', title:'<u>Medial</u> -are-, -ari-', src:'TB p.30', groups:[
@@ -698,7 +698,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'d',s:'are',e:'', ipa:'deə', src:'TB'},{w:'v',s:'ar',e:'iable', ipa:'ˈveəriəbl', src:'TB'},{w:'f',s:'air',e:'', ipa:'feə', src:'TB'},{w:'S',s:'ar',e:'ah', ipa:'ˈseərə', src:'TB'},{w:'sw',s:'ear',e:'', ipa:'sweə', src:'TB'},{w:'th',s:'ere',e:'', ipa:'ðeə', src:'TB'},{w:'th',s:'eir',e:'(s)', ipa:'ðeəz', src:'TB'}],
+    examples:[{w:'d',s:'are',e:'', src:'TB'},{w:'v',s:'ar',e:'iable', src:'TB'},{w:'f',s:'air',e:'', src:'TB'},{w:'S',s:'ar',e:'ah', src:'TB'},{w:'sw',s:'ear',e:'', src:'TB'},{w:'th',s:'ere',e:'', src:'TB'},{w:'th',s:'eir',e:'(s)', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'-are, -ary', src:'TB p.31', groups:[
         { text:'All words ending in <em>-are, -ary</em> have /eə/ — including derivations.', items:[
@@ -757,7 +757,7 @@ const theoryCards = [
     detail:'Long, Usually stressed. Lips Rounded→Unrounded, Rounded→Neutral. Tense.',
     detailSrc:'CAI',
     detailWiki:'',
-    examples:[{w:'t',s:'our',e:'', ipa:'tʊə', src:'TB'},{w:'',s:'Eur',e:'ope', ipa:'ˈjʊərəp', src:'TB'},{w:'m',s:'oor',e:'', ipa:'mʊə', src:'TB'},{w:'c',s:'ur',e:'e', ipa:'kjʊə', src:'TB'},{w:'j',s:'ur',e:'y', ipa:'ˈdʒʊəri', src:'TB'}],
+    examples:[{w:'t',s:'our',e:'', src:'TB'},{w:'',s:'Eur',e:'ope', src:'TB'},{w:'m',s:'oor',e:'', src:'TB'},{w:'c',s:'ur',e:'e', src:'TB'},{w:'j',s:'ur',e:'y', src:'TB'}],
     content:[
       { type:'block', title:'Note', src:'TB p.33', groups:[
         { text:'In most cases /ʊə/ can be replaced with /ɔː/.' },
@@ -2033,7 +2033,7 @@ const theoryCards = [
     mnemonic:'slashes = phonemic /sɪt/, brackets = phonetic [sɪt]',
     desc:'Key rules to apply when writing IPA transcriptions from this course.',
     descSrc:'TB p.25',
-    examples:[{w:'con',s:'test',e:'', ipa:'ˈkɒntest', src:'TB'},{w:'p',s:'ia',e:'no', ipa:'piˈænəʊ', src:'TB'},{w:'butt',s:'on',e:'', ipa:'ˈbʌtn̩', src:'TB'}],
+    examples:[{w:'con',s:'test',e:'', src:'TB'},{w:'p',s:'ia',e:'no', src:'TB'},{w:'butt',s:'on',e:'', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'1. Stress mark [ˈ] — placed before the stressed syllable', src:'TB p.25', groups:[
         { items:[
@@ -2182,7 +2182,7 @@ const theoryCards = [
     isSymbol:true,
     desc:'ˈ marks the syllable with greatest prominence (primary stress). ˌ marks a syllable with secondary stress — less prominent than primary but more than unstressed.',
     descSrc:'TB p.25',
-    examples:[{w:'b',s:'u',e:'tter', ipa:'ˈbʌtə', src:'TB'},{w:'b',s:'e',e:'lieve', ipa:'bəˈliːv', src:'TB'},{w:'',s:'u',e:'nderstand', ipa:'ˌʌndəˈstænd', src:'TB'}],
+    examples:[{w:'b',s:'u',e:'tter', src:'TB'},{w:'b',s:'e',e:'lieve', src:'TB'},{w:'',s:'u',e:'nderstand', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'ˈ Primary stress — the most prominent syllable', src:'TB p.25', groups:[
         { items:[
@@ -2497,7 +2497,7 @@ const theoryCards = [
     mnemonic:'louder, longer, higher — syllables → feet → word rhythm',
     desc:'A stressed syllable is more prominent than surrounding syllables. Syllables group into feet — a stressed syllable plus following unstressed syllables. Each word has one primary stress and may have secondary stresses.',
     descSrc:'TB p.40',
-    examples:[{w:'b',s:'u',e:'tter', ipa:'ˈbʌtə', src:'TB'},{w:'b',s:'e',e:'lieve', ipa:'bəˈliːv', src:'TB'}],
+    examples:[{w:'b',s:'u',e:'tter', src:'TB'},{w:'b',s:'e',e:'lieve', src:'TB'}],
     content:[
       { type:'block', title:'Stressed syllables', src:'WP', groups:[
         { text:'Stressed syllables are <b>louder</b>, <b>longer</b>, and on a <b>higher pitch</b>. The mark <b>ˈ</b> is placed immediately before the stressed syllable in IPA.' },
