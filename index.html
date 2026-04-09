@@ -810,6 +810,8 @@
   }
 
   .example-word {
+    display: inline-flex;
+    align-items: baseline;
     font-family: 'Source Code Pro', monospace;
     font-size: 0.72rem;
     background: var(--paper);
@@ -817,8 +819,20 @@
     border-radius: 3px;
     padding: 0.2rem 0.5rem;
     color: var(--ink);
+    white-space: nowrap;
   }
-
+  .example-word:has(.example-ipa) { padding-right: 0; }
+  .example-ipa {
+    font-size: var(--pill-font-size);
+    border-left: 1px solid var(--border);
+    padding-left: 0.4em;
+    padding-right: 0.05em;
+    margin-left: 0.4em;
+    color: var(--muted);
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
   /* ── Pill base — shared by all inline word/phoneme pills ──
      Using :is() so legacy HTML with just class="ctx-word" etc. also picks up shared styles */
   :is(.pill, .exc-word, .rule-word, .ctx-word, .phon-ref) {
@@ -1518,7 +1532,6 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
-    flex: 1 1 0;
     min-height: 0;
   }
   /* Fade + scroll cue at bottom — hidden when scrolled to end */
@@ -1651,7 +1664,7 @@
   }
   .s-step-header .s-step-num u { text-decoration: underline; font-weight: 700; }
   .s-step-header .s-step-num em { font-style: normal; font-weight: 600; }
-  .s-step-header .phon-ref { color: inherit; background: transparent; border-color: currentColor; opacity: 0.8; }
+  .s-step-header .phon-ref { color: inherit; background: transparent; border-color: currentColor; opacity: 0.8; font-size: inherit; text-transform: none; }
   .s-step-header .s-step-arrow { opacity: 0.55; font-size: 0.7rem; }
   .s-step-header .s-step-phoneme { font-size: 0.82rem; font-weight: 700; }
   .s-step-body {
@@ -2622,7 +2635,11 @@
   }
 
   /* ── USER EDITS ── */
-  .wordlist-study-row.row-generated {
+  .wordlist-study-row.row-generated .wordlist-study-ipa-display {
+    border-left: 2px solid var(--star);
+    padding-left: 0.4rem;
+  }
+  .wordlist-study-row.row-from-tb-text {
     border-left: 2px solid var(--accent2);
     background: var(--blue-faint);
   }
@@ -3386,6 +3403,7 @@
   .exc-word { display: inline-flex; align-items: baseline; gap: 0.2mm; font-family: 'Source Code Pro', monospace; font-size: 7pt; border: 0.5px solid rgba(230,184,0,0.5); border-radius: 1mm; padding: 0.1mm 0.8mm; color: var(--print-dark); background: rgba(230,184,0,0.07); white-space: nowrap; }
   .exc-word--unverified { border-left: 1.5px solid #e6b800; border-radius: 0 1mm 1mm 0; }
   .exc-ipa { font-size: 6.5pt; color: var(--print-muted); border-left: 0.5px solid #ccc; padding-left: 0.5mm; margin-left: 0.1mm; }
+  .example-ipa { font-size: 6.5pt; color: var(--print-muted); border-left: 0.5px solid #ccc; padding-left: 0.5mm; margin-left: 0.1mm; }
   .ctx-word { display: inline-flex; align-items: baseline; font-family: 'Source Code Pro', monospace; font-size: 7pt; border: 0.5px solid #ccc; border-radius: 1mm; padding: 0.1mm 0.8mm; color: var(--print-dark); background: var(--grey-bg2); white-space: nowrap; }
   .print-card-related {
     font-family: 'Source Code Pro', monospace; font-size: 8pt; color: var(--print-muted);
@@ -4728,7 +4746,7 @@ if (typeof theoryCards === 'undefined' || typeof wordlistWords === 'undefined') 
 // - No separation of concerns between data, logic, and presentation
 // - File size will grow; splitting is possible via <script src> but not planned
 // These are not bugs; they reflect a deliberate portability trade-off.
-const APP_VERSION = '12.27';
+const APP_VERSION = '12.35';
 // CARDS_VERSION and WORDS_VERSION declared in cards.js / words.js
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -5575,10 +5593,32 @@ function shuffle() {
 // ─────────────────────────────────────────────────────────────────────────────
 // FLASHCARD RENDER
 // ─────────────────────────────────────────────────────────────────────────────
+
+// Wordlist IPA lookup — used by exampleHTML() when ex.ipa is absent.
+// Builds a word→IPA map from getEffectiveWordlistWords() so localStorage
+// overrides are respected. Cache is invalidated on each card render pass
+// by calling _wordlistIpaCache = null before rendering examples.
+let _wordlistIpaCache = null;
+function getWordlistIpa(word) {
+  if (!_wordlistIpaCache) {
+    _wordlistIpaCache = {};
+    if (typeof getEffectiveWordlistWords === 'function') {
+      getEffectiveWordlistWords().forEach(w => {
+        _wordlistIpaCache[w.word.toLowerCase()] = w.ipa;
+      });
+    }
+  }
+  return _wordlistIpaCache[word.toLowerCase()] || null;
+}
+
 function exampleHTML(ex) {
   const cls = isSrcUnverified(ex.src) ? ' example-word--unverified' : '';
-  if (!ex.s) return `<span class="example-word${cls}">${ex.w}${ex.e}</span>`;
-  return `<span class="example-word${cls}">${ex.w}<em>${ex.s}</em>${ex.e}</span>`;
+  // Use ex.ipa if present; otherwise look up in wordlist (respects LS overrides)
+  const word = (ex.w || '') + (ex.s || '') + (ex.e || '');
+  const ipa = ex.ipa || getWordlistIpa(word.replace(/\s*\(.*?\)/g, '').trim());
+  const ipaHtml = ipa ? `<span class="example-ipa">${ipa}</span>` : '';
+  if (!ex.s) return `<span class="example-word${cls}">${ex.w}${ex.e}${ipaHtml}</span>`;
+  return `<span class="example-word${cls}">${ex.w}<em>${ex.s}</em>${ex.e}${ipaHtml}</span>`;
 }
 
 function tagStrip(card) {
@@ -5904,6 +5944,7 @@ function render() {
   const symbolSide = isCatCard
     ? `${backBtn}<div class="card-symbol-wrap" data-flip-zone><div class="symbol" style="font-size:clamp(1.4rem,6vw,2.6rem);font-weight:400;letter-spacing:-0.02em">${c.name}</div><p class="hint">tap to flip</p></div>${reviewBtn}`
     : `${backBtn}<div class="card-symbol-wrap" data-flip-zone><div class="symbol" id="cardSymbolEl" data-wiki="${c.wiki||c.descWiki||''}" ${c.wiki||c.descWiki ? 'title="Right-click or long-press for Wikipedia"' : ''}>${c.symbol}</div><p class="hint">tap to flip</p>${audioHtmlFront ? `<div class="card-audio-slot">${audioHtmlFront}</div>` : ''}</div>${reviewBtn}`;
+  _wordlistIpaCache = null;
   const examplesHtml = c.examples.map(exampleHTML).join('');
   let audioHtml = '';
   if (isCatCard) {
@@ -5998,7 +6039,7 @@ function getLettersInSource(src) {
 function getWordlistStudySource() {
   const all = getEffectiveWordlistWords();
   let src = wordlistStudyReviewMode ? all.filter(w => wordlistReviewIds.has(w.word)) : all;
-  if (wordlistStudyShowEdited) src = src.filter(w => w.edited || w.generated);
+  if (wordlistStudyShowEdited) src = src.filter(w => w.edited || w.from_tb_text);
   if (wordlistFilterWordVal) {
     const fw = wordlistFilterWordVal.toLowerCase();
     src = src.filter(w => w.word.toLowerCase().includes(fw));
@@ -6225,8 +6266,10 @@ function renderWordlistStudy() {
 
     // Edited row highlight
     if (item.edited) row.classList.add('row-edited');
-    // Generated IPA highlight (IPA not from book source)
+    // IPA not hand-verified from TB/LPD — amber border on IPA display
     if (item.ipa_generated) row.classList.add('row-generated');
+    // Word from TB body text, not from the PL — blue left border
+    if (item.from_tb_text) row.classList.add('row-from-tb-text');
 
     // TTS speaker button
     const ttsCell = document.createElement('div');
@@ -6338,7 +6381,7 @@ function resetAllEdited(trigger) {
 function updateEditButtons() {
   const edits = loadUserEdits();
   const hasEdits = Object.keys(edits.modified || {}).length > 0 || (edits.added || []).length > 0
-    || getEffectiveWordlistWords().some(w => w.generated);
+    || getEffectiveWordlistWords().some(w => w.from_tb_text);
   const eb = $el('wordlistStudyShowEditedBtn');
   const rb = $el('wordlistStudyResetAllEditedBtn');
   if (eb) eb.style.display = hasEdits ? '' : 'none';
@@ -8770,6 +8813,7 @@ function printCardHTML(card) {
     .replace(/<button[^>]*class="([^"]*)"[^>]*>([^<]*)<\/button>/g,
              (_, cls, label) => `<span class="${cls.replace(/\bpill-btn\b\s*/g, '').trim()}">${label}</span>`);
 
+  _wordlistIpaCache = null;
   const examples = (card.examples || []).map(exampleHTML).join(' ');
   const related  = (card.related  || []).map(r => `<span title="${r.reason || ''}">${r.symbol}</span>`).join('');
   const showSrc = lsGet('ipa_setting_show_src_markers', 'true') !== 'false';
@@ -9176,12 +9220,15 @@ async function executePrint(includeCards, selectedEntries) {
 // Symbols are resolved against theoryCards at render time.
 // filterId: when set, this section is highlighted when that filter is active.
 const MORE_SECTIONS = [
-  { label: 'Vowels', filterId: 'vowel', rows: [
+  { label: 'Vowels', filterId: 'vowel', noDivider: true, rows: [
     ['ː', 'lax', 'mono', 'weak', 'diph'],
+    { divider: 'Articulation' },
+    ['vowel-position', 'vowel-quality', 'roundedness'],
   ]},
   { label: 'Consonants', filterId: 'consonant', noDivider: true, rows: [
-    ['fortis-lenis', 'obstruent', 'plosive', 'fricative', 'affricate', 'fortis', 'lenis', 'syllabic', 'sonorant', 'nasal', 'approx', 'lateral', 'place', 'manner'],
-    ['bilabial', 'labiodental', 'dental', 'alveolar', 'post-alveolar', 'palatal', 'velar', 'labio-velar', 'glottal'],
+    ['fortis-lenis', 'obstruent', 'plosive', 'fricative', 'affricate', 'syllabic', 'sonorant', 'nasal', 'approx', 'lateral'],
+    { divider: 'Articulation' },
+    ['place', 'manner'],
   ]},
   { label: 'Stress', filterId: 'supra', rows: [
     ['ˈ', 'supra', 'stress', 'stress-homographs', 'stress-abl'],
@@ -9196,10 +9243,8 @@ const MORE_SECTIONS = [
   { label: 'Concepts', filterId: 'cat', rows: [
     { divider: 'Foundations' },
     ['phoneme', 'syllable'],
-    { divider: 'Articulation' },
-    ['vowel-position', 'vowel-quality', 'roundedness', 'place', 'manner'],
     { divider: 'Phonology' },
-    ['fortis-lenis', 'voicing-independence', 'airflow-obstruction'],
+    ['voicing-independence', 'airflow-obstruction'],
     { divider: 'Phenomena' },
     ['homographs', 'homoph-homogr', 'phon-interf', 'accent-dialect'],
     { divider: 'Transcription' },
@@ -10894,7 +10939,7 @@ try {
           <line x1="0" y1="60" x2="520" y2="60" stroke="#d4cfc4" stroke-width="0.5"/>
           <text x="10" y="69" text-anchor="start" fill="#7a7060" font-size="7.5" font-weight="400" font-family="Noto Serif,serif" font-style="italic">+ Add word   Reset played   Show meaning</text>
         </svg>`,
-        body: `The word list contains hundreds of RP vocabulary words with their IPA transcriptions. Each row shows the <strong>word</strong>, its <strong>IPA transcription</strong> (click to copy), and optionally a <strong>meaning</strong> (toggle with Show meaning). The <strong>★ button</strong> marks a word for review. The <strong>✏ button</strong> lets you edit the IPA transcription for any word. Use <strong>+ Add word</strong> to add your own words with custom IPA — added words appear in both Study and Quiz and are saved locally. Words from card rules and exceptions have also been added to the list — those whose IPA was generated by Claude rather than taken directly from the textbook are <span style="display:inline-block;border-left:2px solid var(--accent2);background:var(--blue-faint);padding:0 0.3em;border-radius:0 2px 2px 0">highlighted in blue</span>. Use <strong>Show added/edited</strong> in Options to filter to these words for review.`
+        body: `The word list contains hundreds of RP vocabulary words with their IPA transcriptions. Each row shows the <strong>word</strong>, its <strong>IPA transcription</strong> (click to copy), and optionally a <strong>meaning</strong> (toggle with Show meaning). The <strong>★ button</strong> marks a word for review. The <strong>✏ button</strong> lets you edit the IPA transcription for any word. Use <strong>+ Add word</strong> to add your own words with custom IPA — added words appear in both Study and Quiz and are saved locally. <br><br>Two source markers may appear on rows: a <span style="display:inline-block;border-left:2px solid var(--accent2);background:var(--blue-faint);padding:0 0.3em;border-radius:0 2px 2px 0">blue left border</span> means the word comes from the TB body text (examples, rules, exercises) rather than the Pronunciation List appendix. An <span style="display:inline-block;border-left:2px solid var(--star);padding:0 0.3em">amber border on the IPA</span> means the transcription has not been hand-verified against the TB or LPD and should be treated as provisional. Both markers can appear together. Use <strong>Show added/edited</strong> in Options to filter to TB-text words for review.`
       },
       // ── WORDLIST: TAG FILTER BAR ──
       {
@@ -11581,7 +11626,7 @@ function syncCharts() {
   const moreSyms = new Set([
     'ˈ','supra','stress','stress-homographs','stress-abl',
     'lax','mono','diph','weak',
-    'obstruent','sonorant','plosive','fricative','affricate','nasal','approx','fortis','lenis',
+    'obstruent','sonorant','plosive','fricative','affricate','nasal','approx','lateral','syllabic',
     'endings-s-plural','endings','grammatical-s','grammatical-ed',
     'silent-h','silent-clusters',
     'phoneme','syllable','vowel-position','vowel-quality','roundedness','place','manner','lateral','syllabic',

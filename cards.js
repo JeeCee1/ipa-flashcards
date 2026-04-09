@@ -1,5 +1,5 @@
 // RP IPA Flashcards — card data
-const CARDS_VERSION = '2.15';
+const CARDS_VERSION = '2.18';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SOURCE ABBREVIATIONS
@@ -62,7 +62,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'l',s:'i',e:'p', src:'TB'},{w:'g',s:'ui',e:'ld', src:'TB'}],
+    examples:[{w:'l',s:'i',e:'p', ipa:'lɪp', src:'TB'},{w:'g',s:'ui',e:'ld', ipa:'ɡɪld', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spellings', src:'TB p.30', groups:[
         { items:[
@@ -103,7 +103,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'p',s:'u',e:'t', src:'TB'},{w:'b',s:'u',e:'ll', src:'TB'},{w:'s',s:'u',e:'gar', src:'TB'},{w:'b',s:'o',e:'som', src:'TB'},{w:'w',s:'o',e:'lf', src:'TB'},{w:'w',s:'o',e:'man', src:'TB'}],
+    examples:[{w:'p',s:'u',e:'t', ipa:'pʊt', src:'TB'},{w:'b',s:'u',e:'ll', ipa:'bʊl', src:'TB'},{w:'s',s:'u',e:'gar', ipa:'ˈʃʊɡə', src:'TB'},{w:'b',s:'o',e:'som', ipa:'ˈbʊzəm', src:'TB'},{w:'w',s:'o',e:'lf', ipa:'wʊlf', src:'TB'},{w:'w',s:'o',e:'man', ipa:'ˈwʊmən', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'<em>oo</em> = /ʊ/ — and all <em>-ook</em> words', src:'TB p.32', groups:[
         { items:[
@@ -149,27 +149,27 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'b',s:'e',e:'d', src:'TB'},{w:'br',s:'ea',e:'d', src:'TB'}],
+    examples:[{w:'b',s:'e',e:'d', ipa:'bed', src:'TB'},{w:'br',s:'ea',e:'d', ipa:'bred', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'<em>a</em>', src:'TB p.30', groups:[
         { items:[
-          { pre:'',   hl:'a', post:'ny',   ipa:'ˈeni',        src:'CAI' },
-          { pre:'m',  hl:'a', post:'ny',   ipa:'ˈmeni',       src:'CAI' },
-          { pre:'Th', hl:'a', post:'mes',  ipa:'temz',        src:'CAI' },
-          { pre:'',   hl:'a', post:'te',   ipa:'et, eɪt',     src:'TB'  },
+          { pre:'',   hl:'a', post:'ny',   ipa:'ˈeni',          src:'CAI' },
+          { pre:'m',  hl:'a', post:'ny',   ipa:'ˈmeni',         src:'CAI' },
+          { pre:'Th', hl:'a', post:'mes',  ipa:'temz',          src:'CAI' },
+          { pre:'',   hl:'a', post:'te',   ipa:'et, eɪt',       src:'TB'  },
         ]},
       ]},
       { type:'block', variant:'yellow-exc', title:'<em>ay, ai</em>', src:'TB p.30', groups:[
         { items:[
-          { pre:'s',  hl:'ay', post:'s',  ipa:'sez',          src:'TB'  },
-          { pre:'s',  hl:'ai', post:'d',  ipa:'sed',          src:'CAI' },
-          { pre:'ag', hl:'ai', post:'n',  ipa:'əˈɡen, əˈɡeɪn', src:'TB' },
+          { pre:'s',  hl:'ay', post:'s',  ipa:'sez',            src:'TB'  },
+          { pre:'s',  hl:'ai', post:'d',  ipa:'sed',            src:'CAI' },
+          { pre:'ag', hl:'ai', post:'n',  ipa:'əˈɡen, əˈɡeɪn', src:'TB'  },
         ]},
       ]},
       { type:'block', variant:'yellow-exc', title:'<em>u</em>', src:'TB p.24', groups:[
         { items:[
-          { pre:'b',  hl:'u', post:'ry',   ipa:'ˈberi',       src:'CAI' },
-          { pre:'b',  hl:'u', post:'rial', ipa:'ˈberiəl',     src:'CAI' },
+          { pre:'b',  hl:'u', post:'ry',   ipa:'ˈberi',         src:'CAI' },
+          { pre:'b',  hl:'u', post:'rial', ipa:'ˈberiəl',       src:'CAI' },
         ]},
       ]},
     ],
@@ -194,7 +194,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'l',s:'a',e:'nd', src:'TB'},{w:'comp',s:'a',e:'rison', src:'TB'},{w:'tr',s:'a',e:'nsparent', src:'TB'},{w:'',s:'a',e:'rid', src:'TB'},{w:'sw',s:'a',e:'m', src:'TB'},{w:'qu',s:'a',e:'ck', src:'TB'}],
+    examples:[{w:'l',s:'a',e:'nd', ipa:'lænd', src:'TB'},{w:'comp',s:'a',e:'rison', ipa:'kəmˈpærəsn', src:'TB'},{w:'tr',s:'a',e:'nsparent', ipa:'trænˈspærənt', src:'TB'},{w:'',s:'a',e:'rid', ipa:'ˈærd', src:'TB'},{w:'sw',s:'a',e:'m', ipa:'swæm', src:'TB'},{w:'qu',s:'a',e:'ck', ipa:'kwæk', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spelling <em>ai</em> = /æ/', src:'TB p.30', groups:[
         { items:[
@@ -232,7 +232,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'n',s:'u',e:'t', src:'TB'},{w:'c',s:'u',e:'rry', src:'TB'},{w:'s',s:'o',e:'n', src:'TB'},{w:'(m)',s:'o',e:'ther', src:'TB'},{w:'',s:'o',e:'ne', src:'TB'},{w:'d',s:'o',e:'ve', src:'TB'},{w:'c',s:'ou',e:'ntry', src:'TB'}],
+    examples:[{w:'n',s:'u',e:'t', ipa:'nʌt', src:'TB'},{w:'c',s:'u',e:'rry', ipa:'ˈkʌri', src:'TB'},{w:'s',s:'o',e:'n', ipa:'sʌn', src:'TB'},{w:'(m)',s:'o',e:'ther', ipa:'ˈmʌðə', src:'TB'},{w:'',s:'o',e:'ne', ipa:'wʌn', src:'TB'},{w:'d',s:'o',e:'ve', ipa:'dʌv', src:'TB'},{w:'c',s:'ou',e:'ntry', ipa:'ˈkʌntri', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'<em>oo</em>', src:'TB p.31', groups:[
         { items:[
@@ -259,7 +259,8 @@ const theoryCards = [
       ]},
       { type:'block', variant:'blue-rule', title:'<em>-other</em>', src:'TB p.31', groups:[
         { text:'All <em>-other</em> words except <span class="ctx-word">b<em>oth</em>er</span> have /ʌðə/.', items:[
-          { pre:'-(m)', hl:'oth', post:'er', ipa:'ˈmʌðə', src:'TB', variant:'rule' },
+          { pre:'m',  hl:'oth', post:'er', ipa:'ˈmʌðə', src:'TB', variant:'rule' },
+          { pre:'',   hl:'oth', post:'er', ipa:'ˈʌðə',  src:'TB', variant:'rule' },
         ]},
       ]},
     ],
@@ -283,7 +284,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'w',s:'a',e:'tch', src:'TB'},{w:'qu',s:'a',e:'lity', src:'TB'},{w:'c',s:'o',e:'ffee', src:'TB'},{w:'b',s:'o',e:'mb', src:'TB'},{w:'s',s:'o',e:'rry', src:'TB'},{w:'h',s:'o',e:'liday', src:'TB'},{w:'f',s:'o',e:'reign', src:'TB'},{w:'m',s:'o',e:'ral', src:'TB'}],
+    examples:[{w:'w',s:'a',e:'tch', ipa:'wɒtʃ', src:'TB'},{w:'qu',s:'a',e:'lity', ipa:'ˈkwɒləti', src:'TB'},{w:'c',s:'o',e:'ffee', ipa:'ˈkɒfi', src:'TB'},{w:'b',s:'o',e:'mb', ipa:'bɒm', src:'TB'},{w:'s',s:'o',e:'rry', ipa:'ˈsɒri', src:'TB'},{w:'h',s:'o',e:'liday', ipa:'ˈhɒlɪdeɪ', src:'TB'},{w:'f',s:'o',e:'reign', ipa:'ˈfɒrən', src:'TB'},{w:'m',s:'o',e:'ral', ipa:'ˈmɒrəl', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'<em>au</em>', src:'TB p.31', groups:[
         { items:[
@@ -324,7 +325,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'n',s:'ea',e:'t', src:'TB'},{w:'compl',s:'e',e:'te', src:'TB'},{w:'s',s:'ee',e:'', src:'TB'},{w:'rec',s:'ei',e:'ve', src:'TB'},{w:'ch',s:'ie',e:'f', src:'TB'},{w:'pol',s:'i',e:'ce', src:'TB'},{w:'mus',s:'eu',e:'m', src:'TB'}],
+    examples:[{w:'n',s:'ea',e:'t', ipa:'niːt', src:'TB'},{w:'compl',s:'e',e:'te', ipa:'kəmˈpliːt', src:'TB'},{w:'s',s:'ee',e:'', ipa:'siː', src:'TB'},{w:'rec',s:'ei',e:'ve', ipa:'rɪˈsiːv', src:'TB'},{w:'ch',s:'ie',e:'f', ipa:'tʃiːf', src:'TB'},{w:'pol',s:'i',e:'ce', ipa:'pəˈliːs', src:'TB'},{w:'mus',s:'eu',e:'m', ipa:'mjuˈziːəm', src:'TB'}],
     rules:'<b>Rule: /iː/ never occurs before <span class="spell-letter">r</span></b> — words like <em>hearing, near</em> have /ɪə/ instead.',
     rulesSrc:["TB p.30", "TB p.30"],
         related:[
@@ -350,7 +351,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'s',s:'oo',e:'n', src:'TB'},{w:'l',s:'o',e:'se', src:'TB'},{w:'gr',s:'ou',e:'p', src:'TB'},{w:'sh',s:'oe',e:'', src:'TB'},{w:'ch',s:'ew',e:'', src:'TB'},{w:'n',s:'u',e:'de', src:'TB'},{w:'fr',s:'ui',e:'t', src:'TB'},{w:'bl',s:'ue',e:'', src:'TB'},{w:'men',s:'u',e:'', src:'TB'},{w:'val',s:'ue',e:'', src:'TB'}],
+    examples:[{w:'s',s:'oo',e:'n', ipa:'suːn', src:'TB'},{w:'l',s:'o',e:'se', ipa:'luːz', src:'TB'},{w:'gr',s:'ou',e:'p', ipa:'ɡruːp', src:'TB'},{w:'sh',s:'oe',e:'', ipa:'ʃuː', src:'TB'},{w:'ch',s:'ew',e:'', ipa:'tʃuː', src:'TB'},{w:'n',s:'u',e:'de', ipa:'njuːd', src:'TB'},{w:'fr',s:'ui',e:'t', ipa:'fruːt', src:'TB'},{w:'bl',s:'ue',e:'', ipa:'bluː', src:'TB'},{w:'men',s:'u',e:'', ipa:'ˈmenjuː', src:'TB'},{w:'val',s:'ue',e:'', ipa:'ˈvæljuː', src:'TB'}],
     rules:'<b>Rule: /uː/ never occurs before <span class="spell-letter">r</span></b> — <em>touring, moor</em> have /ʊə/ or /ɔː/ instead.',
     rulesSrc:["TB p.31", "TB p.31"],
         related:[
@@ -376,7 +377,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'b',s:'a',e:'th', src:'TB'},{w:'c',s:'ar',e:'d', src:'TB'},{w:'',s:'au',e:'nt', src:'TB'},{w:'h',s:'al',e:'f', src:'TB'}],
+    examples:[{w:'b',s:'a',e:'th', ipa:'bɑːθ', src:'TB'},{w:'c',s:'ar',e:'d', ipa:'kɑːd', src:'TB'},{w:'',s:'au',e:'nt', ipa:'ɑːnt', src:'TB'},{w:'h',s:'al',e:'f', ipa:'hɑːf', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spellings', src:'TB p.31', groups:[
         { items:[
@@ -409,7 +410,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'',s:'a',e:'ll', src:'TB'},{w:'l',s:'aw',e:'', src:'TB'},{w:'s',s:'or',e:'e', src:'TB'},{w:'d',s:'oor',e:'', src:'TB'},{w:'b',s:'oar',e:'', src:'TB'},{w:'',s:'au',e:'ral', src:'TB'},{w:'',s:'or',e:'al', src:'TB'},{w:'b',s:'or',e:'n', src:'TB'},{w:'w',s:'ar',e:'', src:'TB'},{w:'f',s:'ough',e:'t', src:'TB'},{w:'d',s:'augh',e:'ter', src:'TB'},{w:'(a)br',s:'oa',e:'d', src:'TB'}],
+    examples:[{w:'',s:'a',e:'ll', ipa:'ɔːl', src:'TB'},{w:'l',s:'aw',e:'', ipa:'lɔː', src:'TB'},{w:'s',s:'or',e:'e', ipa:'sɔː', src:'TB'},{w:'d',s:'oor',e:'', ipa:'dɔː', src:'TB'},{w:'b',s:'oar',e:'', ipa:'bɔː', src:'TB'},{w:'',s:'au',e:'ral', ipa:'ˈɔːrəl', src:'TB'},{w:'',s:'or',e:'al', ipa:'ˈɔːrəl', src:'TB'},{w:'b',s:'or',e:'n', ipa:'bɔːn', src:'TB'},{w:'w',s:'ar',e:'', ipa:'wɔː', src:'TB'},{w:'f',s:'ough',e:'t', ipa:'fɔːt', src:'TB'},{w:'d',s:'augh',e:'ter', ipa:'ˈdɔːtə', src:'TB'},{w:'(a)br',s:'oa',e:'d', ipa:'əˈbrɔːd', src:'TB'}],
     content:[
       { type:'block', title:'Note', src:'TB p.33', groups:[
         { text:'/ʊə/ can in most cases be replaced with /ɔː/.' },
@@ -436,7 +437,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'b',s:'ir',e:'d', src:'TB'},{w:'l',s:'ear',e:'n', src:'TB'},{w:'s',s:'er',e:'ve', src:'TB'},{w:'w',s:'or',e:'d', src:'TB'},{w:'t',s:'ur',e:'n', src:'TB'}],
+    examples:[{w:'b',s:'ir',e:'d', ipa:'bɜːd', src:'TB'},{w:'l',s:'ear',e:'n', ipa:'lɜːn', src:'TB'},{w:'s',s:'er',e:'ve', ipa:'sɜːv', src:'TB'},{w:'w',s:'or',e:'d', ipa:'wɜːd', src:'TB'},{w:'t',s:'ur',e:'n', ipa:'tɜːn', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spelling <em>-our-</em> = /ɜː/', src:'TB p.31', groups:[
         { items:[
@@ -469,7 +470,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'',s:'a',e:'bout', src:'TB'},{w:'surpris',s:'e',e:'', src:'TB'},{w:'',s:'a',e:'norak', src:'TB'},{w:'vill',s:'a',e:'', src:'TB'},{w:'thor',s:'ough',e:'', src:'TB'}],
+    examples:[{w:'',s:'a',e:'bout', ipa:'əˈbaʊt', src:'TB'},{w:'surpris',s:'e',e:'', ipa:'səˈpraɪz', src:'TB'},{w:'',s:'a',e:'norak', ipa:'ˈænəræk', src:'TB'},{w:'vill',s:'a',e:'', ipa:'ˈvɪlə', src:'TB'},{w:'thor',s:'ough',e:'', ipa:'ˈθʌrə', src:'TB'}],
     rules:'Occurs <b>only in unstressed syllables</b>. Has many possible spellings.<br>The weak vowels /ɪ/ and /ʊ/ can also occur in unstressed syllables as alternatives for /ə/.',
     rulesSrc:["TB p.24", "TB p.34", "TB p.24"],
         related:[
@@ -494,7 +495,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'happ',s:'y',e:'', src:'TB'},{w:'committ',s:'ee',e:'', src:'TB'},{w:'psych',s:'e',e:'', src:'TB'},{w:'Ann',s:'ie',e:'', src:'TB'},{w:'radi',s:'o',e:'', src:'TB'},{w:'tiar',s:'a',e:'', src:'TB'}],
+    examples:[{w:'happ',s:'y',e:'', ipa:'ˈhæpi', src:'TB'},{w:'committ',s:'ee',e:'', ipa:'kəˈmɪti', src:'TB'},{w:'psych',s:'e',e:'', ipa:'ˈsaɪki', src:'TB'},{w:'Ann',s:'ie',e:'', ipa:'ˈæni', src:'TB'},{w:'radi',s:'o',e:'', ipa:'ˈreɪdiəʊ', src:'TB'},{w:'tiar',s:'a',e:'', ipa:'tiˈɑːrə', src:'TB'}],
     rules:'Occurs <b>only in unstressed syllables</b>, word-finally or before a vowel.',
     rulesSrc:["TB p.34", "TB p.34"],
     related:[
@@ -517,7 +518,7 @@ const theoryCards = [
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Monophthong',
 
-    examples:[{w:'fat',s:'u',e:'ous', src:'TB'},{w:'biv',s:'u',e:'ouac', src:'TB'},{w:'K',s:'u',e:'wait', src:'TB'}],
+    examples:[{w:'fat',s:'u',e:'ous', ipa:'ˈfætʃuəs', src:'TB'},{w:'biv',s:'u',e:'ouac', ipa:'ˈbɪvuæk', src:'TB'},{w:'K',s:'u',e:'wait', ipa:'kuˈweɪt', src:'TB'}],
     rules:'Occurs <b>only in unstressed syllables</b>, but <b>not word-finally</b>.',
     rulesSrc:["TB p.34", "TB p.34"],
     related:[
@@ -539,7 +540,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'',s:'a',e:'ce', src:'TB'},{w:'pl',s:'ai',e:'n', src:'TB'},{w:'m',s:'ay',e:'', src:'TB'},{w:'v',s:'ei',e:'l', src:'TB'},{w:'gr',s:'ey',e:'', src:'TB'}],
+    examples:[{w:'',s:'a',e:'ce', ipa:'eɪs', src:'TB'},{w:'pl',s:'ai',e:'n', ipa:'pleɪn', src:'TB'},{w:'m',s:'ay',e:'', ipa:'meɪ', src:'TB'},{w:'v',s:'ei',e:'l', ipa:'veɪl', src:'TB'},{w:'gr',s:'ey',e:'', ipa:'ɡreɪ', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'Exceptional spelling <em>ea</em> = /eɪ/', src:'TB p.33', groups:[
         { items:[
@@ -570,7 +571,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'l',s:'i',e:'ne', src:'TB'},{w:'m',s:'i',e:'nd', src:'TB'},{w:'f',s:'igh',e:'t', src:'TB'},{w:'d',s:'ie',e:'', src:'TB'},{w:'',s:'eye',e:'', src:'TB'},{w:'(n)',s:'ei',e:'ther', src:'TB'}],
+    examples:[{w:'l',s:'i',e:'ne', ipa:'laɪn', src:'TB'},{w:'m',s:'i',e:'nd', ipa:'maɪnd', src:'TB'},{w:'f',s:'igh',e:'t', ipa:'faɪt', src:'TB'},{w:'d',s:'ie',e:'', ipa:'daɪ', src:'TB'},{w:'',s:'eye',e:'', ipa:'aɪ', src:'TB'},{w:'(n)',s:'ei',e:'ther', ipa:'ˈnaɪðə', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'/aɪ/ rarely occurs before <span class="spell-letter">r</span> — exceptions', src:'TB p.33', groups:[
         { items:[
@@ -599,7 +600,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'l',s:'oi',e:'n', src:'TB'},{w:'b',s:'oy',e:'', src:'TB'},{w:'b',s:'uo',e:'y', src:'TB'}],
+    examples:[{w:'l',s:'oi',e:'n', ipa:'lɔɪn', src:'TB'},{w:'b',s:'oy',e:'', ipa:'bɔɪ', src:'TB'},{w:'b',s:'uo',e:'y', ipa:'bɔɪ', src:'TB'}],
     rules:'',
     rulesSrc:["TB p.32", "TB p.32"],
     related:[
@@ -619,7 +620,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'d',s:'ow',e:'n', src:'TB'},{w:'m',s:'ou',e:'th', src:'TB'},{w:'r',s:'ow',e:' (quarrel)', src:'TB'}],
+    examples:[{w:'d',s:'ow',e:'n', ipa:'daʊn', src:'TB'},{w:'m',s:'ou',e:'th', ipa:'maʊθ', src:'TB'},{w:'r',s:'ow',e:' (quarrel)', ipa:'raʊ', src:'TB'}],
     content:[
       { type:'block', variant:'yellow-exc', title:'/aʊ/ never occurs before <span class="spell-letter">r</span> — exceptions', src:'TB p.33', groups:[
         { items:[
@@ -646,7 +647,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'',s:'o',e:'ld', src:'TB'},{w:'sh',s:'ou',e:'lder', src:'TB'},{w:'r',s:'ow',e:' (rij)', src:'TB'},{w:'l',s:'oa',e:'d', src:'TB'},{w:'g',s:'oe',e:'s', src:'TB'},{w:'th',s:'ough',e:'', src:'TB'}],
+    examples:[{w:'',s:'o',e:'ld', ipa:'əʊld', src:'TB'},{w:'sh',s:'ou',e:'lder', ipa:'ˈʃəʊldə', src:'TB'},{w:'r',s:'ow',e:' (rij)', ipa:'rəʊ', src:'TB'},{w:'l',s:'oa',e:'d', ipa:'ləʊd', src:'TB'},{w:'g',s:'oe',e:'s', ipa:'ɡəʊz', src:'TB'},{w:'th',s:'ough',e:'', ipa:'ðəʊ', src:'TB'}],
     rules:'',
     rulesSrc:["TB p.32", "TB p.32"],
     related:[
@@ -666,7 +667,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'t',s:'ear',e:' (traan)', src:'TB'},{w:'d',s:'eer',e:'', src:'TB'},{w:'h',s:'ere',e:'', src:'TB'},{w:'p',s:'ier',e:'ce', src:'TB'},{w:'id',s:'ea',e:'(l)', src:'TB'},{w:'r',s:'ea',e:'l', src:'TB'},{w:'th',s:'eor',e:'y', src:'TB'}],
+    examples:[{w:'t',s:'ear',e:' (traan)', ipa:'tɪə', src:'TB'},{w:'d',s:'eer',e:'', ipa:'dɪə', src:'TB'},{w:'h',s:'ere',e:'', ipa:'hɪə', src:'TB'},{w:'p',s:'ier',e:'ce', ipa:'pɪəs', src:'TB'},{w:'id',s:'ea',e:'(l)', ipa:'aɪˈdɪəl', src:'TB'},{w:'r',s:'ea',e:'l', ipa:'rɪəl', src:'TB'},{w:'th',s:'eor',e:'y', ipa:'ˈθɪəri', src:'TB'}],
     content:[
       { type:'rules', text:'Arises because <b>/iː/ never occurs before <span class="spell-letter">r</span></b> in RP — <em>hearing, near</em> etc. all have /ɪə/.', src:'TB p.32' },
       { type:'block', variant:'blue-rule', title:'<u>Medial</u> -are-, -ari-', src:'TB p.30', groups:[
@@ -697,7 +698,7 @@ const theoryCards = [
     manner:'Vowel quality changes within the syllable.',
     mannerSrc:'WP',
     mannerWiki:'https://en.wikipedia.org/wiki/Diphthong',
-    examples:[{w:'d',s:'are',e:'', src:'TB'},{w:'v',s:'ar',e:'iable', src:'TB'},{w:'f',s:'air',e:'', src:'TB'},{w:'S',s:'ar',e:'ah', src:'TB'},{w:'sw',s:'ear',e:'', src:'TB'},{w:'th',s:'ere',e:'', src:'TB'},{w:'th',s:'eir',e:'(s)', src:'TB'}],
+    examples:[{w:'d',s:'are',e:'', ipa:'deə', src:'TB'},{w:'v',s:'ar',e:'iable', ipa:'ˈveəriəbl', src:'TB'},{w:'f',s:'air',e:'', ipa:'feə', src:'TB'},{w:'S',s:'ar',e:'ah', ipa:'ˈseərə', src:'TB'},{w:'sw',s:'ear',e:'', ipa:'sweə', src:'TB'},{w:'th',s:'ere',e:'', ipa:'ðeə', src:'TB'},{w:'th',s:'eir',e:'(s)', ipa:'ðeəz', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'-are, -ary', src:'TB p.31', groups:[
         { text:'All words ending in <em>-are, -ary</em> have /eə/ — including derivations.', items:[
@@ -756,7 +757,7 @@ const theoryCards = [
     detail:'Long, Usually stressed. Lips Rounded→Unrounded, Rounded→Neutral. Tense.',
     detailSrc:'CAI',
     detailWiki:'',
-    examples:[{w:'t',s:'our',e:'', src:'TB'},{w:'',s:'Eur',e:'ope', src:'TB'},{w:'m',s:'oor',e:'', src:'TB'},{w:'c',s:'ur',e:'e', src:'TB'},{w:'j',s:'ur',e:'y', src:'TB'}],
+    examples:[{w:'t',s:'our',e:'', ipa:'tʊə', src:'TB'},{w:'',s:'Eur',e:'ope', ipa:'ˈjʊərəp', src:'TB'},{w:'m',s:'oor',e:'', ipa:'mʊə', src:'TB'},{w:'c',s:'ur',e:'e', ipa:'kjʊə', src:'TB'},{w:'j',s:'ur',e:'y', ipa:'ˈdʒʊəri', src:'TB'}],
     content:[
       { type:'block', title:'Note', src:'TB p.33', groups:[
         { text:'In most cases /ʊə/ can be replaced with /ɔː/.' },
@@ -861,7 +862,7 @@ const theoryCards = [
     content:[
       { type:'block', variant:'blue-rule', title:'After /t/ → /s/', src:'TB p.29', groups:[
         { items:[
-          { pre:'li', hl:'t', post:'s',   ipa:'lɪts',   src:'TB', variant:'rule' },
+          { pre:'ligh', hl:'t', post:'s',   ipa:'laɪts',   src:'TB', variant:'rule' },
         ]},
       ]},
       { type:'block', variant:'blue-rule', title:'After /t/ → /ɪd/', src:'TB p.29', groups:[
@@ -1102,7 +1103,7 @@ const theoryCards = [
       { type:'block', variant:'blue-rule', title:'Plural /θ/ → /ðz/', src:'TB p.29', groups:[
         { items:[
           { pre:'ba',  hl:'th', post:'',  ipa:'bɑːðz',  src:'TB', variant:'rule' },
-          { pre:'mo',  hl:'th', post:'',  ipa:'maʊðz',  src:'TB', variant:'rule' },
+          { pre:'mou', hl:'th', post:'',  ipa:'maʊðz',  src:'TB', variant:'rule' },
           { pre:'you', hl:'th', post:'',  ipa:'juːðz',  src:'TB', variant:'rule' },
         ]},
       ]},
@@ -1188,7 +1189,7 @@ const theoryCards = [
       { type:'block', variant:'blue-rule', title:'Plural -s → /s/ after fortis /p, t, k, f, θ/', src:'TB p.28', groups:[
         { items:[
           { pre:'li',  hl:'p', post:'s',  ipa:'lɪps',  src:'TB', variant:'rule' },
-          { pre:'li',  hl:'t', post:'s',  ipa:'laɪts', src:'TB', variant:'rule' },
+          { pre:'ligh', hl:'t', post:'s',  ipa:'laɪts', src:'TB', variant:'rule' },
           { pre:'boo', hl:'k', post:'s',  ipa:'bʊks',  src:'TB', variant:'rule' },
         ]},
       ]},
@@ -1847,7 +1848,7 @@ const theoryCards = [
       ]},
       { type:'block', variant:'blue-rule', title:'<em>-combe</em> = /kəm/', src:'TB p.37', groups:[
         { items:[
-          { pre:'Lfra',  hl:'combe', post:'', ipa:'ɪlfrəˈkəʊm',  src:'TB', variant:'rule' },
+          { pre:'Ilfra', hl:'combe', post:'', ipa:'ɪlfrəˈkəʊm',  src:'TB', variant:'rule' },
           { pre:'Wide',  hl:'combe', post:'', ipa:'ˈwaɪdkəm',    src:'TB', variant:'rule' },
         ]},
       ]},
@@ -1909,7 +1910,29 @@ const theoryCards = [
     examples:[{w:'',s:'Fortis',e:' p t k f θ s ʃ tʃ', src:'TB'},{w:'',s:'Lenis',e:' b d ɡ v ð z ʒ dʒ', src:'TB'}],
     content:[
       { type:'block', title:'Fortis and lenis', src:'TB p.24', groups:[
-        { text:'<b>Fortis</b> (Latin: strong) = voiceless obstruents. <b>Lenis</b> (Latin: weak) = voiced obstruents. Nasals (/m n ŋ/) and approximants (/l r j w/) are <b>sonorants</b> — outside the fortis/lenis system.' },
+        { text:'<b>Fortis</b> (Latin: strong) = voiceless obstruents: p t k f θ s ʃ tʃ.<br><b>Lenis</b> (Latin: weak) = voiced obstruents: b d ɡ v ð z ʒ dʒ.<br>Nasals (/m n ŋ/) and approximants (/l r j w/) are <b>sonorants</b> — outside the fortis/lenis system.' },
+      ]},
+      { type:'block', variant:'blue-rule', title:'After fortis → /s/ and /t/', src:'TB p.28', groups:[
+        { items:[
+          { pre:'li',  hl:'p', post:'s',   ipa:'lɪps',   src:'TB', variant:'rule' },
+          { pre:'boo', hl:'k', post:'s',   ipa:'bʊks',   src:'TB', variant:'rule' },
+          { pre:'hel', hl:'p', post:'ed',  ipa:'helpt',  src:'TB', variant:'rule' },
+          { pre:'kno', hl:'ck',post:'ed',  ipa:'nɒkt',   src:'TB', variant:'rule' },
+        ]},
+      ]},
+      { type:'block', title:'Aspiration — word-initial fortis plosives', src:'WP', groups:[
+        { text:'/p t k/ are aspirated [pʰ tʰ kʰ] word-initially in RP.' },
+      ]},
+      { type:'block', variant:'blue-rule', title:'After lenis → /z/ and /d/', src:'TB p.28', groups:[
+        { items:[
+          { pre:'ta', hl:'b', post:'s',   ipa:'tæbz',  src:'TB', variant:'rule' },
+          { pre:'ba', hl:'g', post:'s',   ipa:'bæɡz',  src:'TB', variant:'rule' },
+          { pre:'sta',hl:'bb',post:'ed',  ipa:'stæbd', src:'TB', variant:'rule' },
+          { pre:'lo', hl:'v', post:'ed',  ipa:'lʌvd',  src:'TB', variant:'rule' },
+        ]},
+      ]},
+      { type:'block', title:'Partial devoicing in final position', src:'WP', groups:[
+        { text:'Lenis obstruents may be partially devoiced word-finally — yet listeners still perceive them as lenis.' },
       ]},
       { type:'block', title:'Predicts grammatical endings', src:'TB p.24', groups:[
         { text:'<b>Plural -s</b>: /s/ after fortis, /z/ after lenis/vowels.<br><b>Past -ed</b>: /t/ after fortis, /d/ after lenis/vowels.<br><b>Genitive / 3rd p sg</b>: same rule as plural -s.' },
@@ -1918,7 +1941,7 @@ const theoryCards = [
         { text:'<span class="callout callout--warning"><strong>⚠ Author note</strong> — not from TB. Background knowledge developed in dialogue with Claude (Anthropic).</span><br><b>Voiced/voiceless</b> describes what the larynx is doing — a phonetic observation.<br><b>Fortis/lenis</b> is a phonological category predicting a bundle of behaviours.' },
       ]},
       { type:'block', title:'Why RP uses fortis/lenis', src:'CAI', groups:[
-        { text:'So-called "voiced" obstruents /b d ɡ v z ʒ dʒ/ are frequently <b>devoiced</b> word-finally and in clusters, yet listeners still hear them as lenis. The category is carried by a <b>bundle of cues</b>:<br>— <b>Aspiration</b>: fortis plosives have a puff of air — <em>pin</em> [pʰɪn] vs <em>bin</em> [bɪn]<br>— <b>Vowel duration</b>: vowels are longer before lenis — <em>cap</em> vs <em>cab</em><br>— <b>Closure strength</b>: lenis stops have shorter, weaker closure<br>For teaching: coach "lighter, shorter /b/" rather than "make it voiced."' },
+        { text:'So-called \"voiced\" obstruents /b d ɡ v z ʒ dʒ/ are frequently <b>devoiced</b> word-finally and in clusters, yet listeners still hear them as lenis. The category is carried by a <b>bundle of cues</b>:<br>— <b>Aspiration</b>: fortis plosives have a puff of air — <em>pin</em> [pʰɪn] vs <em>bin</em> [bɪn]<br>— <b>Vowel duration</b>: vowels are longer before lenis — <em>cap</em> vs <em>cab</em><br>— <b>Closure strength</b>: lenis stops have shorter, weaker closure<br>For teaching: coach \"lighter, shorter /b/\" rather than \"make it voiced.\"' },
       ]},
     ],
     rulesSrc:["TB p.24", "TB p.24", "TB p.28", "CAI", "CAI", "CAI"],
@@ -2010,7 +2033,7 @@ const theoryCards = [
     mnemonic:'slashes = phonemic /sɪt/, brackets = phonetic [sɪt]',
     desc:'Key rules to apply when writing IPA transcriptions from this course.',
     descSrc:'TB p.25',
-    examples:[{w:'',s:'ˈkɒntest',e:' (noun)', src:'TB'},{w:'',s:'piˈænəʊ',e:'', src:'TB'},{w:'',s:'ˈbʌtn̩',e:' (button)', src:'TB'}],
+    examples:[{w:'con',s:'test',e:'', ipa:'ˈkɒntest', src:'TB'},{w:'p',s:'ia',e:'no', ipa:'piˈænəʊ', src:'TB'},{w:'butt',s:'on',e:'', ipa:'ˈbʌtn̩', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'1. Stress mark [ˈ] — placed before the stressed syllable', src:'TB p.25', groups:[
         { items:[
@@ -2159,7 +2182,7 @@ const theoryCards = [
     isSymbol:true,
     desc:'ˈ marks the syllable with greatest prominence (primary stress). ˌ marks a syllable with secondary stress — less prominent than primary but more than unstressed.',
     descSrc:'TB p.25',
-    examples:[{w:'ˈbʌtə',s:'',e:' (butter)', src:'TB'},{w:'bəˈliːv',s:'',e:' (believe)', src:'TB'},{w:'ˌʌndəˈstænd',s:'',e:' (understand)', src:'TB'}],
+    examples:[{w:'b',s:'u',e:'tter', ipa:'ˈbʌtə', src:'TB'},{w:'b',s:'e',e:'lieve', ipa:'bəˈliːv', src:'TB'},{w:'',s:'u',e:'nderstand', ipa:'ˌʌndəˈstænd', src:'TB'}],
     content:[
       { type:'block', variant:'blue-rule', title:'ˈ Primary stress — the most prominent syllable', src:'TB p.25', groups:[
         { items:[
@@ -2474,7 +2497,7 @@ const theoryCards = [
     mnemonic:'louder, longer, higher — syllables → feet → word rhythm',
     desc:'A stressed syllable is more prominent than surrounding syllables. Syllables group into feet — a stressed syllable plus following unstressed syllables. Each word has one primary stress and may have secondary stresses.',
     descSrc:'TB p.40',
-    examples:[{w:'ˈbʌtə',s:'',e:' (butter)'},{w:'bəˈlaɪv',s:'',e:' (believe)'}],
+    examples:[{w:'b',s:'u',e:'tter', ipa:'ˈbʌtə', src:'TB'},{w:'b',s:'e',e:'lieve', ipa:'bəˈliːv', src:'TB'}],
     content:[
       { type:'block', title:'Stressed syllables', src:'WP', groups:[
         { text:'Stressed syllables are <b>louder</b>, <b>longer</b>, and on a <b>higher pitch</b>. The mark <b>ˈ</b> is placed immediately before the stressed syllable in IPA.' },
@@ -2697,67 +2720,7 @@ const theoryCards = [
       {symbol:'obstruent',  reason:'Affricates are obstruents',      src:'TB'},
     ] },
 
-  { symbol:'fortis', name:'Fortis Obstruents',
-    filterLabel:'Fortis',
-    tagLabel:'',
-    isSymbol:false, tags:['cat', 'plosive','fricative','affricate','consonant','obstruent'],
-    mnemonic:'fortress — strong, voiceless',
-    desc:'Fortis (Latin for strong) obstruents are voiceless.',
-    descSrc:'TB p.24',
-    examples:[{w:'',s:'p t k f θ s ʃ tʃ',e:''}],
-    content:[
-      { type:'block', variant:'blue-rule', title:'After fortis → /s/ and /t/', src:'TB p.28', groups:[
-        { items:[
-          { pre:'li',  hl:'p', post:'s',   ipa:'lɪps',   src:'TB', variant:'rule' },
-          { pre:'boo', hl:'k', post:'s',   ipa:'bʊks',   src:'TB', variant:'rule' },
-          { pre:'hel', hl:'p', post:'ed',  ipa:'helpt',  src:'TB', variant:'rule' },
-          { pre:'kno', hl:'ck',post:'ed',  ipa:'nɒkt',   src:'TB', variant:'rule' },
-        ]},
-      ]},
-      { type:'block', title:'Aspiration — word-initial fortis plosives', src:'WP', groups:[
-        { text:'/p t k/ are aspirated [pʰ tʰ kʰ] word-initially in RP.' },
-      ]},
-    ],
-    rulesSrc:["TB p.28", "TB p.24"],
-    related:[
-      {symbol:'lenis',               reason:'The voiced counterpart class',          src:'TB'},
-      {symbol:'obstruent',           reason:'Fortis/lenis applies to obstruents',    src:'TB'},
-      {symbol:'fortis-lenis',        reason:'Full list of pairs',                    src:'TB'},
-      {symbol:'grammatical-s',         reason:'-s endings rule',                    src:'TB'},
-      {symbol:'grammatical-ed',      reason:'-ed endings rule',                      src:'TB'},
-      {symbol:'voicing-independence',reason:'What voiceless means — the larynx',     src:'CAI'},
-    ] },
 
-  { symbol:'lenis', name:'Lenis Obstruents',
-    filterLabel:'Lenis',
-    tagLabel:'',
-    isSymbol:false, tags:['cat', 'plosive','fricative','affricate','consonant','obstruent'],
-    mnemonic:'lenient — weak, voiced',
-    desc:'Lenis (Latin for weak) obstruents are voiced.',
-    descSrc:'TB p.24',
-    examples:[{w:'',s:'b d ɡ v ð z ʒ dʒ',e:''}],
-    content:[
-      { type:'block', variant:'blue-rule', title:'After lenis → /z/ and /d/', src:'TB p.28', groups:[
-        { items:[
-          { pre:'ta', hl:'b', post:'s',   ipa:'tæbz',  src:'TB', variant:'rule' },
-          { pre:'ba', hl:'g', post:'s',   ipa:'bæɡz',  src:'TB', variant:'rule' },
-          { pre:'sta',hl:'bb',post:'ed',  ipa:'stæbd', src:'TB', variant:'rule' },
-          { pre:'lo', hl:'v', post:'ed',  ipa:'lʌvd',  src:'TB', variant:'rule' },
-        ]},
-      ]},
-      { type:'block', title:'Partial devoicing in final position', src:'WP', groups:[
-        { text:'Lenis obstruents may be partially devoiced word-finally — yet listeners still perceive them as lenis.' },
-      ]},
-    ],
-    rulesSrc:["TB p.28", "TB p.28"],
-    related:[
-      {symbol:'fortis',              reason:'The voiceless counterpart class',        src:'TB'},
-      {symbol:'obstruent',           reason:'Fortis/lenis applies to obstruents',     src:'TB'},
-      {symbol:'fortis-lenis',        reason:'Full list of pairs',                     src:'TB'},
-      {symbol:'grammatical-s',         reason:'-s endings rule',                    src:'TB'},
-      {symbol:'grammatical-ed',      reason:'-ed endings rule',                      src:'TB'},
-      {symbol:'voicing-independence',reason:'What voiced means — the larynx',         src:'CAI'},
-    ] },
 
   { symbol:'syllabic', name:'Syllabic Consonants',
     filterLabel:'Syllabic',
@@ -2885,7 +2848,7 @@ const theoryCards = [
         { text:'Tongue tip on alveolar ridge; back of tongue raised toward velum.', items:[
           { pre:'he', hl:'l', post:'p',  ipa:'help', src:'TB', variant:'rule' },
           { pre:'mi', hl:'l', post:'k',  ipa:'mɪlk', src:'TB', variant:'rule' },
-          { pre:'hi', hl:'l', post:'',   ipa:'hɪl',  src:'TB', variant:'rule' },
+          { pre:'hi', hl:'l', post:'l',   ipa:'hɪl',  src:'TB', variant:'rule' },
         ]},
       ]},
       { type:'block', variant:'blue-rule', title:'Syllabic /<span class="ipa-syll">l̩</span>/ — after alveolar in unstressed syllable', src:'TB p.25', groups:[
@@ -3042,6 +3005,22 @@ const theoryCards = [
         { items:[
           { pre:'hel',  hl:'p', post:'ed', ipa:'helpt', src:'TB', label:'Past tense', variant:'rule' },
           { pre:'lo',   hl:'v', post:'ed', ipa:'lʌvd',  src:'TB', label:'Past part.', variant:'rule' },
+        ]},
+      ]},
+      { type:'block', variant:'blue-rule', title:'After fortis stem → /s/ or /t/', src:'TB p.28', groups:[
+        { items:[
+          { pre:'li',  hl:'p', post:'s',  ipa:'lɪps',  src:'TB', variant:'rule' },
+          { pre:'boo', hl:'k', post:'s',  ipa:'bʊks',  src:'TB', variant:'rule' },
+          { pre:'hel', hl:'p', post:'ed', ipa:'helpt', src:'TB', variant:'rule' },
+          { pre:'kno', hl:'ck',post:'ed', ipa:'nɒkt',  src:'TB', variant:'rule' },
+        ]},
+      ]},
+      { type:'block', variant:'blue-rule', title:'After lenis/vowel stem → /z/ or /d/', src:'TB p.28', groups:[
+        { items:[
+          { pre:'ta', hl:'b', post:'s',  ipa:'tæbz',  src:'TB', variant:'rule' },
+          { pre:'ba', hl:'g', post:'s',  ipa:'bæɡz',  src:'TB', variant:'rule' },
+          { pre:'sta',hl:'bb',post:'ed', ipa:'stæbd', src:'TB', variant:'rule' },
+          { pre:'lo', hl:'v', post:'ed', ipa:'lʌvd',  src:'TB', variant:'rule' },
         ]},
       ]},
     ],
